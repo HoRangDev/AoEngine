@@ -1,8 +1,16 @@
 #pragma once
-#include "AoActor.h"
+#include <list>
+#include <string>
+using string = std::wstring;
 
+class AoActor;
 class AoLevel
 {
+public:
+	using ActorList = std::list<AoActor*>;
+	using ActorListItr = ActorList::iterator;
+	using ActorListConstItr = ActorList::const_iterator;
+
 public:
 	AoLevel();
 	~AoLevel();
@@ -15,6 +23,6 @@ public:
 	void Update( float DeltaTime );
 
 private:
-	AoActor::ActorVector RegisteredActors;
+	ActorList RegisteredActors;
 
 };

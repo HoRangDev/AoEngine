@@ -1,15 +1,15 @@
 #pragma once
 #include "WindowsInc.h"
-#include <vector>
+#include <list>
 
 class AoWindow;
 class AoRenderComponent;
 class AoRenderer
 {
 public:
-	using RenderComponentVector = std::vector<AoRenderComponent*>;
-	using RenderComponentVectorItr = RenderComponentVector::iterator;
-	using RenderComponentVectorConstItr = RenderComponentVector::const_iterator;
+	using RenderComponentList = std::list<AoRenderComponent*>;
+	using RenderComponentListItr = RenderComponentList::iterator;
+	using RenderComponentListConstItr = RenderComponentList::const_iterator;
 
 public:
 	AoRenderer( AoWindow& Window );
@@ -28,6 +28,6 @@ protected:
 
 protected:
 	AoWindow& Window;
-	RenderComponentVector Components;
+	RenderComponentList Components;
 
 };

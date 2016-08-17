@@ -1,4 +1,5 @@
 #include "AoLevel.h"
+#include "AoActor.h"
 
 AoLevel::AoLevel()
 {
