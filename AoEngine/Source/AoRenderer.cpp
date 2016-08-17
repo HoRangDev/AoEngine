@@ -45,3 +45,18 @@ void AoRenderer::UnRegisterComponent( AoRenderComponent* RenderComponent )
 		}
 	}
 }
+
+float AoRenderer::GetBackBufferWidth() const
+{
+	return 0.0f;
+}
+
+float AoRenderer::GetBackBufferHeight() const
+{
+	return 0.0f;
+}
+
+void AoRenderer::SetViewport( const AoViewport& Viewport )
+{
+	this->Viewport = Viewport;
+}

@@ -77,3 +77,10 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+AoEngine.VC.db
+*.opendb
+*.tlog
+AoEngine.VC.db
+*.db
+AoEngine.VC.db

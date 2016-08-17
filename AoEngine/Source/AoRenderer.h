@@ -1,9 +1,11 @@
 #pragma once
 #include "WindowsInc.h"
+#include "AoViewport.h"
 #include <list>
 
 class AoWindow;
 class AoRenderComponent;
+struct AoViewport;
 class AoRenderer
 {
 public:
@@ -22,12 +24,19 @@ public:
 	virtual void RegisterComponent( AoRenderComponent* RenderComponent ) final;
 	virtual void UnRegisterComponent( AoRenderComponent* RenderComponent ) final;
 
+	virtual float GetBackBufferWidth() const;
+	virtual float GetBackBufferHeight() const;
+
+	void SetViewport( const AoViewport& Viewport );
+
 protected:
 	virtual void CreateDevice() = 0;
+	virtual void CreateDepthStencilBuffer() = 0;
 	virtual void CreateRenderTarget() = 0;
 
 protected:
 	AoWindow& Window;
+	AoViewport Viewport;
 	RenderComponentList Components;
 
 };

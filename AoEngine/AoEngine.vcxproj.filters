@@ -36,6 +36,7 @@
     <ClCompile Include="Source\AoApplication.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\AoViewport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AoWindow.h">
@@ -66,6 +67,9 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoRenderComponent.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoViewport.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>

@@ -11,8 +11,12 @@ public:
 	virtual void BeginFrame() override;
 	virtual void EndFrame() override;
 
+	virtual float GetBackBufferWidth() const override;
+	virtual float GetBackBufferHeight() const override;
+
 protected:
 	virtual void CreateDevice() override;
+	virtual void CreateDepthStencilBuffer() override;
 	virtual void CreateRenderTarget() override;
 
 private:
@@ -21,5 +25,9 @@ private:
 	ID3D11DeviceContext* DeviceContext = nullptr;
 
 	ID3D11RenderTargetView* RenderTargetView = nullptr;
+
+	ID3D11DepthStencilView* DepthStencilView = nullptr;
+
+	D3D11_TEXTURE2D_DESC BackBufferDesc;
 
 };
