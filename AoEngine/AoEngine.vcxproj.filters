@@ -37,6 +37,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoViewport.cpp" />
+    <ClCompile Include="Source\WinProc.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AoWindow.h">
@@ -70,6 +73,9 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoViewport.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WinProc.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>

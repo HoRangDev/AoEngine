@@ -1,20 +1,8 @@
 #include "AoWindow.h"
+#include "WinProc.h"
 
 uint32_t AoWindow::DefaultWidth = 800;
 uint32_t AoWindow::DefaultHeight = 600;
-
-LRESULT CALLBACK WinProc(HWND Handle, UINT Msg, WPARAM WParam, LPARAM LParam)
-{
-	switch( Msg )
-	{
-	case WM_DESTROY:
-	case WM_CLOSE:
-		PostQuitMessage( 0 );
-		return 0;
-	}
-
-	return DefWindowProc( Handle, Msg, WParam, LParam );
-}
 
 AoWindow::AoWindow( string Name, uint32_t Width, uint32_t Height ) :
 	Name( Name ),

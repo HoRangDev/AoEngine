@@ -52,7 +52,7 @@ int AoApplication::Excute()
 	return 0;
 }
 
-AoRenderer * AoApplication::GetRenderer()
+AoRenderer* AoApplication::GetRenderer()
 {
 	return Renderer;
 }

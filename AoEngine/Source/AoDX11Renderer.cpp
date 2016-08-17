@@ -13,16 +13,13 @@ AoDX11Renderer::AoDX11Renderer( AoWindow& Window ) :
 
 AoDX11Renderer::~AoDX11Renderer()
 {
-	RenderTargetView->Release();
-	DepthStencilView->Release();
-	SwapChain->Release();
-	DeviceContext->Release();
-	Device->Release();
+	ReleaseRenderer();
 }
 
 void AoDX11Renderer::BeginFrame()
 {
 	DeviceContext->OMSetRenderTargets( 1, &RenderTargetView, DepthStencilView );
+
 	auto D3DViewport = CD3D11_VIEWPORT( Viewport.TopLeftX, Viewport.TopLeftY, Viewport.Width, Viewport.Height );
 	DeviceContext->RSSetViewports( 1, &D3DViewport );
 
@@ -34,7 +31,14 @@ void AoDX11Renderer::BeginFrame()
 
 void AoDX11Renderer::EndFrame()
 {
-	SwapChain->Present( 1, 0 );
+	if( bIsStandByMode )
+	{
+		bIsStandByMode = (SwapChain->Present( 0, DXGI_PRESENT_TEST ) == DXGI_STATUS_OCCLUDED);
+	}
+	else
+	{
+		bIsStandByMode = ( SwapChain->Present( 0, 0 ) == DXGI_STATUS_OCCLUDED );
+	}
 }
 
 float AoDX11Renderer::GetBackBufferWidth() const
@@ -45,6 +49,12 @@ float AoDX11Renderer::GetBackBufferWidth() const
 float AoDX11Renderer::GetBackBufferHeight() const
 {
 	return static_cast<float>(BackBufferDesc.Height);
+}
+
+void AoDX11Renderer::ResizeBackBuffer()
+{
+	DeviceContext->OMSetRenderTargets( 0, nullptr, nullptr );
+	SwapChain->ResizeBuffers( 1, 0, 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0 );
 }
 
 void AoDX11Renderer::CreateDevice()
@@ -95,4 +105,15 @@ void AoDX11Renderer::CreateRenderTarget()
 	Device->CreateRenderTargetView( BackBuffer, nullptr, &RenderTargetView );
 	BackBuffer->GetDesc( &BackBufferDesc );
 	BackBuffer->Release();
+}
+
+void AoDX11Renderer::ReleaseRenderer()
+{
+	SwapChain->SetFullscreenState( false, nullptr );
+	DeviceContext->ClearState();
+	RenderTargetView->Release();
+	DepthStencilView->Release();
+	SwapChain->Release();
+	DeviceContext->Release();
+	Device->Release();
 }

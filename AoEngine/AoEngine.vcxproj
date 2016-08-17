@@ -165,6 +165,7 @@
     <ClCompile Include="Source\AoWindow.cpp" />
     <ClCompile Include="Source\AoLevel.cpp" />
     <ClCompile Include="Source\AoEntryPoint.cpp" />
+    <ClCompile Include="Source\WinProc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AoActor.h" />
@@ -178,6 +179,7 @@
     <ClInclude Include="Source\AoComponent.h" />
     <ClInclude Include="Source\AoLevel.h" />
     <ClInclude Include="Source\WindowsInc.h" />
+    <ClInclude Include="Source\WinProc.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
