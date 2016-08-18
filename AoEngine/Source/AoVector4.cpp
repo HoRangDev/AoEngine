@@ -166,7 +166,7 @@ AoVector4 & AoVector4::operator/=( const AoVector4 & Operand )
 
 float AoVector4::operator|( const AoVector4 & Operand )
 {
-	return 0.0f;
+	return ( X * Operand.X + Y * Operand.Y + Z * Operand.Z + W * Operand.W );
 }
 
 AoVector4 AoVector4::operator^( const AoVector4 & Operand )

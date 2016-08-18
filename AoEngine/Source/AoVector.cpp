@@ -128,12 +128,15 @@ AoVector & AoVector::operator/=( const AoVector & Operand )
 
 float AoVector::operator|( const AoVector & Operand )
 {
-	return 0.0f;
+	return ( X * Operand.X + Y * Operand.Y + Z * Operand.Z );
 }
 
 AoVector AoVector::operator^( const AoVector & Operand )
 {
-	return  AoVector( ( Y*Operand.Z - Z*Operand.Y ), ( X*Operand.Z - Z*Operand.X ), ( X*Operand.Y - Y*Operand.X ) );
+	return  AoVector(
+		Y*Operand.Z - Z*Operand.Y,
+		X*Operand.Z - Z*Operand.X,
+		X*Operand.Y - Y*Operand.X );
 }
 
 void AoVector::SetX( float X )
