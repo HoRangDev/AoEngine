@@ -35,7 +35,7 @@ protected:
 	virtual void CreateDevice() = 0;
 	virtual void CreateDepthStencilBuffer() = 0;
 	virtual void CreateRenderTarget() = 0;
-	virtual void ReleaseRenderer() = 0;
+	virtual void Release() = 0;
 
 protected:
 	AoWindow& Window;

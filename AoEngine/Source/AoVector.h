@@ -3,9 +3,9 @@
 class AoVector
 {
 public:
-	AoVector( float X, float Y, float Z );
-	AoVector();
+	AoVector( float X = 0.0f, float Y = 0.0f, float Z = 0.0f );
 
+	AoVector& operator=( const AoVector& Operand );
 	AoVector operator+( float Operand );
 	AoVector operator+( const AoVector& Operand );
 	AoVector& operator+=( float Operand );
@@ -36,13 +36,13 @@ public:
 	void SetZ( float Z );
 	float GetZ() const;
 
-	float Magnitude() const;
-	float SquaredMagnitude() const;
+	float Size() const;
+	float SquaredSize() const;
 
 	void Normalize();
-	AoVector GetNormalized() const;
-	bool IsNormalized() const;
+	AoVector GetNormal() const;
 
+	bool IsUnit() const;
 	bool IsOne() const;
 	bool IsZero() const;
 

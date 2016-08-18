@@ -35,7 +35,7 @@ protected:
 	virtual void CreateDevice() override;
 	virtual void CreateDepthStencilBuffer() override;
 	virtual void CreateRenderTarget() override;
-	virtual void ReleaseRenderer() override;
+	virtual void Release() override;
 
 private:
 	IDXGISwapChain* SwapChain = nullptr;

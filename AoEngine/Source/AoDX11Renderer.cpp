@@ -13,7 +13,7 @@ AoDX11Renderer::AoDX11Renderer( AoWindow& Window ) :
 
 AoDX11Renderer::~AoDX11Renderer()
 {
-	ReleaseRenderer();
+	Release();
 }
 
 void AoDX11Renderer::BeginFrame()
@@ -107,7 +107,7 @@ void AoDX11Renderer::CreateRenderTarget()
 	BackBuffer->Release();
 }
 
-void AoDX11Renderer::ReleaseRenderer()
+void AoDX11Renderer::Release()
 {
 	SwapChain->SetFullscreenState( false, nullptr );
 	DeviceContext->ClearState();

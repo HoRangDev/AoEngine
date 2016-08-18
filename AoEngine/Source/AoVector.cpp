@@ -1,21 +1,23 @@
-#include <math.h>
 #include "AoVector.h"
+#include "AoMath.h"
 
 AoVector AoVector::Zero = AoVector();
 AoVector AoVector::One = AoVector( 1.0f, 1.0f, 1.0f );
 
 AoVector::AoVector( float X, float Y, float Z ) :
-	X(X),
-	Y(Y),
-	Z(Z)
+	X( X ),
+	Y( Y ),
+	Z( Z )
 {
-	
+
 }
 
-AoVector::AoVector() :
-	AoVector(0.0f, 0.0f, 0.0f)
+AoVector & AoVector::operator=( const AoVector & Operand )
 {
-
+	X = Operand.X;
+	Y = Operand.Y;
+	Z = Operand.Z;
+	return *this;
 }
 
 AoVector AoVector::operator+( float Operand )
@@ -164,33 +166,33 @@ float AoVector::GetZ() const
 	return Z;
 }
 
-float AoVector::Magnitude() const
+float AoVector::Size() const
 {
 	return sqrtf( ( X * X + Y * Y + Z * Z ) );
 }
 
-float AoVector::SquaredMagnitude() const
+float AoVector::SquaredSize() const
 {
 	return ( X * X + Y * Y + Z * Z );
 }
 
 void AoVector::Normalize()
 {
-	float InvMagnitude = 1.0f / Magnitude();
-	X *= InvMagnitude;
-	Y *= InvMagnitude;
-	Z *= InvMagnitude;
+	float InvSize = 1.0f / Size();
+	X *= InvSize;
+	Y *= InvSize;
+	Z *= InvSize;
 }
 
-AoVector AoVector::GetNormalized() const
+AoVector AoVector::GetNormal() const
 {
-	float InvMagnitude = 1.0f / Magnitude();
-	return AoVector( X * InvMagnitude, Y * InvMagnitude, Z * InvMagnitude );
+	float InvSize = 1.0f / Size();
+	return AoVector( X * InvSize, Y * InvSize, Z * InvSize );
 }
 
-bool AoVector::IsNormalized() const
+bool AoVector::IsUnit() const
 {
-	return ( Magnitude() == 1.0f );
+	return ( Size() == 1.0f );
 }
 
 bool AoVector::IsOne() const

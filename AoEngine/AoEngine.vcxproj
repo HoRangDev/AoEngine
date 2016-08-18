@@ -158,9 +158,11 @@
     <ClCompile Include="Source\AoApplication.cpp" />
     <ClCompile Include="Source\AoComponent.cpp" />
     <ClCompile Include="Source\AoDX11Renderer.cpp" />
+    <ClCompile Include="Source\AoMatrix4x4.cpp" />
     <ClCompile Include="Source\AoRenderComponent.cpp" />
     <ClCompile Include="Source\AoRenderer.cpp" />
     <ClCompile Include="Source\AoVector.cpp" />
+    <ClCompile Include="Source\AoVector4.cpp" />
     <ClCompile Include="Source\AoViewport.cpp" />
     <ClCompile Include="Source\AoWindow.cpp" />
     <ClCompile Include="Source\AoLevel.cpp" />
@@ -171,9 +173,12 @@
     <ClInclude Include="Source\AoActor.h" />
     <ClInclude Include="Source\AoApplication.h" />
     <ClInclude Include="Source\AoDX11Renderer.h" />
+    <ClInclude Include="Source\AoMath.h" />
+    <ClInclude Include="Source\AoMatrix4x4.h" />
     <ClInclude Include="Source\AoRenderComponent.h" />
     <ClInclude Include="Source\AoRenderer.h" />
     <ClInclude Include="Source\AoVector.h" />
+    <ClInclude Include="Source\AoVector4.h" />
     <ClInclude Include="Source\AoViewport.h" />
     <ClInclude Include="Source\AoWindow.h" />
     <ClInclude Include="Source\AoComponent.h" />

@@ -36,8 +36,16 @@
     <ClCompile Include="Source\AoApplication.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AoViewport.cpp" />
     <ClCompile Include="Source\WinProc.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoViewport.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoMatrix4x4.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoVector4.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -76,6 +84,15 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\WinProc.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoMatrix4x4.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoMath.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoVector4.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
