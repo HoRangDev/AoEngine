@@ -8,12 +8,12 @@ class AoWindow
 {
 public:
 	AoWindow( string Name, uint32_t Width, uint32_t Height );
-	AoWindow();
+	AoWindow( );
 
-	uint32_t GetWidth() const;
-	uint32_t GetHeight() const;
+	uint32_t GetWidth( ) const;
+	uint32_t GetHeight( ) const;
 
-	HWND GetHandle() const;
+	HWND GetHandle( ) const;
 
 private:
 	static uint32_t DefaultWidth, DefaultHeight;

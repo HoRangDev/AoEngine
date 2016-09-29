@@ -30,21 +30,21 @@ public:
 	AoVector operator^( const AoVector& Operand );
 
 	void SetX( float X );
-	float GetX() const;
+	float GetX( ) const;
 	void SetY( float Y );
-	float GetY() const;
+	float GetY( ) const;
 	void SetZ( float Z );
-	float GetZ() const;
+	float GetZ( ) const;
 
-	float Size() const;
-	float SquaredSize() const;
+	float Size( ) const;
+	float SquaredSize( ) const;
 
-	void Normalize();
-	AoVector GetNormal() const;
+	void Normalize( );
+	AoVector GetNormal( ) const;
 
-	bool IsUnit() const;
-	bool IsOne() const;
-	bool IsZero() const;
+	bool IsUnit( ) const;
+	bool IsOne( ) const;
+	bool IsZero( ) const;
 
 public:
 	float X;

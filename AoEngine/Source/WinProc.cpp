@@ -12,10 +12,10 @@ LRESULT CALLBACK WinProc( HWND Handle, UINT Msg, WPARAM WParam, LPARAM LParam )
 		return 0;
 
 	case WM_SIZE:
-		AoRenderer* Renderer = AoApplication::GetRenderer();
+		AoRenderer* Renderer = AoApplication::GetRenderer( );
 		if ( Renderer != nullptr )
 		{
-			Renderer->ResizeBackBuffer();
+			Renderer->ResizeBackBuffer( );
 		}
 		break;
 	}

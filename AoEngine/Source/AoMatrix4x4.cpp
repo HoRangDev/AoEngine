@@ -117,7 +117,6 @@ AoVector4 AoMatrix4x4::operator*( const AoVector4& InV ) const
 	Vector.Y = ( M[ 1 ][ 0 ] * InV.X ) + ( M[ 1 ][ 1 ] * InV.Y ) + ( M[ 1 ][ 2 ] * InV.Z ) + ( M[ 1 ][ 3 ] * InV.W );
 	Vector.Z = ( M[ 2 ][ 0 ] * InV.X ) + ( M[ 2 ][ 1 ] * InV.Y ) + ( M[ 2 ][ 2 ] * InV.Z ) + ( M[ 2 ][ 3 ] * InV.W );
 	Vector.W = ( M[ 3 ][ 0 ] * InV.X ) + ( M[ 3 ][ 1 ] * InV.Y ) + ( M[ 3 ][ 2 ] * InV.Z ) + ( M[ 3 ][ 3 ] * InV.W );
-
 	return Vector;
 }
 

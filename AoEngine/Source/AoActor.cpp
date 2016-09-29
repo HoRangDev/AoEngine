@@ -8,15 +8,16 @@ AoActor::AoActor( string Name ) :
 	Name( Name )
 {
 	++InstanceCount;
+	/*@TODO: 트랜스폼 생성하도록 하기 */
 }
 
-AoActor::AoActor() :
+AoActor::AoActor( ) :
 	AoActor( TEXT( "Actor" ) + std::to_wstring( InstanceCount ) )
 {
 
 }
 
-AoActor::~AoActor()
+AoActor::~AoActor( )
 {
 	DetachAllChild( true );
 	DetachAllComponent( true );
@@ -24,7 +25,7 @@ AoActor::~AoActor()
 
 void AoActor::AttachChild( AoActor* const Child )
 {
-	bool IsAttachedChild = Child->GetParent() != nullptr;
+	bool IsAttachedChild = Child->GetParent( ) != nullptr;
 	if ( !IsAttachedChild )
 	{
 		Child->SetParent( this );
@@ -34,10 +35,10 @@ void AoActor::AttachChild( AoActor* const Child )
 
 void AoActor::DetachChild( AoActor* const Child )
 {
-	bool IsAttachedChild = Child->GetParent() == this;
+	bool IsAttachedChild = Child->GetParent( ) == this;
 	if ( IsAttachedChild )
 	{
-		for ( ActorVectorItr Itr = Children.begin(); Itr != Children.end(); ++Itr )
+		for ( ActorVectorItr Itr = Children.begin( ); Itr != Children.end( ); ++Itr )
 		{
 			if ( *Itr == Child )
 			{
@@ -51,9 +52,9 @@ void AoActor::DetachChild( AoActor* const Child )
 
 AoActor* AoActor::DetachChild( const string & Name )
 {
-	for ( ActorVectorItr Itr = Children.begin(); Itr != Children.end(); ++Itr )
+	for ( ActorVectorItr Itr = Children.begin( ); Itr != Children.end( ); ++Itr )
 	{
-		bool bIsTargetActor = ( ( *Itr )->GetName() ).compare( Name ) == 0;
+		bool bIsTargetActor = ( ( *Itr )->GetName( ) ).compare( Name ) == 0;
 		if ( bIsTargetActor )
 		{
 			( *Itr )->SetParent( nullptr );
@@ -67,9 +68,9 @@ AoActor* AoActor::DetachChild( const string & Name )
 
 void AoActor::DetachAllChild( bool bIsCleanup )
 {
-	if( bIsCleanup )
+	if ( bIsCleanup )
 	{
-		for( auto* Child : Children )
+		for ( auto* Child : Children )
 		{
 			delete Child;
 		}
@@ -82,13 +83,13 @@ void AoActor::DetachAllChild( bool bIsCleanup )
 		}
 	}
 
-	Children.clear();
+	Children.clear( );
 }
 
 void AoActor::AttachComponent( AoComponent * const Component )
 {
-	bool IsAttachedComponent = Component->GetAttachedActor() != nullptr;
-	if( !IsAttachedComponent )
+	bool IsAttachedComponent = Component->GetAttachedActor( ) != nullptr;
+	if ( !IsAttachedComponent )
 	{
 		Component->SetAttachedActor( this );
 		Components.push_back( Component );
@@ -97,12 +98,12 @@ void AoActor::AttachComponent( AoComponent * const Component )
 
 void AoActor::DetachComponent( AoComponent * const Component )
 {
-	bool IsAttachedComponent = Component->GetAttachedActor() == this;
-	if( IsAttachedComponent )
+	bool IsAttachedComponent = Component->GetAttachedActor( ) == this;
+	if ( IsAttachedComponent )
 	{
-		for( auto Itr = Components.begin(); Itr != Components.end(); ++Itr )
+		for ( auto Itr = Components.begin( ); Itr != Components.end( ); ++Itr )
 		{
-			if( *Itr == Component )
+			if ( *Itr == Component )
 			{
 				( *Itr )->SetAttachedActor( nullptr );
 				Components.erase( Itr );
@@ -114,33 +115,33 @@ void AoActor::DetachComponent( AoComponent * const Component )
 
 void AoActor::DetachAllComponent( bool bIsCleanup )
 {
-	if( bIsCleanup )
+	if ( bIsCleanup )
 	{
-		for( auto* Component : Components )
+		for ( auto* Component : Components )
 		{
 			delete Component;
 		}
 	}
 
-	Components.clear();
+	Components.clear( );
 }
 
-uint64_t AoActor::GetInstanceCount()
+uint64_t AoActor::GetInstanceCount( )
 {
 	return InstanceCount;
 }
 
-string AoActor::GetName() const
+string AoActor::GetName( ) const
 {
 	return Name;
 }
 
-AoActor * AoActor::GetParent() const
+AoActor * AoActor::GetParent( ) const
 {
 	return Parent;
 }
 
-AoLevel * AoActor::GetRegisteredLevel() const
+AoLevel * AoActor::GetRegisteredLevel( ) const
 {
 	return RegisteredLevel;
 }
@@ -150,9 +151,14 @@ void AoActor::SetActive( bool bIsActive )
 	this->bIsActive = bIsActive;
 }
 
-bool AoActor::IsActive() const
+bool AoActor::IsActive( ) const
 {
-	return bIsActive && (RegisteredLevel != nullptr);
+	return bIsActive;
+}
+
+bool AoActor::IsRegisteredAtLevel( ) const
+{
+	return ( RegisteredLevel != nullptr );
 }
 
 void AoActor::Update( float DeltaTime )

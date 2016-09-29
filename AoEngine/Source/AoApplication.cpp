@@ -1,25 +1,25 @@
 #include "AoApplication.h"
 #include "AoWindow.h"
-#include "AoDX11Renderer.h"
+#include "AoRenderer.h"
 #include "AoLevel.h"
 
 AoRenderer* AoApplication::Renderer = nullptr;
 
 AoApplication::AoApplication( string Name, uint32_t Width, uint32_t Height ) :
-	Window(new AoWindow(Name, Width, Height)),
-	LoadedLevel(nullptr)
+	Window( new AoWindow( Name, Width, Height ) ),
+	LoadedLevel( nullptr )
 {
-	Renderer = new AoDX11Renderer( *Window );
+	Renderer = new AoRenderer( *Window );
 }
 
-AoApplication::~AoApplication()
+AoApplication::~AoApplication( )
 {
 
 }
 
-int AoApplication::Excute()
+int AoApplication::Excute( )
 {
-	Initialize();
+	Initialize( );
 
 	MSG Msg = { 0 };
 	while ( true )
@@ -37,46 +37,46 @@ int AoApplication::Excute()
 
 		/** Main Loop		*/
 		// Update
-		if( LoadedLevel != nullptr )
+		if ( LoadedLevel != nullptr )
 		{
 			//LoadedLevel->Update()
 		}
 		// Render
-		Renderer->BeginFrame();
-		Renderer->Render();
-		Renderer->EndFrame();
+		Renderer->BeginFrame( );
+		Renderer->Render( );
+		Renderer->EndFrame( );
 		/** Main Loop End	*/
 	}
 
-	DeInitialize();
+	DeInitialize( );
 	return 0;
 }
 
-AoRenderer* AoApplication::GetRenderer()
+AoRenderer* AoApplication::GetRenderer( )
 {
 	return Renderer;
 }
 
-void AoApplication::Initialize()
+void AoApplication::Initialize( )
 {
 	//@TODO: Load App Initialize Informations from Config.
 }
 
-void AoApplication::DeInitialize()
+void AoApplication::DeInitialize( )
 {
-	if( LoadedLevel != nullptr )
+	if ( LoadedLevel != nullptr )
 	{
 		delete LoadedLevel;
 		LoadedLevel = nullptr;
 	}
 
-	if( Renderer != nullptr )
+	if ( Renderer != nullptr )
 	{
 		delete Renderer;
 		Renderer = nullptr;
 	}
 
-	if( Window != nullptr )
+	if ( Window != nullptr )
 	{
 		delete Window;
 		Window = nullptr;

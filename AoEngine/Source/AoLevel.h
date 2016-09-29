@@ -12,8 +12,8 @@ public:
 	using ActorListConstItr = ActorList::const_iterator;
 
 public:
-	AoLevel();
-	~AoLevel();
+	AoLevel( );
+	~AoLevel( );
 
 	void RegisterActor( AoActor* const Actor );
 	void UnRegisterActor( AoActor* const Actor );

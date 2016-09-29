@@ -22,12 +22,18 @@ AoVector & AoVector::operator=( const AoVector & Operand )
 
 AoVector AoVector::operator+( float Operand )
 {
-	return AoVector( X + Operand, Y + Operand, Z + Operand );
+	return AoVector(
+		X + Operand,
+		Y + Operand,
+		Z + Operand );
 }
 
 AoVector AoVector::operator+( const AoVector & Operand )
 {
-	return AoVector( X + Operand.X, Y + Operand.Y, Z + Operand.Z );
+	return AoVector( 
+		X + Operand.X,
+		Y + Operand.Y,
+		Z + Operand.Z );
 }
 
 AoVector & AoVector::operator+=( float Operand )
@@ -48,12 +54,18 @@ AoVector & AoVector::operator+=( const AoVector & Operand )
 
 AoVector AoVector::operator-( float Operand )
 {
-	return AoVector( X - Operand, Y - Operand, Z - Operand );
+	return AoVector(
+		X - Operand,
+		Y - Operand,
+		Z - Operand );
 }
 
 AoVector AoVector::operator-( const AoVector & Operand )
 {
-	return AoVector( X - Operand.X, Y - Operand.Y, Z - Operand.Z );
+	return AoVector( 
+		X - Operand.X,
+		Y - Operand.Y,
+		Z - Operand.Z );
 }
 
 AoVector & AoVector::operator-=( float Operand )
@@ -74,12 +86,18 @@ AoVector & AoVector::operator-=( const AoVector & Operand )
 
 AoVector AoVector::operator*( float Operand )
 {
-	return AoVector( X * Operand, Y * Operand, Z * Operand );
+	return AoVector(
+		X * Operand,
+		Y * Operand,
+		Z * Operand );
 }
 
 AoVector AoVector::operator*( const AoVector & Operand )
 {
-	return AoVector( X * Operand.X, Y * Operand.Y, Z * Operand.Z );
+	return AoVector(
+		X * Operand.X,
+		Y * Operand.Y,
+		Z * Operand.Z );
 }
 
 AoVector & AoVector::operator*=( float Operand )
@@ -101,12 +119,18 @@ AoVector & AoVector::operator*=( const AoVector & Operand )
 AoVector AoVector::operator/( float Operand )
 {
 	float InvOperand = 1.0f / Operand;
-	return AoVector( X  * InvOperand, Y * InvOperand, Z * InvOperand );
+	return AoVector( 
+		X * InvOperand,
+		Y * InvOperand, 
+		Z * InvOperand );
 }
 
 AoVector AoVector::operator/( const AoVector & Operand )
 {
-	return AoVector( X / Operand.X, Y / Operand.Y, Z / Operand.Z );
+	return AoVector(
+		X / Operand.X,
+		Y / Operand.Y,
+		Z / Operand.Z );
 }
 
 AoVector & AoVector::operator/=( float Operand )

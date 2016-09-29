@@ -1,12 +1,12 @@
 #include "AoLevel.h"
 #include "AoActor.h"
 
-AoLevel::AoLevel()
+AoLevel::AoLevel( )
 {
 
 }
 
-AoLevel::~AoLevel()
+AoLevel::~AoLevel( )
 {
 	// 등록되어있는 모든 액터를 삭제해야함
 	UnRegisterAllActor( true );
@@ -14,8 +14,8 @@ AoLevel::~AoLevel()
 
 void AoLevel::RegisterActor( AoActor* const Actor )
 {
-	bool bIsRegisteredActor = Actor->GetRegisteredLevel() != nullptr;
-	if( !bIsRegisteredActor )
+	bool bIsRegisteredActor = Actor->GetRegisteredLevel( ) != nullptr;
+	if ( !bIsRegisteredActor )
 	{
 		Actor->SetRegisteredLevel( this );
 		RegisteredActors.push_back( Actor );
@@ -24,12 +24,12 @@ void AoLevel::RegisterActor( AoActor* const Actor )
 
 void AoLevel::UnRegisterActor( AoActor* const Actor )
 {
-	bool bIsRegisteredActor = Actor->GetRegisteredLevel() == this;
-	if( bIsRegisteredActor )
+	bool bIsRegisteredActor = Actor->GetRegisteredLevel( ) == this;
+	if ( bIsRegisteredActor )
 	{
-		for ( auto Itr = RegisteredActors.begin(); Itr != RegisteredActors.end(); ++Itr )
+		for ( auto Itr = RegisteredActors.begin( ); Itr != RegisteredActors.end( ); ++Itr )
 		{
-			if( *Itr == Actor )
+			if ( *Itr == Actor )
 			{
 				( *Itr )->SetRegisteredLevel( nullptr );
 				RegisteredActors.erase( Itr );
@@ -41,10 +41,10 @@ void AoLevel::UnRegisterActor( AoActor* const Actor )
 
 AoActor* AoLevel::UnRegisterActor( const string& Name )
 {
-	for( auto Itr = RegisteredActors.begin(); Itr != RegisteredActors.end(); ++Itr )
+	for ( auto Itr = RegisteredActors.begin( ); Itr != RegisteredActors.end( ); ++Itr )
 	{
-		bool bIsTargetActor = ( ( *Itr )->GetName() ).compare( Name ) == 0;
-		if( bIsTargetActor )
+		bool bIsTargetActor = ( ( *Itr )->GetName( ) ).compare( Name ) == 0;
+		if ( bIsTargetActor )
 		{
 			( *Itr )->SetRegisteredLevel( nullptr );
 			RegisteredActors.erase( Itr );
@@ -65,12 +65,12 @@ void AoLevel::UnRegisterAllActor( bool bIsCleanup = true )
 		}
 	}
 
-	RegisteredActors.clear();
+	RegisteredActors.clear( );
 }
 
 void AoLevel::Update( float DeltaTime )
 {
-	for( auto* Actor : RegisteredActors )
+	for ( auto* Actor : RegisteredActors )
 	{
 		Actor->Update( DeltaTime );
 	}

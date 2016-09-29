@@ -184,7 +184,7 @@ void AoVector4::SetX( float X )
 	this->X = X;
 }
 
-float AoVector4::GetX() const
+float AoVector4::GetX( ) const
 {
 	return X;
 }
@@ -194,7 +194,7 @@ void AoVector4::SetY( float Y )
 	this->Y = Y;
 }
 
-float AoVector4::GetY() const
+float AoVector4::GetY( ) const
 {
 	return Y;
 }
@@ -204,7 +204,7 @@ void AoVector4::SetZ( float Z )
 	this->Z = Z;
 }
 
-float AoVector4::GetZ() const
+float AoVector4::GetZ( ) const
 {
 	return Z;
 }
@@ -214,62 +214,62 @@ void AoVector4::SetW( float W )
 	this->W = W;
 }
 
-float AoVector4::GetW() const
+float AoVector4::GetW( ) const
 {
 	return W;
 }
 
-float AoVector4::Size3() const
+float AoVector4::Size3( ) const
 {
 	return sqrt( X*X + Y*Y + Z*Z );
 }
 
-float AoVector4::SquaredSize3() const
+float AoVector4::SquaredSize3( ) const
 {
 	return ( X*X + Y*Y + Z*Z );
 }
 
-float AoVector4::Size4() const
+float AoVector4::Size4( ) const
 {
 	return sqrt( X*X + Y*Y + Z*Z + W*W );
 }
 
-float AoVector4::SquaredSize4() const
+float AoVector4::SquaredSize4( ) const
 {
 	return ( X*X + Y*Y + Z*Z + W*W );
 }
 
-void AoVector4::Normalize3()
+void AoVector4::Normalize3( )
 {
-	float InvSize3 = 1.0f / Size3();
+	float InvSize3 = 1.0f / Size3( );
 	X *= InvSize3;
 	Y *= InvSize3;
 	Z *= InvSize3;
 	W = 0.0f;
 }
 
-AoVector4 AoVector4::GetNormal3() const
+AoVector4 AoVector4::GetNormal3( ) const
 {
-	float InvSize3 = 1.0f / Size3();
+	float InvSize3 = 1.0f / Size3( );
 	return AoVector4( X * InvSize3, Y * InvSize3, Z * InvSize3 );
 }
 
-bool AoVector4::IsUnit() const
+bool AoVector4::IsUnit( ) const
 {
-	return ( Size3() == 1.0f );
+	return ( Size3( ) == 1.0f );
 }
 
-bool AoVector4::IsOne() const
+bool AoVector4::IsOne( ) const
 {
 	return ( X == 1.0f ) && ( Y == 1.0f ) && ( Z == 1.0f ) && ( W == 1.0f );
 }
 
-bool AoVector4::IsZero() const
+bool AoVector4::IsZero( ) const
 {
 	return ( X == 0.0f ) && ( Y == 0.0f ) && ( Z == 0.0f ) && ( W == 0.0f );
 }
 
-bool AoVector4::IsPoint() const
+bool AoVector4::IsPoint( ) const
 {
 	return ( W == 1.0f );
 }

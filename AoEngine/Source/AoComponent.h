@@ -12,13 +12,13 @@ public:
 	friend AoActor;
 
 public:
-	AoComponent();
-	virtual ~AoComponent();
+	AoComponent( );
+	virtual ~AoComponent( );
 
 	virtual void SetActive( bool bIsActive );
-	bool IsActive() const;
+	bool IsActive( ) const;
 
-	AoActor* GetAttachedActor() const;
+	AoActor* GetAttachedActor( ) const;
 
 private:
 	virtual void SetAttachedActor( AoActor* Actor );

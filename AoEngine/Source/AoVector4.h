@@ -30,30 +30,30 @@ public:
 	AoVector4 operator^( const AoVector4& Operand );
 
 	void SetX( float X );
-	float GetX() const;
+	float GetX( ) const;
 	void SetY( float Y );
-	float GetY() const;
+	float GetY( ) const;
 	void SetZ( float Z );
-	float GetZ() const;
+	float GetZ( ) const;
 	void SetW( float W );
-	float GetW() const;
+	float GetW( ) const;
 
-	float Size3() const;
-	float SquaredSize3() const;
+	float Size3( ) const;
+	float SquaredSize3( ) const;
 
-	float Size4() const;
-	float SquaredSize4() const;
+	float Size4( ) const;
+	float SquaredSize4( ) const;
 
 	friend float Dot3( const AoVector4& Left, const AoVector4& Right );
 	friend float Dot4( const AoVector4& Left, const AoVector4& Right );
 
-	void Normalize3();
-	AoVector4 GetNormal3() const;
+	void Normalize3( );
+	AoVector4 GetNormal3( ) const;
 
-	bool IsUnit() const;
-	bool IsOne() const;
-	bool IsZero() const;
-	bool IsPoint() const;
+	bool IsUnit( ) const;
+	bool IsOne( ) const;
+	bool IsZero( ) const;
+	bool IsPoint( ) const;
 
 public:
 	float X;

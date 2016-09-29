@@ -14,8 +14,6 @@ public:
 	void SetMaterial( AoMaterial* Material );
 	AoMaterial* GetMaterial() const;
 
-	virtual void SetActive( bool bIsActive ) override;
-
 	/** Is Visible 메소드는 컴포넌트가 Actor에 Attach 되어 있는지 여부를 확인함. */
 	bool IsVisible() const;
 	void SetIsVisible( bool bIsVisible );
@@ -29,5 +27,7 @@ protected:
 
 private:
 	bool bIsRegistered;
+
+	friend AoRenderer;
 
 };

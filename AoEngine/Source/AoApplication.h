@@ -10,16 +10,16 @@ class AoApplication
 public:
 	AoApplication( string Name, uint32_t Width, uint32_t Height );
 	AoApplication( const AoApplication& ) = delete;
-	~AoApplication();
+	~AoApplication( );
 
-	int Excute();
+	int Excute( );
 
-	static AoRenderer* GetRenderer();
+	static AoRenderer* GetRenderer( );
 
 private:
-	void Initialize();
-	void DeInitialize();
-	
+	void Initialize( );
+	void DeInitialize( );
+
 private:
 	AoWindow* Window;
 	static AoRenderer* Renderer;

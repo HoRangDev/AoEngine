@@ -114,9 +114,9 @@ template <typename Ty
 	, Ty _IsSigned = std::is_signed<Ty>::value>
 	inline static Ty Abs( Ty Value )
 {
-	if ( Value < static_cast<Ty>( 0 ) )
+	if ( Value < static_cast< Ty >( 0 ) )
 	{
-		return ( Value ) * static_cast<Ty>( -1 );
+		return ( Value ) * static_cast< Ty >( -1 );
 	}
 	else
 	{
@@ -124,16 +124,16 @@ template <typename Ty
 	}
 }
 
-inline static int Random()
+inline static int Random( )
 {
 	static std::random_device Rd;
-	static std::mt19937 REngine( Rd() );
+	static std::mt19937 REngine( Rd( ) );
 	static std::uniform_int_distribution<> Dist( 0, INT_MAX );
 
 	return Dist( REngine );
 }
 
-inline static double Random01()
+inline static double Random01( )
 {
-	return Random() / static_cast<double>( INT_MAX );
+	return Random( ) / static_cast< double >( INT_MAX );
 }

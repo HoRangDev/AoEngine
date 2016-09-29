@@ -3,16 +3,17 @@
 #include "AoRenderer.h"
 #include "AoActor.h"
 
-AoRenderComponent::AoRenderComponent() :
-	Renderer(AoApplication::GetRenderer()),
-	AoComponent()
+AoRenderComponent::AoRenderComponent( ) :
+	Renderer( AoApplication::GetRenderer( ) ),
+	AoComponent( )
 {
-	SetActive( true );
+	Renderer->RegisterComponent( this );
 }
 
-AoRenderComponent::~AoRenderComponent()
+AoRenderComponent::~AoRenderComponent( )
 {
 	SetActive( false );
+	Renderer->UnRegisterComponent( this );
 }
 
 void AoRenderComponent::SetMaterial( AoMaterial * Material )
@@ -20,31 +21,16 @@ void AoRenderComponent::SetMaterial( AoMaterial * Material )
 	this->Material = Material;
 }
 
-AoMaterial* AoRenderComponent::GetMaterial() const
+AoMaterial* AoRenderComponent::GetMaterial( ) const
 {
 	return Material;
 }
 
-void AoRenderComponent::SetActive( bool bIsActive )
+bool AoRenderComponent::IsVisible( ) const
 {
-	AoComponent::SetActive( bIsActive );
-	if( bIsActive && !bIsRegistered )
+	if ( Actor != nullptr )
 	{
-		Renderer->RegisterComponent( this );
-		bIsRegistered = true;
-	}
-	else if( !bIsActive && bIsRegistered )
-	{
-		Renderer->UnRegisterComponent( this );
-		bIsRegistered = false;
-	}
-}
-
-bool AoRenderComponent::IsVisible() const
-{
-	if( Actor != nullptr )
-	{
-		return bIsVisible && IsActive() && Actor->IsActive();
+		return bIsVisible && IsActive( ) && Actor->IsActive( );
 	}
 	else
 	{
@@ -57,7 +43,7 @@ void AoRenderComponent::SetIsVisible( bool bIsVisible )
 	this->bIsVisible = bIsVisible;
 }
 
-bool AoRenderComponent::IsRegistered() const
+bool AoRenderComponent::IsRegistered( ) const
 {
 	return bIsRegistered;
 }

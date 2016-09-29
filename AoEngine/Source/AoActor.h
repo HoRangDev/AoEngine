@@ -15,6 +15,8 @@ using string = std::wstring;;
 
 class AoLevel;
 class AoComponent;
+class AoRenderComponent;
+class AoTransform;
 class AoActor
 {
 public:
@@ -28,8 +30,8 @@ public:
 
 public:
 	AoActor( string Name );
-	AoActor();
-	~AoActor();
+	AoActor( );
+	~AoActor( );
 
 	void AttachChild( AoActor* const Child );
 	void DetachChild( AoActor* const Child );
@@ -40,17 +42,19 @@ public:
 	void DetachComponent( AoComponent* const Component );
 	void DetachAllComponent( bool bIsCleanup = true );
 
-	static uint64_t GetInstanceCount();
-	string GetName() const;
+	static uint64_t GetInstanceCount( );
+	string GetName( ) const;
 
-	AoActor* GetParent() const;
-	AoLevel* GetRegisteredLevel() const;
+	AoActor* GetParent( ) const;
+	AoLevel* GetRegisteredLevel( ) const;
 
-	virtual void Tick( float DeltaTime ) { }
+	virtual void Tick( float DeltaTime )
+	{
+	}
 
 	void SetActive( bool bIsActive );
-	/** Scene 에 등록되었는지도 검사함. */
-	bool IsActive() const;
+	bool IsActive( ) const;
+	bool IsRegisteredAtLevel( ) const;
 
 private:
 	friend AoLevel;
@@ -62,6 +66,9 @@ private:
 protected:
 	bool bIsActive;
 	bool bIsTick;
+
+	AoRenderComponent* RenderComponent;
+	AoTransform* Transform;
 
 private:
 	static uint64_t InstanceCount;
