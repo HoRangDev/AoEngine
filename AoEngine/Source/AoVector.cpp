@@ -1,8 +1,8 @@
 #include "AoVector.h"
 #include "AoMath.h"
 
-AoVector AoVector::Zero = AoVector();
-AoVector AoVector::One = AoVector( 1.0f, 1.0f, 1.0f );
+const AoVector AoVector::Zero = AoVector( 0.0f, 0.0f, 0.0f );
+const AoVector AoVector::One = AoVector( 1.0f, 1.0f, 1.0f );
 
 AoVector::AoVector( float X, float Y, float Z ) :
 	X( X ),
@@ -12,7 +12,7 @@ AoVector::AoVector( float X, float Y, float Z ) :
 
 }
 
-AoVector & AoVector::operator=( const AoVector & Operand )
+AoVector& AoVector::operator=( const AoVector& Operand )
 {
 	X = Operand.X;
 	Y = Operand.Y;
@@ -28,7 +28,7 @@ AoVector AoVector::operator+( float Operand )
 		Z + Operand );
 }
 
-AoVector AoVector::operator+( const AoVector & Operand )
+AoVector AoVector::operator+( const AoVector& Operand )
 {
 	return AoVector( 
 		X + Operand.X,
@@ -36,7 +36,7 @@ AoVector AoVector::operator+( const AoVector & Operand )
 		Z + Operand.Z );
 }
 
-AoVector & AoVector::operator+=( float Operand )
+AoVector& AoVector::operator+=( float Operand )
 {
 	X += Operand;
 	Z += Operand;
@@ -44,7 +44,7 @@ AoVector & AoVector::operator+=( float Operand )
 	return *this;
 }
 
-AoVector & AoVector::operator+=( const AoVector & Operand )
+AoVector& AoVector::operator+=( const AoVector& Operand )
 {
 	X += Operand.X;
 	Y += Operand.Y;
@@ -68,7 +68,7 @@ AoVector AoVector::operator-( const AoVector & Operand )
 		Z - Operand.Z );
 }
 
-AoVector & AoVector::operator-=( float Operand )
+AoVector& AoVector::operator-=( float Operand )
 {
 	X -= Operand;
 	Y -= Operand;
@@ -76,7 +76,7 @@ AoVector & AoVector::operator-=( float Operand )
 	return *this;
 }
 
-AoVector & AoVector::operator-=( const AoVector & Operand )
+AoVector& AoVector::operator-=( const AoVector& Operand )
 {
 	X -= Operand.X;
 	Y -= Operand.Y;
@@ -92,7 +92,7 @@ AoVector AoVector::operator*( float Operand )
 		Z * Operand );
 }
 
-AoVector AoVector::operator*( const AoVector & Operand )
+AoVector AoVector::operator*( const AoVector& Operand )
 {
 	return AoVector(
 		X * Operand.X,
@@ -100,7 +100,7 @@ AoVector AoVector::operator*( const AoVector & Operand )
 		Z * Operand.Z );
 }
 
-AoVector & AoVector::operator*=( float Operand )
+AoVector& AoVector::operator*=( float Operand )
 {
 	X *= Operand;
 	Y *= Operand;
@@ -108,7 +108,7 @@ AoVector & AoVector::operator*=( float Operand )
 	return *this;
 }
 
-AoVector & AoVector::operator*=( const AoVector & Operand )
+AoVector& AoVector::operator*=( const AoVector& Operand )
 {
 	X *= Operand.X;
 	Y *= Operand.Y;
@@ -125,7 +125,7 @@ AoVector AoVector::operator/( float Operand )
 		Z * InvOperand );
 }
 
-AoVector AoVector::operator/( const AoVector & Operand )
+AoVector AoVector::operator/( const AoVector& Operand )
 {
 	return AoVector(
 		X / Operand.X,
@@ -133,7 +133,7 @@ AoVector AoVector::operator/( const AoVector & Operand )
 		Z / Operand.Z );
 }
 
-AoVector & AoVector::operator/=( float Operand )
+AoVector& AoVector::operator/=( float Operand )
 {
 	float InvOperand = 1.0f / Operand;
 	X *= InvOperand;
@@ -142,7 +142,7 @@ AoVector & AoVector::operator/=( float Operand )
 	return *this;
 }
 
-AoVector & AoVector::operator/=( const AoVector & Operand )
+AoVector& AoVector::operator/=( const AoVector& Operand )
 {
 	X /= Operand.X;
 	Y /= Operand.Y;
@@ -150,12 +150,12 @@ AoVector & AoVector::operator/=( const AoVector & Operand )
 	return *this;
 }
 
-float AoVector::operator|( const AoVector & Operand )
+float AoVector::operator|( const AoVector& Operand )
 {
 	return ( X * Operand.X + Y * Operand.Y + Z * Operand.Z );
 }
 
-AoVector AoVector::operator^( const AoVector & Operand )
+AoVector AoVector::operator^( const AoVector& Operand )
 {
 	return  AoVector(
 		Y*Operand.Z - Z*Operand.Y,

@@ -16,12 +16,12 @@ AoRenderComponent::~AoRenderComponent( )
 	Renderer->UnRegisterComponent( this );
 }
 
-void AoRenderComponent::SetMaterial( AoMaterial * Material )
+void AoRenderComponent::SetMaterial( AoMaterial Material )
 {
 	this->Material = Material;
 }
 
-AoMaterial* AoRenderComponent::GetMaterial( ) const
+AoMaterial AoRenderComponent::GetMaterial( ) const
 {
 	return Material;
 }

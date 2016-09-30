@@ -61,4 +61,8 @@ public:
 	float Z;
 	float W;
 
+public:
+	static const AoVector4 Zero;
+	static const AoVector4 One;
+
 };

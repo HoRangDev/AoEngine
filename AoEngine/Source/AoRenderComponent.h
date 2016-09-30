@@ -1,8 +1,9 @@
 #pragma once
 #include "AoComponent.h"
+#include "AoMaterial.h"
 
 class AoRenderer;
-class AoMaterial;
+class AoShader;
 class AoRenderComponent : public AoComponent
 {
 public:
@@ -11,8 +12,8 @@ public:
 
 	virtual void Render() = 0;
 
-	void SetMaterial( AoMaterial* Material );
-	AoMaterial* GetMaterial() const;
+	void SetMaterial( AoMaterial Material );
+	AoMaterial GetMaterial() const;
 
 	/** Is Visible 메소드는 컴포넌트가 Actor에 Attach 되어 있는지 여부를 확인함. */
 	bool IsVisible() const;
@@ -22,7 +23,8 @@ public:
 
 protected:
 	AoRenderer* Renderer;
-	AoMaterial* Material;
+	AoShader*	Shader;
+	AoMaterial  Material;
 	bool bIsVisible;
 
 private:

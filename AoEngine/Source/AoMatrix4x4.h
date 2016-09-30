@@ -37,4 +37,5 @@ public:
 
 public:
 	static AoMatrix4x4 Identity;
+
 };

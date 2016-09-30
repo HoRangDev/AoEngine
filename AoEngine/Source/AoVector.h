@@ -52,7 +52,7 @@ public:
 	float Z;
 
 public:
-	static AoVector Zero;
-	static AoVector One;
+	static const AoVector Zero;
+	static const AoVector One;
 
 };

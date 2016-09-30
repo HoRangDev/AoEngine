@@ -1,6 +1,9 @@
 #include "AoVector4.h"
 #include "AoMath.h"
 
+const AoVector4 AoVector4::Zero = AoVector4( 0.0f, 0.0f, 0.0f, 0.0f );
+const AoVector4 AoVector4::One = AoVector4( 1.0f, 1.0f, 1.0f, 1.0f );
+
 AoVector4::AoVector4( float X, float Y, float Z, float W ) :
 	X( X ),
 	Y( Y ),
