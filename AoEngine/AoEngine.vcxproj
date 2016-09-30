@@ -69,7 +69,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>dxgi.lib;d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Effects11d.lib;dxgi.lib;d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -87,17 +88,22 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>dxgi.lib;d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Effects11.lib;dxgi.lib;d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\AoActor.cpp" />
     <ClCompile Include="Source\AoApplication.cpp" />
+    <ClCompile Include="Source\AoAsset.cpp" />
+    <ClCompile Include="Source\AoAssetManager.cpp" />
     <ClCompile Include="Source\AoComponent.cpp" />
+    <ClCompile Include="Source\AoInputLayouts.cpp" />
     <ClCompile Include="Source\AoMatrix4x4.cpp" />
     <ClCompile Include="Source\AoRenderComponent.cpp" />
     <ClCompile Include="Source\AoRenderer.cpp" />
     <ClCompile Include="Source\AoVector.cpp" />
+    <ClCompile Include="Source\AoVector2.cpp" />
     <ClCompile Include="Source\AoVector4.cpp" />
     <ClCompile Include="Source\AoViewport.cpp" />
     <ClCompile Include="Source\AoWindow.cpp" />
@@ -108,16 +114,25 @@
   <ItemGroup>
     <ClInclude Include="Source\AoActor.h" />
     <ClInclude Include="Source\AoApplication.h" />
+    <ClInclude Include="Source\AoAsset.h" />
+    <ClInclude Include="Source\AoAssetManager.h" />
+    <ClInclude Include="Source\AoInputLayouts.h" />
+    <ClInclude Include="Source\AoMaterial.h" />
     <ClInclude Include="Source\AoMath.h" />
     <ClInclude Include="Source\AoMatrix4x4.h" />
+    <ClInclude Include="Source\AoPtrWrapper.hpp" />
     <ClInclude Include="Source\AoRenderComponent.h" />
     <ClInclude Include="Source\AoRenderer.h" />
     <ClInclude Include="Source\AoVector.h" />
+    <ClInclude Include="Source\AoVector2.h" />
     <ClInclude Include="Source\AoVector4.h" />
+    <ClInclude Include="Source\AoVertex.h" />
     <ClInclude Include="Source\AoViewport.h" />
     <ClInclude Include="Source\AoWindow.h" />
     <ClInclude Include="Source\AoComponent.h" />
     <ClInclude Include="Source\AoLevel.h" />
+    <ClInclude Include="Source\D3DX11Effect.h" />
+    <ClInclude Include="Source\DirectXInc.h" />
     <ClInclude Include="Source\WindowsInc.h" />
     <ClInclude Include="Source\WinProc.h" />
   </ItemGroup>

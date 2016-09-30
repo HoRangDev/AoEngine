@@ -45,6 +45,18 @@
     <ClCompile Include="Source\AoVector4.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\AoInputLayouts.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoVector2.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoAsset.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoAssetManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AoWindow.h">
@@ -87,6 +99,33 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoVector4.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoVertex.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoInputLayouts.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoMaterial.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoVector2.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DirectXInc.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\D3DX11Effect.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoAsset.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoAssetManager.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoPtrWrapper.hpp">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
