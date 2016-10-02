@@ -22,7 +22,7 @@ public:
 	bool IsRegistered() const;
 
 protected:
-	AoRenderer* Renderer;
+	AoRenderer& Renderer;
 	AoShader*	Shader;
 	AoMaterial  Material;
 	bool bIsVisible;

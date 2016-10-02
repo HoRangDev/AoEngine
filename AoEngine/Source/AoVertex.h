@@ -12,8 +12,19 @@ namespace AoVertex
 
 	struct AoBasic32
 	{
+		AoBasic32( )
+		{
+		}
+
+		AoBasic32( AoVector Position, AoVector Normal, AoVector2 Tex1UV ) 
+			: Position( Position ), Normal( Normal ), Tex1UV( Tex1UV )
+		{
+		
+		}
+
 		AoVector	Position;
 		AoVector	Normal;
 		AoVector2	Tex1UV;
 	};
 }
+

@@ -9,7 +9,6 @@ AoVector::AoVector( float X, float Y, float Z ) :
 	Y( Y ),
 	Z( Z )
 {
-
 }
 
 AoVector& AoVector::operator=( const AoVector& Operand )

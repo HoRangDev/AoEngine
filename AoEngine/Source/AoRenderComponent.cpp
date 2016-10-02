@@ -7,13 +7,13 @@ AoRenderComponent::AoRenderComponent( ) :
 	Renderer( AoApplication::GetRenderer( ) ),
 	AoComponent( )
 {
-	Renderer->RegisterComponent( this );
+	Renderer.RegisterComponent( this );
 }
 
 AoRenderComponent::~AoRenderComponent( )
 {
 	SetActive( false );
-	Renderer->UnRegisterComponent( this );
+	Renderer.UnRegisterComponent( this );
 }
 
 void AoRenderComponent::SetMaterial( AoMaterial Material )

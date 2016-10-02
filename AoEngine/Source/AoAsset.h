@@ -5,22 +5,38 @@ using string = std::wstring;
 enum class EAssetType
 {
 	Unknown,
+	Config,
+	Model,
 	Texture2D,
 	Shader,
-	Mesh,
 	Audio,
 	Text,
-	Config
+};
+
+// 지원 파일 형식들
+enum class ESupportAssetExtension
+{
+	Unknown,
+	CFG,
+	FBX, OBJ,
+	PNG, JPG, DDS,
+	HLSL, FX,
+	MP3, WAV, OGG,
+	TXT
 };
 
 struct SAssetTypeMatchInfo
 {
-	string		Extension;
-	EAssetType	MatchType;
+	string						Extension;
+	ESupportAssetExtension		ExtensionType;
+	EAssetType					MatchType;
 };
 
+class AoAssetFactory;
 class AoAsset
 {
+	friend AoAssetFactory;
+
 protected:
 	AoAsset( );
 
@@ -36,6 +52,11 @@ public:
 	string GetFileExtension( ) const;
 	EAssetType GetType( ) const;
 
+public:
+	static SAssetTypeMatchInfo GetMatchInfoFromFileExtension( const string& Extension );
+	static EAssetType GetAssetTypeFromFileExtension( const string& Extension );
+	static ESupportAssetExtension GetSupportExtensionFromFileExtension( const string& Extension );
+
 private:
 	string		FileName;
 	string		FilePath;
@@ -43,6 +64,6 @@ private:
 	EAssetType	Type;
 
 public:
-	static const SAssetTypeMatchInfo MatchInfo[ ];
+	static const SAssetTypeMatchInfo MatchInfos[ ];
 
 };

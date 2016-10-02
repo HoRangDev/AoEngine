@@ -44,16 +44,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)Source;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <SourcePath>$(ProjectDir)Source;$(VC_SourcePath)</SourcePath>
+    <IncludePath>$(SolutionDir)ThirdParty\DDSTextureLoader;$(SolutionDir)ThirdParty\WICTextureLoader;$(SolutionDir)ThirdParty\Effects11\include;$(SolutionDir)ThirdParty\assimp\include;$(ProjectDir)Source;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <SourcePath>$(SolutionDir)ThirdParty\DDSTextureLoader;$(SolutionDir)ThirdParty\WICTextureLoader;$(SolutionDir)ThirdParty\Effects11\include;$(SolutionDir)ThirdParty\assimp\include;$(ProjectDir)Source;$(VC_SourcePath)</SourcePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
     <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)Source;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <SourcePath>$(ProjectDir)Source;$(VC_SourcePath)</SourcePath>
+    <IncludePath>$(SolutionDir)ThirdParty\DDSTextureLoader;$(SolutionDir)ThirdParty\WICTextureLoader;$(SolutionDir)ThirdParty\Effects11\include;$(SolutionDir)ThirdParty\assimp\include;$(ProjectDir)Source;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <SourcePath>$(SolutionDir)ThirdParty\DDSTextureLoader;$(SolutionDir)ThirdParty\WICTextureLoader;$(SolutionDir)ThirdParty\Effects11\include;$(SolutionDir)ThirdParty\assimp\include;$(ProjectDir)Source;$(VC_SourcePath)</SourcePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
     <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</IntDir>
@@ -69,8 +69,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Effects11d.lib;dxgi.lib;d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp_D.lib;Effects11d.lib;dxgi.lib;d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\assimp\libs;$(SolutionDir)ThirdParty\Effects11\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -88,20 +88,29 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>Effects11.lib;dxgi.lib;d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp_.lib;Effects11.lib;dxgi.lib;d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\assimp\libs;$(SolutionDir)ThirdParty\Effects11\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\ThirdParty\DDSTextureLoader\DDSTextureLoader.cpp" />
+    <ClCompile Include="..\ThirdParty\WICTextureLoader\WICTextureLoader.cpp" />
     <ClCompile Include="Source\AoActor.cpp" />
     <ClCompile Include="Source\AoApplication.cpp" />
     <ClCompile Include="Source\AoAsset.cpp" />
+    <ClCompile Include="Source\AoAssetFactory.cpp" />
     <ClCompile Include="Source\AoAssetManager.cpp" />
     <ClCompile Include="Source\AoComponent.cpp" />
     <ClCompile Include="Source\AoInputLayouts.cpp" />
     <ClCompile Include="Source\AoMatrix4x4.cpp" />
+    <ClCompile Include="Source\AoMesh.cpp" />
+    <ClCompile Include="Source\AoModelAsset.cpp" />
     <ClCompile Include="Source\AoRenderComponent.cpp" />
     <ClCompile Include="Source\AoRenderer.cpp" />
+    <ClCompile Include="Source\AoShader.cpp" />
+    <ClCompile Include="Source\AoString.cpp" />
+    <ClCompile Include="Source\AoTexture2DAsset.cpp" />
+    <ClCompile Include="Source\AoTransform.cpp" />
     <ClCompile Include="Source\AoVector.cpp" />
     <ClCompile Include="Source\AoVector2.cpp" />
     <ClCompile Include="Source\AoVector4.cpp" />
@@ -112,17 +121,63 @@
     <ClCompile Include="Source\WinProc.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\ThirdParty\assimp\include\ai_assert.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\anim.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\camera.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\cexport.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\cfileio.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\cimport.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\color4.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\Compiler\poppack1.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\Compiler\pstdint.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\Compiler\pushpack1.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\config.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\DefaultLogger.hpp" />
+    <ClInclude Include="..\ThirdParty\assimp\include\defs.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\Exporter.hpp" />
+    <ClInclude Include="..\ThirdParty\assimp\include\Importer.hpp" />
+    <ClInclude Include="..\ThirdParty\assimp\include\importerdesc.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\IOStream.hpp" />
+    <ClInclude Include="..\ThirdParty\assimp\include\IOSystem.hpp" />
+    <ClInclude Include="..\ThirdParty\assimp\include\light.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\Logger.hpp" />
+    <ClInclude Include="..\ThirdParty\assimp\include\LogStream.hpp" />
+    <ClInclude Include="..\ThirdParty\assimp\include\material.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\matrix3x3.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\matrix4x4.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\mesh.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\metadata.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\NullLogger.hpp" />
+    <ClInclude Include="..\ThirdParty\assimp\include\port\AndroidJNI\AndroidJNIIOSystem.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\postprocess.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\ProgressHandler.hpp" />
+    <ClInclude Include="..\ThirdParty\assimp\include\quaternion.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\scene.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\texture.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\types.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\vector2.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\vector3.h" />
+    <ClInclude Include="..\ThirdParty\assimp\include\version.h" />
+    <ClInclude Include="..\ThirdParty\DDSTextureLoader\DDSTextureLoader.h" />
+    <ClInclude Include="..\ThirdParty\Effects11\include\D3DX11Effect.h" />
+    <ClInclude Include="..\ThirdParty\WICTextureLoader\WICTextureLoader.h" />
     <ClInclude Include="Source\AoActor.h" />
     <ClInclude Include="Source\AoApplication.h" />
     <ClInclude Include="Source\AoAsset.h" />
+    <ClInclude Include="Source\AoAssetFactory.h" />
     <ClInclude Include="Source\AoAssetManager.h" />
     <ClInclude Include="Source\AoInputLayouts.h" />
     <ClInclude Include="Source\AoMaterial.h" />
     <ClInclude Include="Source\AoMath.h" />
     <ClInclude Include="Source\AoMatrix4x4.h" />
-    <ClInclude Include="Source\AoPtrWrapper.hpp" />
+    <ClInclude Include="Source\AoMesh.h" />
+    <ClInclude Include="Source\AoModelAsset.h" />
     <ClInclude Include="Source\AoRenderComponent.h" />
     <ClInclude Include="Source\AoRenderer.h" />
+    <ClInclude Include="Source\AoShader.h" />
+    <ClInclude Include="Source\AoString.h" />
+    <ClInclude Include="Source\AoTexture2DAsset.h" />
+    <ClInclude Include="Source\AoTransform.h" />
     <ClInclude Include="Source\AoVector.h" />
     <ClInclude Include="Source\AoVector2.h" />
     <ClInclude Include="Source\AoVector4.h" />
@@ -131,10 +186,18 @@
     <ClInclude Include="Source\AoWindow.h" />
     <ClInclude Include="Source\AoComponent.h" />
     <ClInclude Include="Source\AoLevel.h" />
-    <ClInclude Include="Source\D3DX11Effect.h" />
     <ClInclude Include="Source\DirectXInc.h" />
     <ClInclude Include="Source\WindowsInc.h" />
     <ClInclude Include="Source\WinProc.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ThirdParty\assimp\include\color4.inl" />
+    <None Include="..\ThirdParty\assimp\include\material.inl" />
+    <None Include="..\ThirdParty\assimp\include\matrix3x3.inl" />
+    <None Include="..\ThirdParty\assimp\include\matrix4x4.inl" />
+    <None Include="..\ThirdParty\assimp\include\quaternion.inl" />
+    <None Include="..\ThirdParty\assimp\include\vector2.inl" />
+    <None Include="..\ThirdParty\assimp\include\vector3.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

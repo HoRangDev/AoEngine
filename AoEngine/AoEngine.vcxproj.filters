@@ -4,129 +4,344 @@
     <Filter Include="Source">
       <UniqueIdentifier>{7972d154-e9e8-4975-957e-993b13cf2ff7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Core">
+      <UniqueIdentifier>{ef52f50c-66f1-4dc0-b003-7796310e6200}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Math">
+      <UniqueIdentifier>{3757588e-953c-49c8-91ba-1c11d6941529}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Game">
+      <UniqueIdentifier>{13eb0638-4c09-413e-b344-75718107af83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\Rendering">
+      <UniqueIdentifier>{836a02b3-c190-4b25-9afb-20d93f0b514d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ThirdParty">
+      <UniqueIdentifier>{bd092cdb-1808-40d6-88b4-c246c69ff96d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ThirdParty\assimp">
+      <UniqueIdentifier>{78c778f5-6c46-4942-a0f4-bdac2ca6e956}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ThirdParty\Effects11">
+      <UniqueIdentifier>{57c742b3-34d1-4489-b05c-c145f8175b3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\Asset">
+      <UniqueIdentifier>{ee322377-1ec5-4829-971b-c54f000db3b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ThirdParty\WICTextureLoader">
+      <UniqueIdentifier>{909718ab-791a-4ac8-a27e-3e32a1f42ddc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ThirdParty\DDSTextureLoader">
+      <UniqueIdentifier>{24911748-93e0-4390-99a0-3a99e45b5f7f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\AoActor.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoWindow.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoRenderer.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoLevel.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Source\AoEntryPoint.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AoComponent.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoVector.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoRenderComponent.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Source\AoApplication.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\WinProc.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoViewport.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoMatrix4x4.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="Source\AoWindow.cpp">
+      <Filter>Source\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoVector4.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoInputLayouts.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoVector2.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoVector.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoMatrix4x4.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoRenderer.cpp">
+      <Filter>Source\Core\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoViewport.cpp">
+      <Filter>Source\Core\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoInputLayouts.cpp">
+      <Filter>Source\Core\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoActor.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoComponent.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoRenderComponent.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WinProc.cpp">
+      <Filter>Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoString.cpp">
+      <Filter>Source\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoAsset.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Core\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoAssetFactory.cpp">
+      <Filter>Source\Core\Asset</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoAssetManager.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Core\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoLevel.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoTexture2DAsset.cpp">
+      <Filter>Source\Core\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\WICTextureLoader\WICTextureLoader.cpp">
+      <Filter>Source\ThirdParty\WICTextureLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\DDSTextureLoader\DDSTextureLoader.cpp">
+      <Filter>Source\ThirdParty\DDSTextureLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoShader.cpp">
+      <Filter>Source\Core\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoTransform.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoModelAsset.cpp">
+      <Filter>Source\Core\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoMesh.cpp">
+      <Filter>Source\Core\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\AoApplication.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
     <ClInclude Include="Source\AoWindow.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoRenderer.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoComponent.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoActor.h">
-      <Filter>Source</Filter>
+      <Filter>Source\Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\WindowsInc.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoLevel.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoVector.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoApplication.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoRenderComponent.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoViewport.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WinProc.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoMatrix4x4.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoMath.h">
-      <Filter>Source</Filter>
+      <Filter>Source\Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoVector4.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoVertex.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoInputLayouts.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoMaterial.h">
-      <Filter>Source</Filter>
+      <Filter>Source\Math</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoVector2.h">
-      <Filter>Source</Filter>
+      <Filter>Source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoVector.h">
+      <Filter>Source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoMatrix4x4.h">
+      <Filter>Source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoMath.h">
+      <Filter>Source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoRenderer.h">
+      <Filter>Source\Core\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoViewport.h">
+      <Filter>Source\Core\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoVertex.h">
+      <Filter>Source\Core\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoMaterial.h">
+      <Filter>Source\Core\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoInputLayouts.h">
+      <Filter>Source\Core\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\DirectXInc.h">
-      <Filter>Source</Filter>
+      <Filter>Source\Core\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Source\D3DX11Effect.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="Source\AoRenderComponent.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoActor.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoComponent.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WinProc.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\ai_assert.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\anim.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\camera.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\cexport.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\cfileio.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\cimport.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\color4.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\Compiler\poppack1.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\Compiler\pstdint.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\Compiler\pushpack1.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\config.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\DefaultLogger.hpp">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\defs.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\Exporter.hpp">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\Importer.hpp">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\importerdesc.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\IOStream.hpp">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\IOSystem.hpp">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\light.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\Logger.hpp">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\LogStream.hpp">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\material.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\matrix3x3.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\matrix4x4.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\mesh.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\metadata.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\NullLogger.hpp">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\port\AndroidJNI\AndroidJNIIOSystem.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\postprocess.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\ProgressHandler.hpp">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\quaternion.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\scene.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\texture.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\types.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\vector2.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\vector3.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\assimp\include\version.h">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\Effects11\include\D3DX11Effect.h">
+      <Filter>Source\ThirdParty\Effects11</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoString.h">
+      <Filter>Source\Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoAsset.h">
-      <Filter>Source</Filter>
+      <Filter>Source\Core\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoAssetFactory.h">
+      <Filter>Source\Core\Asset</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoAssetManager.h">
-      <Filter>Source</Filter>
+      <Filter>Source\Core\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AoPtrWrapper.hpp">
-      <Filter>Source</Filter>
+    <ClInclude Include="Source\AoLevel.h">
+      <Filter>Source\Game</Filter>
     </ClInclude>
+    <ClInclude Include="Source\AoTexture2DAsset.h">
+      <Filter>Source\Core\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\WICTextureLoader\WICTextureLoader.h">
+      <Filter>Source\ThirdParty\WICTextureLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\DDSTextureLoader\DDSTextureLoader.h">
+      <Filter>Source\ThirdParty\DDSTextureLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoShader.h">
+      <Filter>Source\Core\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoTransform.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoMesh.h">
+      <Filter>Source\Core\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoModelAsset.h">
+      <Filter>Source\Core\Asset</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ThirdParty\assimp\include\color4.inl">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </None>
+    <None Include="..\ThirdParty\assimp\include\material.inl">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </None>
+    <None Include="..\ThirdParty\assimp\include\matrix3x3.inl">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </None>
+    <None Include="..\ThirdParty\assimp\include\matrix4x4.inl">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </None>
+    <None Include="..\ThirdParty\assimp\include\quaternion.inl">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </None>
+    <None Include="..\ThirdParty\assimp\include\vector2.inl">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </None>
+    <None Include="..\ThirdParty\assimp\include\vector3.inl">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </None>
   </ItemGroup>
 </Project>

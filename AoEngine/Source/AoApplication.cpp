@@ -1,15 +1,17 @@
+#include <assert.h>
 #include "AoApplication.h"
 #include "AoWindow.h"
 #include "AoRenderer.h"
 #include "AoLevel.h"
+#include "AoAssetManager.h"
 
+bool AoApplication::bIsInitialized = false;
 AoRenderer* AoApplication::Renderer = nullptr;
 
 AoApplication::AoApplication( string Name, uint32_t Width, uint32_t Height ) :
 	Window( new AoWindow( Name, Width, Height ) ),
 	LoadedLevel( nullptr )
 {
-	Renderer = new AoRenderer( *Window );
 }
 
 AoApplication::~AoApplication( )
@@ -52,14 +54,24 @@ int AoApplication::Excute( )
 	return 0;
 }
 
-AoRenderer* AoApplication::GetRenderer( )
+AoRenderer& AoApplication::GetRenderer( )
 {
-	return Renderer;
+	assert( Renderer != nullptr );
+	return ( *Renderer );
+}
+
+bool AoApplication::IsInitialized( )
+{
+	return bIsInitialized;
 }
 
 void AoApplication::Initialize( )
 {
 	//@TODO: Load App Initialize Informations from Config.
+	Renderer = new AoRenderer( *Window );
+	AoAssetManager::GetInstance( ).Initialize( );
+
+	bIsInitialized = true;
 }
 
 void AoApplication::DeInitialize( )
@@ -81,4 +93,6 @@ void AoApplication::DeInitialize( )
 		delete Window;
 		Window = nullptr;
 	}
+
+	AoAssetManager::GetInstance( ).DeInitialize( );
 }

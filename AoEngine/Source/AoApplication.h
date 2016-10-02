@@ -14,7 +14,9 @@ public:
 
 	int Excute( );
 
-	static AoRenderer* GetRenderer( );
+	static AoRenderer& GetRenderer( );
+
+	static bool IsInitialized( );
 
 private:
 	void Initialize( );
@@ -24,5 +26,6 @@ private:
 	AoWindow* Window;
 	static AoRenderer* Renderer;
 	AoLevel* LoadedLevel;
+	static bool bIsInitialized;
 
 };

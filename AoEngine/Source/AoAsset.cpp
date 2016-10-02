@@ -2,18 +2,20 @@
 #include "AoAssetManager.h"
 #include "WindowsInc.h"
 
-const SAssetTypeMatchInfo AoAsset::MatchInfo[ ] =
+const SAssetTypeMatchInfo AoAsset::MatchInfos[ ] =
 {
-	{ TEXT( ".fx" ), EAssetType::Shader },
-	{ TEXT( ".hlsl" ), EAssetType::Shader },
-	{ TEXT( ".txt" ), EAssetType::Text },
-	{ TEXT( ".png" ), EAssetType::Texture2D},
-	{ TEXT( ".jpg" ), EAssetType::Texture2D },
-	{ TEXT( ".fbx" ), EAssetType::Mesh },
-	{ TEXT( ".mp3" ), EAssetType::Audio },
-	{ TEXT( ".wav" ), EAssetType::Audio },
-	{ TEXT( ".ogg" ), EAssetType::Audio },
-	{ TEXT( ".cfg"), EAssetType::Config }
+	{ TEXT( ".cfg" ),	ESupportAssetExtension::CFG,	 EAssetType::Config		},
+	{ TEXT( ".fbx" ),	ESupportAssetExtension::FBX,	 EAssetType::Model		},
+	{ TEXT( ".obj" ),	ESupportAssetExtension::OBJ,	 EAssetType::Model		},
+	{ TEXT( ".png" ),	ESupportAssetExtension::PNG,	 EAssetType::Texture2D	},
+	{ TEXT( ".jpg" ),	ESupportAssetExtension::JPG,	 EAssetType::Texture2D	},
+	{ TEXT( ".dds" ),	ESupportAssetExtension::DDS,	 EAssetType::Texture2D	},
+	{ TEXT( ".fx" ),	ESupportAssetExtension::FX,		 EAssetType::Shader		},
+	{ TEXT( ".hlsl" ),	ESupportAssetExtension::HLSL,	 EAssetType::Shader		},
+	{ TEXT( ".mp3" ),	ESupportAssetExtension::MP3,	 EAssetType::Audio		},
+	{ TEXT( ".wav" ),	ESupportAssetExtension::WAV,	 EAssetType::Audio		},
+	{ TEXT( ".ogg" ),	ESupportAssetExtension::OGG,	 EAssetType::Audio		},
+	{ TEXT( ".txt" ),	ESupportAssetExtension::TXT,	 EAssetType::Text		}
 };
 
 AoAsset::AoAsset( )
@@ -48,20 +50,13 @@ string AoAsset::GetFilePath( ) const
 
 string AoAsset::GetFileFullPath( ) const
 {
-	return AoAssetManager::GetInstance()->GetAssetDirectoryPath() + FilePath;
+	return AoAssetManager::GetInstance().GetAssetDirectoryPath() + TEXT("/") + FilePath + FileName + FileExtension;
 }
 
 void AoAsset::SetFileExtension( const string& FileExtension )
 {
 	this->FileExtension = FileExtension;
-	int NumOfMatchInfo = sizeof( MatchInfo ) / sizeof( SAssetTypeMatchInfo );
-	for ( int Index = 0; Index < NumOfMatchInfo; ++Index )
-	{
-		if( MatchInfo[ Index ].Extension == FileExtension )
-		{
-			Type = MatchInfo[ Index ].MatchType;
-		}
-	}
+	this->Type = GetAssetTypeFromFileExtension( FileExtension );
 }
 
 string AoAsset::GetFileExtension( ) const
@@ -72,4 +67,46 @@ string AoAsset::GetFileExtension( ) const
 EAssetType AoAsset::GetType( ) const
 {
 	return Type;
+}
+
+SAssetTypeMatchInfo AoAsset::GetMatchInfoFromFileExtension( const string & Extension )
+{
+	int NumOfMatchInfo = sizeof( MatchInfos ) / sizeof( SAssetTypeMatchInfo );
+	for ( int Index = 0; Index < NumOfMatchInfo; ++Index )
+	{
+		if ( MatchInfos[ Index ].Extension == Extension )
+		{
+			return MatchInfos[ Index ];
+		}
+	}
+
+	return SAssetTypeMatchInfo( );
+}
+
+EAssetType AoAsset::GetAssetTypeFromFileExtension( const string& Extension )
+{
+	int NumOfMatchInfo = sizeof( MatchInfos ) / sizeof( SAssetTypeMatchInfo );
+	for ( int Index = 0; Index < NumOfMatchInfo; ++Index )
+	{
+		if ( MatchInfos[ Index ].Extension == Extension )
+		{
+			return MatchInfos[ Index ].MatchType;
+		}
+	}
+
+	return EAssetType::Unknown;
+}
+
+ESupportAssetExtension AoAsset::GetSupportExtensionFromFileExtension( const string & Extension )
+{
+	int NumOfMatchInfo = sizeof( MatchInfos ) / sizeof( SAssetTypeMatchInfo );
+	for ( int Index = 0; Index < NumOfMatchInfo; ++Index )
+	{
+		if ( MatchInfos[ Index ].Extension == Extension )
+		{
+			return MatchInfos[ Index ].ExtensionType;
+		}
+	}
+
+	return ESupportAssetExtension::Unknown;
 }
