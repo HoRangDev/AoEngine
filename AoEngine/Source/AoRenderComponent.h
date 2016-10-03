@@ -11,8 +11,8 @@ public:
 
 	virtual void Render() = 0;
 
-	void SetMaterial( AoMaterial Material );
-	AoMaterial GetMaterial() const;
+	void SetMaterial( AoMaterial* Material );
+	AoMaterial* GetMaterial() const;
 
 	/** Is Visible 메소드는 컴포넌트가 Actor에 Attach 되어 있는지 여부를 확인함. */
 	bool IsVisible() const;
@@ -22,7 +22,7 @@ public:
 
 protected:
 	AoRenderer& Renderer;
-	AoMaterial  Material;
+	AoMaterial*  Material;
 	bool bIsVisible;
 
 private:

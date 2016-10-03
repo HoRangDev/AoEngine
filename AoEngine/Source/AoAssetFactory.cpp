@@ -42,7 +42,7 @@ AoAsset* AoAssetFactory::CreateAsset( const string& AssetDirectoryPath, const st
 		break;
 
 	case EAssetType::Text:
-		//CreatedAsset = CreateAudioFromFile( AssetFullPath, AssetTypeMatchInfo.ExtensionType );
+		//CreatedAsset = CreateTextFromFile( AssetFullPath, AssetTypeMatchInfo.ExtensionType );
 		break;
 
 	case EAssetType::Config:

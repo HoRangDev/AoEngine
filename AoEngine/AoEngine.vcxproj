@@ -104,6 +104,7 @@
     <ClCompile Include="Source\AoAssetManager.cpp" />
     <ClCompile Include="Source\AoComponent.cpp" />
     <ClCompile Include="Source\AoInputLayouts.cpp" />
+    <ClCompile Include="Source\AoMaterial.cpp" />
     <ClCompile Include="Source\AoMatrix4x4.cpp" />
     <ClCompile Include="Source\AoMesh.cpp" />
     <ClCompile Include="Source\AoModel.cpp" />
@@ -200,12 +201,6 @@
     <None Include="..\ThirdParty\assimp\include\quaternion.inl" />
     <None Include="..\ThirdParty\assimp\include\vector2.inl" />
     <None Include="..\ThirdParty\assimp\include\vector3.inl" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="..\ThirdParty\assimp\libs\assimp.lib" />
-    <Library Include="..\ThirdParty\assimp\libs\assimp_D.lib" />
-    <Library Include="..\ThirdParty\Effects11\libs\Effects11.lib" />
-    <Library Include="..\ThirdParty\Effects11\libs\Effects11d.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

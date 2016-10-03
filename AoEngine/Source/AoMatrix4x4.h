@@ -4,7 +4,7 @@
 #include "AoVector.h"
 #include "AoVector4.h"
 
-class AoMatrix4x4
+class __declspec(align(16)) AoMatrix4x4
 {
 public:
 	//M[ROW INDEX][COLUMN INDEX]

@@ -9,10 +9,10 @@ class AoTexture2D : public AoAsset
 private:
 	AoTexture2D( ID3D11ShaderResourceView* SRV );
 
-	ID3D11ShaderResourceView* GetShaderResourceView( ) const;
-
 public:
 	~AoTexture2D( );
+
+	ID3D11ShaderResourceView* GetShaderResourceView( ) const;
 
 private:
 	ID3D11ShaderResourceView* MapSRV;
