@@ -1,5 +1,5 @@
 /**
-* @details 액터는 Level 상에서 표시될수있는 모든 오브젝트 입니다.
+* @details 액터는 Level 상에서 존재할수있는 모든 오브젝트 입니다.
 		   만약 렌더링가능한 Component 를 가지고 있지않는 다면. 표시되지 않습니다.
 		   (Parent Actor 는 Child Actor 를 업데이트해야하는 의무를 가집니다.)
 * @author Yang Kyowon
