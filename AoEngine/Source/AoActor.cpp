@@ -2,7 +2,7 @@
 #include "AoComponent.h"
 #include <Windows.h>
 
-uint64_t AoActor::InstanceCount = 0;
+std::atomic<uint64_t> AoActor::InstanceCount = 0;
 
 AoActor::AoActor( string Name ) :
 	Name( Name )
@@ -14,11 +14,11 @@ AoActor::AoActor( string Name ) :
 AoActor::AoActor( ) :
 	AoActor( TEXT( "Actor" ) + std::to_wstring( InstanceCount ) )
 {
-
 }
 
 AoActor::~AoActor( )
 {
+	--InstanceCount;
 	DetachAllChild( true );
 	DetachAllComponent( true );
 }
@@ -86,7 +86,7 @@ void AoActor::DetachAllChild( bool bIsCleanup )
 	Children.clear( );
 }
 
-void AoActor::AttachComponent( AoComponent * const Component )
+void AoActor::AttachComponent( AoComponent* const Component )
 {
 	bool IsAttachedComponent = Component->GetAttachedActor( ) != nullptr;
 	if ( !IsAttachedComponent )
@@ -96,7 +96,7 @@ void AoActor::AttachComponent( AoComponent * const Component )
 	}
 }
 
-void AoActor::DetachComponent( AoComponent * const Component )
+void AoActor::DetachComponent( AoComponent* const Component )
 {
 	bool IsAttachedComponent = Component->GetAttachedActor( ) == this;
 	if ( IsAttachedComponent )
@@ -159,6 +159,11 @@ bool AoActor::IsActive( ) const
 bool AoActor::IsRegisteredAtLevel( ) const
 {
 	return ( RegisteredLevel != nullptr );
+}
+
+AoTransform * AoActor::GetTransform( ) const
+{
+	return Transform;
 }
 
 void AoActor::Update( float DeltaTime )

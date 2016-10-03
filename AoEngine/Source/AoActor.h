@@ -11,6 +11,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <atomic>
 using string = std::wstring;;
 
 class AoLevel;
@@ -56,6 +57,8 @@ public:
 	bool IsActive( ) const;
 	bool IsRegisteredAtLevel( ) const;
 
+	AoTransform* GetTransform( ) const;
+
 private:
 	friend AoLevel;
 	virtual void Update( float DeltaTime ) final;
@@ -71,7 +74,7 @@ protected:
 	AoTransform* Transform;
 
 private:
-	static uint64_t InstanceCount;
+	static std::atomic<uint64_t> InstanceCount;
 	string Name;
 
 	ActorVector Children;
