@@ -30,11 +30,11 @@ void AoComponent::SetAttachedActor( AoActor* Actor )
 {
 	if( Actor != nullptr )
 	{
-		OnAttached( );
+		OnAttach( );
 	}
 	else
 	{
-		OnDettached( );
+		OnDetach( );
 	}
 
 	this->Actor = Actor;
