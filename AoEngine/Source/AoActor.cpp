@@ -1,5 +1,5 @@
 #include "AoActor.h"
-#include "AoComponent.h"
+#include "AoTransform.h"
 #include <Windows.h>
 
 std::atomic<uint64_t> AoActor::InstanceCount = 0;
@@ -8,7 +8,8 @@ AoActor::AoActor( string Name ) :
 	Name( Name )
 {
 	++InstanceCount;
-	/*@TODO: 트랜스폼 생성하도록 하기 */
+	Transform = new AoTransform( );
+	AttachComponent( Transform );
 }
 
 AoActor::AoActor( ) :
