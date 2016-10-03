@@ -1,5 +1,6 @@
 #include "AoActor.h"
 #include "AoTransform.h"
+#include "AoRenderComponent.h"
 #include <Windows.h>
 
 std::atomic<uint64_t> AoActor::InstanceCount = 0;
@@ -19,9 +20,13 @@ AoActor::AoActor( ) :
 
 AoActor::~AoActor( )
 {
-	--InstanceCount;
 	DetachAllChild( true );
 	DetachAllComponent( true );
+
+	delete Transform;
+	Transform = nullptr;
+
+	--InstanceCount;
 }
 
 void AoActor::AttachChild( AoActor* const Child )
@@ -92,6 +97,15 @@ void AoActor::AttachComponent( AoComponent* const Component )
 	bool IsAttachedComponent = Component->GetAttachedActor( ) != nullptr;
 	if ( !IsAttachedComponent )
 	{
+		if ( this->RenderComponent == nullptr )
+		{
+			AoRenderComponent* RenderComponent = dynamic_cast< AoRenderComponent* > ( Component );
+			if ( RenderComponent != nullptr )
+			{
+				this->RenderComponent = RenderComponent;
+			}
+		}
+
 		Component->SetAttachedActor( this );
 		Components.push_back( Component );
 	}
@@ -99,16 +113,26 @@ void AoActor::AttachComponent( AoComponent* const Component )
 
 void AoActor::DetachComponent( AoComponent* const Component )
 {
-	bool IsAttachedComponent = Component->GetAttachedActor( ) == this;
-	if ( IsAttachedComponent )
+	if( Component ==  RenderComponent )
 	{
-		for ( auto Itr = Components.begin( ); Itr != Components.end( ); ++Itr )
+		RenderComponent = nullptr;
+	}
+	else
+	{
+		if ( Transform != Component )
 		{
-			if ( *Itr == Component )
+			bool IsAttachedComponent = Component->GetAttachedActor( ) == this;
+			if ( IsAttachedComponent )
 			{
-				( *Itr )->SetAttachedActor( nullptr );
-				Components.erase( Itr );
-				break;
+				for ( auto Itr = Components.begin( ); Itr != Components.end( ); ++Itr )
+				{
+					if ( *Itr == Component )
+					{
+						( *Itr )->SetAttachedActor( nullptr );
+						Components.erase( Itr );
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -116,15 +140,23 @@ void AoActor::DetachComponent( AoComponent* const Component )
 
 void AoActor::DetachAllComponent( bool bIsCleanup )
 {
-	if ( bIsCleanup )
+	for ( auto* Component : Components )
 	{
-		for ( auto* Component : Components )
+		if ( bIsCleanup )
 		{
-			delete Component;
+			if ( Component != Transform )
+			{
+				delete Component;
+			}
+		}
+		else
+		{
+			Component->SetAttachedActor( nullptr );
 		}
 	}
 
 	Components.clear( );
+	AttachComponent( Transform );
 }
 
 uint64_t AoActor::GetInstanceCount( )
@@ -137,12 +169,12 @@ string AoActor::GetName( ) const
 	return Name;
 }
 
-AoActor * AoActor::GetParent( ) const
+AoActor* AoActor::GetParent( ) const
 {
 	return Parent;
 }
 
-AoLevel * AoActor::GetRegisteredLevel( ) const
+AoLevel* AoActor::GetRegisteredLevel( ) const
 {
 	return RegisteredLevel;
 }
@@ -162,7 +194,7 @@ bool AoActor::IsRegisteredAtLevel( ) const
 	return ( RegisteredLevel != nullptr );
 }
 
-AoTransform * AoActor::GetTransform( ) const
+AoTransform* AoActor::GetTransform( ) const
 {
 	return Transform;
 }
