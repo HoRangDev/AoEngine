@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 
+using string = std::wstring;
+
 class AoString
 {
 public:

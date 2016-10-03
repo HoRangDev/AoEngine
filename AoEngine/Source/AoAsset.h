@@ -20,7 +20,7 @@ enum class ESupportAssetExtension
 	CFG,
 	FBX, OBJ,
 	PNG, JPG, DDS,
-	HLSL, FX,
+	FXO,
 	MP3, WAV, OGG,
 	TXT
 };

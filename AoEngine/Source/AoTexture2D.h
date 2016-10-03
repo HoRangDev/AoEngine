@@ -3,16 +3,16 @@
 #include "DirectXInc.h"
 
 class AoAssetFactory;
-class AoTexture2DAsset : public AoAsset
+class AoTexture2D : public AoAsset
 {
 	friend AoAssetFactory;
 private:
-	AoTexture2DAsset( ID3D11ShaderResourceView* SRV );
+	AoTexture2D( ID3D11ShaderResourceView* SRV );
 
 	ID3D11ShaderResourceView* GetShaderResourceView( ) const;
 
 public:
-	~AoTexture2DAsset( );
+	~AoTexture2D( );
 
 private:
 	ID3D11ShaderResourceView* MapSRV;

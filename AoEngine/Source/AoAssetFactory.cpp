@@ -2,12 +2,14 @@
 #include "AoString.h"
 #include "AoApplication.h"
 #include "AoRenderer.h"
-#include "AoShaderAsset.h"
+#include "AoShader.h"
 #include "AoAssetFactory.h"
-#include "AoModelAsset.h"
+#include "AoModel.h"
 #include "AoMesh.h"
-#include "AoTexture2DAsset.h"
+#include "AoTexture2D.h"
 #include "AoVertex.h"
+#include <sstream>
+#include <fstream>
 #include <vector>
 #include <Importer.hpp>
 #include <scene.h>
@@ -32,7 +34,7 @@ AoAsset* AoAssetFactory::CreateAsset( const string& AssetDirectoryPath, const st
 		break;
 
 	case EAssetType::Shader:
-		//CreatedAsset = CreateShaderFromFile( AssetFullPath, AssetTypeMatchInfo.ExtensionType );
+		CreatedAsset = CreateShaderFromFile( AssetFullPath, AssetTypeMatchInfo.ExtensionType );
 		break;
 
 	case EAssetType::Audio:
@@ -58,9 +60,9 @@ AoAsset* AoAssetFactory::CreateAsset( const string& AssetDirectoryPath, const st
 	return CreatedAsset;
 }
 
-AoModelAsset* AoAssetFactory::CreateModelFromFile( const string& FileFullPath, ESupportAssetExtension Extension )
+AoModel* AoAssetFactory::CreateModelFromFile( const string& FileFullPath, ESupportAssetExtension Extension )
 {
-	AoModelAsset* CreatedAsset = nullptr;
+	AoModel* CreatedAsset = nullptr;
 
 	/* Loading From File */
 	switch ( Extension )
@@ -104,16 +106,16 @@ AoModelAsset* AoAssetFactory::CreateModelFromFile( const string& FileFullPath, E
 			Meshes[ MeshIndex ] = MeshData;
 		}
 
-		CreatedAsset = new AoModelAsset( std::move(Meshes) );
+		CreatedAsset = new AoModel( std::move(Meshes) );
 		break;
 	}
 
 	return CreatedAsset;
 }
 
-AoTexture2DAsset* AoAssetFactory::CreateTexture2DFromFile( const string& FileFullPath, ESupportAssetExtension Extension )
+AoTexture2D* AoAssetFactory::CreateTexture2DFromFile( const string& FileFullPath, ESupportAssetExtension Extension )
 {
-	AoTexture2DAsset* CreatedAsset = nullptr;
+	AoTexture2D* CreatedAsset = nullptr;
 	ID3D11ShaderResourceView* SRV = nullptr;
 	ID3D11Device* Device = AoApplication::GetRenderer( ).GetDevice( );
 
@@ -137,7 +139,31 @@ AoTexture2DAsset* AoAssetFactory::CreateTexture2DFromFile( const string& FileFul
 
 	if( SRV != nullptr )
 	{
-		CreatedAsset = new AoTexture2DAsset( SRV );
+		CreatedAsset = new AoTexture2D( SRV );
+	}
+
+	return CreatedAsset;
+}
+
+AoShader* AoAssetFactory::CreateShaderFromFile( const string& FileFullPath, ESupportAssetExtension Extension )
+{
+	AoShader* CreatedAsset = nullptr;
+
+	switch ( Extension )
+	{
+	case ESupportAssetExtension::FXO:
+		std::ifstream FileIn( FileFullPath, std::ios::binary );
+
+		FileIn.seekg( 0, std::ios_base::end );
+		int Size = static_cast< int >( FileIn.tellg( ) );
+		FileIn.seekg( 0, std::ios_base::beg );
+		std::vector<char> CompiledShader( Size );
+
+		FileIn.read( &CompiledShader[ 0 ], Size );
+		FileIn.close( );
+
+		CreatedAsset = new AoShader( std::move( CompiledShader ) );
+		break;
 	}
 
 	return CreatedAsset;

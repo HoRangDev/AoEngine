@@ -2,14 +2,14 @@
 #include "AoAsset.h"
 #include "AoMesh.h"
 
-class AoModelAsset : public AoAsset
+class AoModel : public AoAsset
 {
 	friend AoAssetFactory;
 private:
-	AoModelAsset( std::vector<AoMesh*>&& Meshes );
+	AoModel( std::vector<AoMesh*>&& Meshes );
 
 public:
-	~AoModelAsset( );
+	~AoModel( );
 
 private:
 	std::vector<AoMesh*> Meshes;

@@ -93,9 +93,6 @@
     <ClCompile Include="Source\AoLevel.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AoTexture2DAsset.cpp">
-      <Filter>Source\Core\Asset</Filter>
-    </ClCompile>
     <ClCompile Include="..\ThirdParty\WICTextureLoader\WICTextureLoader.cpp">
       <Filter>Source\ThirdParty\WICTextureLoader</Filter>
     </ClCompile>
@@ -105,13 +102,16 @@
     <ClCompile Include="Source\AoTransform.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AoModelAsset.cpp">
-      <Filter>Source\Core\Asset</Filter>
-    </ClCompile>
     <ClCompile Include="Source\AoMesh.cpp">
       <Filter>Source\Core\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AoShaderAsset.cpp">
+    <ClCompile Include="Source\AoTexture2D.cpp">
+      <Filter>Source\Core\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoModel.cpp">
+      <Filter>Source\Core\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoShader.cpp">
       <Filter>Source\Core\Asset</Filter>
     </ClCompile>
   </ItemGroup>
@@ -299,9 +299,6 @@
     <ClInclude Include="Source\AoLevel.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AoTexture2DAsset.h">
-      <Filter>Source\Core\Asset</Filter>
-    </ClInclude>
     <ClInclude Include="..\ThirdParty\WICTextureLoader\WICTextureLoader.h">
       <Filter>Source\ThirdParty\WICTextureLoader</Filter>
     </ClInclude>
@@ -314,10 +311,13 @@
     <ClInclude Include="Source\AoMesh.h">
       <Filter>Source\Core\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AoModelAsset.h">
+    <ClInclude Include="Source\AoTexture2D.h">
       <Filter>Source\Core\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AoShaderAsset.h">
+    <ClInclude Include="Source\AoModel.h">
+      <Filter>Source\Core\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoShader.h">
       <Filter>Source\Core\Asset</Filter>
     </ClInclude>
   </ItemGroup>
