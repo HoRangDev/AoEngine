@@ -3,7 +3,6 @@
 #include "AoMaterial.h"
 
 class AoRenderer;
-class AoShader;
 class AoRenderComponent : public AoComponent
 {
 public:
@@ -23,7 +22,6 @@ public:
 
 protected:
 	AoRenderer& Renderer;
-	AoShader*	Shader;
 	AoMaterial  Material;
 	bool bIsVisible;
 
