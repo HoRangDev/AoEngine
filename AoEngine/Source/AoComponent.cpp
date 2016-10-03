@@ -28,5 +28,14 @@ AoActor* AoComponent::GetAttachedActor( ) const
 
 void AoComponent::SetAttachedActor( AoActor* Actor )
 {
+	if( Actor != nullptr )
+	{
+		OnAttached( );
+	}
+	else
+	{
+		OnDettached( );
+	}
+
 	this->Actor = Actor;
 }

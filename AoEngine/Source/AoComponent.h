@@ -20,6 +20,10 @@ public:
 
 	AoActor* GetAttachedActor( ) const;
 
+protected:
+	virtual void OnAttach( ){ }
+	virtual void OnDetach( ){ }
+
 private:
 	virtual void SetAttachedActor( AoActor* Actor );
 
