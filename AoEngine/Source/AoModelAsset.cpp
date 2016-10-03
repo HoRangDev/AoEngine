@@ -8,5 +8,10 @@ AoModelAsset::AoModelAsset( std::vector<AoMesh*>&& Meshes )
 
 AoModelAsset::~AoModelAsset( )
 {
+	for( AoMesh* MeshData : Meshes )
+	{
+		delete MeshData;
+	}
 
+	Meshes.clear( );
 }
