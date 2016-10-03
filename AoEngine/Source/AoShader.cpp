@@ -20,32 +20,32 @@ AoShader::~AoShader( )
 	ReleaseCOM( FX );
 }
 
-ID3DX11EffectTechnique* AoShader::GetTechniqueByName( const string& PropertyName )
+ID3DX11EffectTechnique* AoShader::GetTechniqueByName( const string& PropertyName ) const
 {
 	return FX->GetTechniqueByName( AoString::WStringToString(PropertyName).c_str() );
 }
 
-ID3DX11EffectVariable* AoShader::GetVariableByName( const string& PropertyName )
+ID3DX11EffectVariable* AoShader::GetVariableByName( const string& PropertyName ) const
 {
 	return FX->GetVariableByName( AoString::WStringToString( PropertyName ).c_str( ) );
 }
 
-ID3DX11EffectMatrixVariable* AoShader::GetMatrixByName( const string& PropertyName )
+ID3DX11EffectMatrixVariable* AoShader::GetMatrixByName( const string& PropertyName ) const
 {
 	return GetVariableByName( PropertyName )->AsMatrix( );
 }
 
-ID3DX11EffectScalarVariable* AoShader::GetScalarByName( const string& PropertyName )
+ID3DX11EffectScalarVariable* AoShader::GetScalarByName( const string& PropertyName ) const
 {
 	return GetVariableByName( PropertyName )->AsScalar( );
 }
 
-ID3DX11EffectVectorVariable* AoShader::GetVectorByName( const string& PropertyName )
+ID3DX11EffectVectorVariable* AoShader::GetVectorByName( const string& PropertyName ) const
 {
 	return GetVariableByName( PropertyName )->AsVector( );
 }
 
-ID3DX11EffectShaderResourceVariable* AoShader::GetTextureByName( const string& PropertyName )
+ID3DX11EffectShaderResourceVariable* AoShader::GetTextureByName( const string& PropertyName ) const
 {
 	return GetVariableByName( PropertyName )->AsShaderResource( );
 }
@@ -95,6 +95,15 @@ void AoShader::SetGlobalBoolByName( const string& PropertyName, bool Value )
 	}
 }
 
+void AoShader::SetGlobalVectorByName( const string& PropertyName, const AoVector4& Vector )
+{
+	ID3DX11EffectVectorVariable* Variable = GetVectorByName( PropertyName );
+	if( Variable != nullptr )
+	{
+		Variable->SetFloatVector( reinterpret_cast< const float * >( &Vector ) );
+	}
+}
+
 void  AoShader::SetGlobalTextureByName(const string& PropertyName, const AoTexture2D* Texture )
 {
 	ID3DX11EffectShaderResourceVariable* Variable = GetTextureByName( PropertyName );
@@ -109,4 +118,9 @@ void  AoShader::SetGlobalTextureByName(const string& PropertyName, const AoTextu
 			Variable->SetResource( nullptr );
 		}
 	}
+}
+
+bool AoShader::IsValidProperty( const string& PropertyName ) const
+{
+	return (GetVariableByName( PropertyName ) != nullptr);
 }
