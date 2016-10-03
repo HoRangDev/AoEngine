@@ -1,5 +1,6 @@
 #pragma once
 #include <ostream>
+#include "DirectXInc.h"
 #include "AoVector.h"
 #include "AoVector4.h"
 
@@ -33,7 +34,19 @@ public:
 
 	AoMatrix4x4 operator/( float Scale ) const;
 
-	friend std::ostream& operator<<( std::ostream& Os, const AoMatrix4x4& InM );
+	static AoMatrix4x4 CreateTranslationMatrix( AoVector Position );
+	static AoMatrix4x4 CreateTranslationMatrix( float X, float Y, float Z );
+	static AoMatrix4x4 CreateScaleMatrix( AoVector Scale );
+	static AoMatrix4x4 CreateScaleMatrix( float X, float Y, float Z );
+	static AoMatrix4x4 CreateRotationX( float Degree );
+	static AoMatrix4x4 CreateRotationY( float Degree );
+	static AoMatrix4x4 CreateRotationZ( float Degree );
+	static AoMatrix4x4 CreateRotation( AoVector Degrees );
+	static AoMatrix4x4 CreateInverse( const AoMatrix4x4& InM );
+	static AoMatrix4x4 CreateTranspose( const AoMatrix4x4& InM );
+	static DirectX::XMMATRIX AoMatrixToXMMATRIX( const AoMatrix4x4& InM );
+
+	friend std::ostream& operator<<( std::ostream& OS, const AoMatrix4x4& InM );
 
 public:
 	static AoMatrix4x4 Identity;

@@ -157,12 +157,104 @@ AoMatrix4x4 AoMatrix4x4::operator/( float Scale ) const
 	return Mat;
 }
 
-std::ostream& operator<<( std::ostream& Os, const AoMatrix4x4& InM )
+AoMatrix4x4 AoMatrix4x4::CreateTranslationMatrix( AoVector Position )
 {
-	Os << InM.M[ 0 ][ 0 ] << '	' << InM.M[ 0 ][ 1 ] << '	' << InM.M[ 0 ][ 2 ] << '	' << InM.M[ 0 ][ 3 ] << std::endl;
-	Os << InM.M[ 1 ][ 0 ] << '	' << InM.M[ 1 ][ 1 ] << '	' << InM.M[ 1 ][ 2 ] << '	' << InM.M[ 1 ][ 3 ] << std::endl;
-	Os << InM.M[ 2 ][ 0 ] << '	' << InM.M[ 2 ][ 1 ] << '	' << InM.M[ 2 ][ 2 ] << '	' << InM.M[ 2 ][ 3 ] << std::endl;
-	Os << InM.M[ 3 ][ 0 ] << '	' << InM.M[ 3 ][ 1 ] << '	' << InM.M[ 3 ][ 2 ] << '	' << InM.M[ 3 ][ 3 ] << std::endl;
+	return AoMatrix4x4(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		Position.X, Position.Y, Position.Z, 1.0f );
+}
 
-	return Os;
+AoMatrix4x4 AoMatrix4x4::CreateTranslationMatrix( float X, float Y, float Z )
+{
+	return AoMatrix4x4(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		X, Y, Z, 1.0f );
+}
+
+AoMatrix4x4 AoMatrix4x4::CreateScaleMatrix( AoVector Scale )
+{
+	return AoMatrix4x4(
+		Scale.X, 0.0f, 0.0f, 0.0f,
+		0.0f, Scale.Y, 0.0f, 0.0f,
+		0.0f, 0.0f, Scale.Z, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f );
+}
+
+AoMatrix4x4 AoMatrix4x4::CreateScaleMatrix( float X, float Y, float Z )
+{
+	return AoMatrix4x4(
+		X, 0.0f, 0.0f, 0.0f,
+		0.0f, Y, 0.0f, 0.0f,
+		0.0f, 0.0f, Z, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f );
+}
+
+AoMatrix4x4 AoMatrix4x4::CreateRotationX( float Degree )
+{
+	float CosDegree = DegreeCos( Degree );
+	float SinDegree = DegreeSin( Degree );
+	return AoMatrix4x4(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, CosDegree, SinDegree, 0.0f,
+		0.0f, -SinDegree, CosDegree, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f );
+}
+
+AoMatrix4x4 AoMatrix4x4::CreateRotationY( float Degree )
+{
+	float CosDegree = DegreeCos( Degree );
+	float SinDegree = DegreeSin( Degree );
+	return AoMatrix4x4(
+		CosDegree, 0.0f, -SinDegree, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		SinDegree, 0.0f, CosDegree, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f );
+}
+
+AoMatrix4x4 AoMatrix4x4::CreateRotationZ( float Degree )
+{
+	float CosDegree = DegreeCos( Degree );
+	float SinDegree = DegreeSin( Degree );
+	return AoMatrix4x4(
+		CosDegree, SinDegree, 0.0f, 0.0f,
+		-SinDegree, CosDegree, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f );
+}
+
+AoMatrix4x4 AoMatrix4x4::CreateRotation( AoVector Degrees )
+{
+	return CreateRotationZ( Degrees.Z ) * CreateRotationY( Degrees.Y ) * CreateRotationX( Degrees.X );
+}
+
+AoMatrix4x4 AoMatrix4x4::CreateTranspose( const AoMatrix4x4& InM )
+{
+	return AoMatrix4x4(
+		InM.M[ 0 ][ 0 ], InM.M[ 1 ][ 0 ], InM.M[ 2 ][ 0 ], InM.M[ 3 ][ 0 ],
+		InM.M[ 0 ][ 1 ], InM.M[ 1 ][ 1 ], InM.M[ 2 ][ 1 ], InM.M[ 3 ][ 1 ],
+		InM.M[ 0 ][ 2 ], InM.M[ 1 ][ 2 ], InM.M[ 2 ][ 2 ], InM.M[ 3 ][ 2 ],
+		InM.M[ 0 ][ 3 ], InM.M[ 1 ][ 3 ], InM.M[ 2 ][ 3 ], InM.M[ 3 ][ 3 ] );
+}
+
+DirectX::XMMATRIX AoMatrix4x4::AoMatrixToXMMATRIX( const AoMatrix4x4& InM )
+{
+	return DirectX::XMMATRIX(
+		InM.M[ 0 ][ 0 ], InM.M[ 0 ][ 1 ], InM.M[ 0 ][ 2 ], InM.M[ 0 ][ 3 ],
+		InM.M[ 1 ][ 0 ], InM.M[ 1 ][ 1 ], InM.M[ 1 ][ 2 ], InM.M[ 1 ][ 3 ],
+		InM.M[ 2 ][ 0 ], InM.M[ 2 ][ 1 ], InM.M[ 2 ][ 2 ], InM.M[ 2 ][ 3 ],
+		InM.M[ 3 ][ 0 ], InM.M[ 3 ][ 1 ], InM.M[ 3 ][ 2 ], InM.M[ 3 ][ 3 ] );
+}
+
+std::ostream& operator<<( std::ostream& OS, const AoMatrix4x4& InM )
+{
+	OS << InM.M[ 0 ][ 0 ] << '	' << InM.M[ 0 ][ 1 ] << '	' << InM.M[ 0 ][ 2 ] << '	' << InM.M[ 0 ][ 3 ] << std::endl;
+	OS << InM.M[ 1 ][ 0 ] << '	' << InM.M[ 1 ][ 1 ] << '	' << InM.M[ 1 ][ 2 ] << '	' << InM.M[ 1 ][ 3 ] << std::endl;
+	OS << InM.M[ 2 ][ 0 ] << '	' << InM.M[ 2 ][ 1 ] << '	' << InM.M[ 2 ][ 2 ] << '	' << InM.M[ 2 ][ 3 ] << std::endl;
+	OS << InM.M[ 3 ][ 0 ] << '	' << InM.M[ 3 ][ 1 ] << '	' << InM.M[ 3 ][ 2 ] << '	' << InM.M[ 3 ][ 3 ] << std::endl;
+
+	return OS;
 }
