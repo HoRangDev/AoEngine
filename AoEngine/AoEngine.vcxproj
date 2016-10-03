@@ -107,7 +107,7 @@
     <ClCompile Include="Source\AoModelAsset.cpp" />
     <ClCompile Include="Source\AoRenderComponent.cpp" />
     <ClCompile Include="Source\AoRenderer.cpp" />
-    <ClCompile Include="Source\AoShader.cpp" />
+    <ClCompile Include="Source\AoShaderAsset.cpp" />
     <ClCompile Include="Source\AoString.cpp" />
     <ClCompile Include="Source\AoTexture2DAsset.cpp" />
     <ClCompile Include="Source\AoTransform.cpp" />
@@ -174,7 +174,7 @@
     <ClInclude Include="Source\AoModelAsset.h" />
     <ClInclude Include="Source\AoRenderComponent.h" />
     <ClInclude Include="Source\AoRenderer.h" />
-    <ClInclude Include="Source\AoShader.h" />
+    <ClInclude Include="Source\AoShaderAsset.h" />
     <ClInclude Include="Source\AoString.h" />
     <ClInclude Include="Source\AoTexture2DAsset.h" />
     <ClInclude Include="Source\AoTransform.h" />

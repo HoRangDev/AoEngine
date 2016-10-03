@@ -102,9 +102,6 @@
     <ClCompile Include="..\ThirdParty\DDSTextureLoader\DDSTextureLoader.cpp">
       <Filter>Source\ThirdParty\DDSTextureLoader</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AoShader.cpp">
-      <Filter>Source\Core\Asset</Filter>
-    </ClCompile>
     <ClCompile Include="Source\AoTransform.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
@@ -113,6 +110,9 @@
     </ClCompile>
     <ClCompile Include="Source\AoMesh.cpp">
       <Filter>Source\Core\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoShaderAsset.cpp">
+      <Filter>Source\Core\Asset</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -308,9 +308,6 @@
     <ClInclude Include="..\ThirdParty\DDSTextureLoader\DDSTextureLoader.h">
       <Filter>Source\ThirdParty\DDSTextureLoader</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AoShader.h">
-      <Filter>Source\Core\Asset</Filter>
-    </ClInclude>
     <ClInclude Include="Source\AoTransform.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
@@ -318,6 +315,9 @@
       <Filter>Source\Core\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoModelAsset.h">
+      <Filter>Source\Core\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoShaderAsset.h">
       <Filter>Source\Core\Asset</Filter>
     </ClInclude>
   </ItemGroup>

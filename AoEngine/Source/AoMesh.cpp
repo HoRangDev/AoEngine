@@ -21,7 +21,7 @@ void AoMesh::Initialize( VertexVector&& Vertices, IndexVector&& Indices )
 	{
 		D3D11_BUFFER_DESC VBD;
 		VBD.Usage = D3D11_USAGE_IMMUTABLE;
-		VBD.ByteWidth = sizeof( AoVertex::AoBasic32 ) * Vertices.size( );
+		VBD.ByteWidth = static_cast<unsigned int>( sizeof( AoVertex::AoBasic32 ) * Vertices.size( ));
 		VBD.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		VBD.CPUAccessFlags = 0;
 		VBD.MiscFlags = 0;
@@ -31,7 +31,7 @@ void AoMesh::Initialize( VertexVector&& Vertices, IndexVector&& Indices )
 
 		D3D11_BUFFER_DESC IBD;
 		IBD.Usage = D3D11_USAGE_IMMUTABLE;
-		IBD.ByteWidth = sizeof( unsigned int ) * Indices.size( );
+		IBD.ByteWidth = static_cast<unsigned int>(sizeof( unsigned int ) * Indices.size( ));
 		IBD.BindFlags = D3D11_BIND_INDEX_BUFFER;
 		IBD.CPUAccessFlags = 0;
 		IBD.MiscFlags = 0;

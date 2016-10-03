@@ -4,7 +4,6 @@
 #include "AoVector.h"
 #include "AoVector4.h"
 
-class AoShader;
 struct AoMaterial
 {
 	AoMaterial( )
@@ -21,6 +20,4 @@ struct AoMaterial
 	AoVector4 Diffuse;
 	// Specular, w = Specular exponent
 	AoVector4 Specular;
-
-	AoShader*	Shader;
 };

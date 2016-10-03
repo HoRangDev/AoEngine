@@ -2,7 +2,7 @@
 #include "AoString.h"
 #include "AoApplication.h"
 #include "AoRenderer.h"
-#include "AoShader.h"
+#include "AoShaderAsset.h"
 #include "AoAssetFactory.h"
 #include "AoModelAsset.h"
 #include "AoMesh.h"
