@@ -344,4 +344,18 @@
       <Filter>Source\ThirdParty\assimp</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\ThirdParty\assimp\libs\assimp_D.lib">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </Library>
+    <Library Include="..\ThirdParty\assimp\libs\assimp.lib">
+      <Filter>Source\ThirdParty\assimp</Filter>
+    </Library>
+    <Library Include="..\ThirdParty\Effects11\libs\Effects11.lib">
+      <Filter>Source\ThirdParty\Effects11</Filter>
+    </Library>
+    <Library Include="..\ThirdParty\Effects11\libs\Effects11d.lib">
+      <Filter>Source\ThirdParty\Effects11</Filter>
+    </Library>
+  </ItemGroup>
 </Project>
