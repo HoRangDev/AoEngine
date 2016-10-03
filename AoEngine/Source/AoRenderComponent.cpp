@@ -4,8 +4,7 @@
 #include "AoActor.h"
 
 AoRenderComponent::AoRenderComponent( ) :
-	Renderer( AoApplication::GetRenderer( ) ),
-	AoComponent( )
+	Renderer( AoApplication::GetRenderer( ) )
 {
 	Renderer.RegisterComponent( this );
 }

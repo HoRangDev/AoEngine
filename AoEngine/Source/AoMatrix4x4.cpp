@@ -110,16 +110,6 @@ AoMatrix4x4 AoMatrix4x4::operator*( float Scale ) const
 	return Mat;
 }
 
-AoVector4 AoMatrix4x4::operator*( const AoVector4& InV ) const
-{
-	AoVector4 Vector;
-	Vector.X = ( M[ 0 ][ 0 ] * InV.X ) + ( M[ 0 ][ 1 ] * InV.Y ) + ( M[ 0 ][ 2 ] * InV.Z ) + ( M[ 0 ][ 3 ] * InV.W );
-	Vector.Y = ( M[ 1 ][ 0 ] * InV.X ) + ( M[ 1 ][ 1 ] * InV.Y ) + ( M[ 1 ][ 2 ] * InV.Z ) + ( M[ 1 ][ 3 ] * InV.W );
-	Vector.Z = ( M[ 2 ][ 0 ] * InV.X ) + ( M[ 2 ][ 1 ] * InV.Y ) + ( M[ 2 ][ 2 ] * InV.Z ) + ( M[ 2 ][ 3 ] * InV.W );
-	Vector.W = ( M[ 3 ][ 0 ] * InV.X ) + ( M[ 3 ][ 1 ] * InV.Y ) + ( M[ 3 ][ 2 ] * InV.Z ) + ( M[ 3 ][ 3 ] * InV.W );
-	return Vector;
-}
-
 AoMatrix4x4 AoMatrix4x4::operator*( const AoMatrix4x4& InM ) const
 {
 	AoMatrix4x4 Mat;
@@ -238,6 +228,39 @@ AoMatrix4x4 AoMatrix4x4::CreateTranspose( const AoMatrix4x4& InM )
 		InM.M[ 0 ][ 1 ], InM.M[ 1 ][ 1 ], InM.M[ 2 ][ 1 ], InM.M[ 3 ][ 1 ],
 		InM.M[ 0 ][ 2 ], InM.M[ 1 ][ 2 ], InM.M[ 2 ][ 2 ], InM.M[ 3 ][ 2 ],
 		InM.M[ 0 ][ 3 ], InM.M[ 1 ][ 3 ], InM.M[ 2 ][ 3 ], InM.M[ 3 ][ 3 ] );
+}
+
+AoMatrix4x4 AoMatrix4x4::CreateLookToLH( const AoVector& CameraPosition, const AoVector& CameraDirection, const AoVector& UpDirection )
+{
+	AoVector Up( UpDirection );
+	AoVector ZAxis( CameraDirection );
+	ZAxis.Normalize( );
+	AoVector XAxis( Up ^ ZAxis );
+	XAxis.Normalize( );
+	AoVector YAxis( ZAxis ^ XAxis );
+	YAxis.Normalize( );
+
+	return AoMatrix4x4(
+		XAxis.X, YAxis.X, ZAxis.X, 0.0f,
+		XAxis.Y, YAxis.Y, ZAxis.Y, 0.0f,
+		XAxis.Z, YAxis.Z, ZAxis.Z, 0.0f,
+		-( XAxis | CameraPosition ), -( YAxis | CameraPosition ), -( ZAxis | CameraPosition ), 1.0f );
+}
+
+AoMatrix4x4 AoMatrix4x4::CreatePerspectiveLH( float FOV, float AspectRatio, float Near, float Far )
+{
+	float SinFOV = sin(0.5f * FOV);
+	float CosFOV = cos(0.5f * FOV);
+
+	float Height = CosFOV / SinFOV;
+	float Width = Height / AspectRatio;
+	float Range = Far / ( Far - Near );
+
+	return AoMatrix4x4(
+		Width, 0.0f, 0.0f, 0.0f,
+		0.0f, Height, 0.0f, 0.0f,
+		0.0f, 0.0f, Range, 1.0f,
+		0.0f, 0.0f, -Range * Near, 0.0f );
 }
 
 DirectX::XMMATRIX AoMatrix4x4::AoMatrixToXMMATRIX( const AoMatrix4x4& InM )

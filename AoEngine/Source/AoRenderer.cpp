@@ -19,7 +19,7 @@ AoRenderer::~AoRenderer()
 
 void AoRenderer::Render()
 {
-	for( auto* Component : Components )
+	for( AoRenderComponent* Component : Components )
 	{
 		if( Component->IsVisible() )
 		{
@@ -70,10 +70,10 @@ void AoRenderer::BeginFrame()
 	DeviceContext->ClearDepthStencilView(DepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
 		1.0f, 0);
 
-	for ( AoRenderComponent* Component : Components )
-	{
-		Component->Render( );
-	}
+	/*
+	* @TODO: View(Camera) Proj 행렬 계산
+	*/
+
 }
 
 void AoRenderer::EndFrame()
@@ -112,6 +112,16 @@ ID3D11Device* AoRenderer::GetDevice( ) const
 ID3D11DeviceContext* AoRenderer::GetDeviceContext( ) const
 {
 	return DeviceContext;
+}
+
+AoCameraComponent* AoRenderer::GetMainCamera( ) const
+{
+	return MainCamera;
+}
+
+void AoRenderer::SetMainCamera( AoCameraComponent* Camera )
+{
+	this->MainCamera = Camera;
 }
 
 void AoRenderer::CreateDevice()

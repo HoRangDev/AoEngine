@@ -5,6 +5,8 @@
 class AoRenderer;
 class AoRenderComponent : public AoComponent
 {
+	friend AoRenderer;
+
 public:
 	AoRenderComponent();
 	~AoRenderComponent();
@@ -27,7 +29,5 @@ protected:
 
 private:
 	bool bIsRegistered;
-
-	friend AoRenderer;
 
 };

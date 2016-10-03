@@ -1,4 +1,5 @@
 #include "AoVector4.h"
+#include "AoMatrix4x4.h"
 #include "AoMath.h"
 
 const AoVector4 AoVector4::Zero = AoVector4( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -110,6 +111,16 @@ AoVector4 AoVector4::operator*( const AoVector4 & Operand )
 		Y * Operand.Y,
 		Z * Operand.Z,
 		W * Operand.W );
+}
+
+AoVector4 AoVector4::operator*( const AoMatrix4x4& Operand )
+{
+	AoVector4 Vector;
+	Vector.X = ( Operand.M[ 0 ][ 0 ] * X ) + ( Operand.M[ 0 ][ 1 ] * Y ) + ( Operand.M[ 0 ][ 2 ] * Z ) + ( Operand.M[ 0 ][ 3 ] * W );
+	Vector.Y = ( Operand.M[ 1 ][ 0 ] * X ) + ( Operand.M[ 1 ][ 1 ] * Y ) + ( Operand.M[ 1 ][ 2 ] * Z ) + ( Operand.M[ 1 ][ 3 ] * W );
+	Vector.Z = ( Operand.M[ 2 ][ 0 ] * X ) + ( Operand.M[ 2 ][ 1 ] * Y ) + ( Operand.M[ 2 ][ 2 ] * Z ) + ( Operand.M[ 2 ][ 3 ] * W );
+	Vector.W = ( Operand.M[ 3 ][ 0 ] * X ) + ( Operand.M[ 3 ][ 1 ] * Y ) + ( Operand.M[ 3 ][ 2 ] * Z ) + ( Operand.M[ 3 ][ 3 ] * W );
+	return Vector;
 }
 
 AoVector4 & AoVector4::operator*=( float Operand )

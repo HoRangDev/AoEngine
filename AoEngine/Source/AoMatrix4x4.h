@@ -29,7 +29,6 @@ public:
 	AoMatrix4x4 operator-( const AoMatrix4x4& InM ) const;
 
 	AoMatrix4x4 operator*( float Scale ) const;
-	AoVector4 operator*( const AoVector4& InV ) const;
 	AoMatrix4x4 operator*( const AoMatrix4x4& InM ) const;
 
 	AoMatrix4x4 operator/( float Scale ) const;
@@ -44,6 +43,8 @@ public:
 	static AoMatrix4x4 CreateRotation( AoVector Degrees );
 	static AoMatrix4x4 CreateInverse( const AoMatrix4x4& InM );
 	static AoMatrix4x4 CreateTranspose( const AoMatrix4x4& InM );
+	static AoMatrix4x4 CreateLookToLH( const AoVector& CameraPosition, const AoVector& CameraDirection, const AoVector& UpDirection );
+	static AoMatrix4x4 CreatePerspectiveLH( float FOV, float AspectRatio, float Near, float Far );
 	static DirectX::XMMATRIX AoMatrixToXMMATRIX( const AoMatrix4x4& InM );
 
 	friend std::ostream& operator<<( std::ostream& OS, const AoMatrix4x4& InM );

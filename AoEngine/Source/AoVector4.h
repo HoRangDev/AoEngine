@@ -1,5 +1,6 @@
 #pragma once
 
+class AoMatrix4x4;
 class AoVector4
 {
 public:
@@ -16,6 +17,7 @@ public:
 	AoVector4& operator-=( const AoVector4& Operand );
 	AoVector4 operator*( float Operand );
 	AoVector4 operator*( const AoVector4& Operand );
+	AoVector4 operator*( const AoMatrix4x4& Operand );
 	AoVector4& operator*=( float Operand );
 	AoVector4& operator*=( const AoVector4& Operand );
 	AoVector4 operator/( float Operand );

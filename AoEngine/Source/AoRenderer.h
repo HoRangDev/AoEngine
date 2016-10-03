@@ -5,6 +5,7 @@
 
 class AoWindow;
 class AoRenderComponent;
+class AoCameraComponent;
 class AoRenderer
 {
 public:
@@ -33,6 +34,9 @@ public:
 	ID3D11Device* GetDevice( ) const;
 	ID3D11DeviceContext* GetDeviceContext( ) const;
 
+	AoCameraComponent* GetMainCamera( ) const;
+	void SetMainCamera( AoCameraComponent* Camera );
+
 protected:
 	virtual void CreateDevice();
 	virtual void CreateDepthStencilBuffer();
@@ -42,6 +46,7 @@ protected:
 private:
 	AoWindow& Window;
 	AoViewport Viewport;
+	AoCameraComponent* MainCamera;
 	RenderComponentList Components;
 
 	IDXGISwapChain* SwapChain = nullptr;
