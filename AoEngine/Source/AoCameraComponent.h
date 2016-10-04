@@ -22,6 +22,8 @@ public:
 	float GetAspectRatio( ) const;
 	void SetAspectRatio( float AspectRatio );
 
+	AoMatrix4x4 GetViewMatrix( ) const;
+	AoMatrix4x4 GetProjectionMatrix( ) const;
 	AoMatrix4x4 GetViewProjMatrix( ) const;
 
 private:

@@ -34,6 +34,9 @@
     <Filter Include="Source\ThirdParty\DDSTextureLoader">
       <UniqueIdentifier>{24911748-93e0-4390-99a0-3a99e45b5f7f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\ThirdParty\TinyXML2">
+      <UniqueIdentifier>{a91cabce-1707-4b5d-946d-0bd0d33c9c09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\AoEntryPoint.cpp">
@@ -114,9 +117,6 @@
     <ClCompile Include="Source\AoShader.cpp">
       <Filter>Source\Core\Asset</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AoMaterial.cpp">
-      <Filter>Source\Core\Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="Source\AoMaterialProperty.cpp">
       <Filter>Source\Core\Rendering</Filter>
     </ClCompile>
@@ -143,6 +143,12 @@
     </ClCompile>
     <ClCompile Include="Source\AoCameraComponent.cpp">
       <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoMaterial.cpp">
+      <Filter>Source\Core\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\TinyXML2\tinyxml2.cpp">
+      <Filter>Source\ThirdParty\TinyXML2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -177,9 +183,6 @@
       <Filter>Source\Core\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoVertex.h">
-      <Filter>Source\Core\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoMaterial.h">
       <Filter>Source\Core\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoInputLayouts.h">
@@ -376,6 +379,12 @@
     </ClInclude>
     <ClInclude Include="Source\AoCameraComponent.h">
       <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoMaterial.h">
+      <Filter>Source\Core\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\TinyXML2\tinyxml2.h">
+      <Filter>Source\ThirdParty\TinyXML2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

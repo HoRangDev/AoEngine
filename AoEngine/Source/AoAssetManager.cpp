@@ -123,6 +123,10 @@ void AoAssetManager::LoadAllAssets( )
 			FilePath.find( TEXT("Assets"), 0 ) +
 			(sizeof( TEXT("Assets" ) ) / sizeof ( wchar_t )); 
 		FilePath = FilePath.substr( FilePathSubOffset );
+
+		// Delete Last slash
+		FilePathSubOffset = 0;
+		FilePath = FilePath.substr( FilePathSubOffset, FilePath.size( ) - 1 );
 		_wcslwr_s( FileExtension, sizeof( FileExtension ) / sizeof( wchar_t ) );
 		LoadAsset( FilePath, FileName, FileExtension );
 	}

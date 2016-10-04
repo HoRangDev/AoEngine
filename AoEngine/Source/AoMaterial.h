@@ -1,4 +1,5 @@
 #pragma once
+#include "AoAsset.h"
 #include "AoString.h"
 #include "AoMatrix4x4.h"
 #include <unordered_map>
@@ -7,10 +8,14 @@ class AoShader;
 class AoTexture2D;
 class AoMaterialProperty;
 //@TODO: Initialize Properties from Shader Variables
-class AoMaterial
+class AoMaterial : public AoAsset
 {
-public:
+	friend AoAssetFactory;
+
+protected:
 	AoMaterial( AoShader* Shader );
+
+public:
 	~AoMaterial( );
 
 	ID3DX11EffectTechnique* GetTechniqueByName( const string& PropertyName ) const;
@@ -29,8 +34,22 @@ public:
 	void SetMatrixByName( const string& PropertyName, const AoMatrix4x4& Value );
 	void SetVectorByName( const string& PropertyName, const AoVector4& Value );
 
+	void SetMaterialName( const string& Name );
+	string GetMaterialName( ) const;
+
+	void SetShader( AoShader* Shader );
+	AoShader* GetShader( ) const;
+
+	void ApplyPropertiesToShader( );
+
+	static void SaveToFile( const string& FileFullPath, const AoMaterial* Material );
+
+private:
+	void DeleteAllProperties( );
+
 private:
 	using PropertyMap = std::unordered_map<string, AoMaterialProperty*>;
+	string MaterialName;
 	AoShader* Shader;
 	PropertyMap Properties;
 

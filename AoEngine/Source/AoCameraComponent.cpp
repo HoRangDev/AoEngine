@@ -53,17 +53,23 @@ void AoCameraComponent::SetAspectRatio( float AspectRatio )
 	this->AspectRatio = Clamp<float>( AspectRatio, 1.0f, 2.5f );
 }
 
-AoMatrix4x4 AoCameraComponent::GetViewProjMatrix( ) const
+AoMatrix4x4 AoCameraComponent::GetViewMatrix( ) const
 {
 	AoTransform* Transform = Actor->GetTransform( );
 	AoVector4 LookDirection{ 0.0f, 0.0f, 1.0f, 0.0f };
 	LookDirection = LookDirection * Transform->GetRelativeRotationMatrix( );
-	AoMatrix4x4 View = AoMatrix4x4::CreateLookToLH(
+	return AoMatrix4x4::CreateLookToLH(
 		Transform->GetRelativePosition( ),
-		AoVector( LookDirection.X, LookDirection.Y, LookDirection.Z) ,
+		AoVector( LookDirection.X, LookDirection.Y, LookDirection.Z ),
 		AoVector( 0.0f, 1.0f, 0.0f ) );
+}
 
-	AoMatrix4x4 Projection = AoMatrix4x4::CreatePerspectiveLH( FOV, AspectRatio, Near, Far );
+AoMatrix4x4 AoCameraComponent::GetProjectionMatrix( ) const
+{
+	return AoMatrix4x4::CreatePerspectiveLH( FOV, AspectRatio, Near, Far );
+}
 
-	return View * Projection;
+AoMatrix4x4 AoCameraComponent::GetViewProjMatrix( ) const
+{
+	return GetViewMatrix( ) * GetProjectionMatrix( );
 }

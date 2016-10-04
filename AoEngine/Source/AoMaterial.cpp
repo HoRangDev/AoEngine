@@ -8,20 +8,17 @@
 #include "AoMaterialTextureProperty.h"
 #include "AoShader.h"
 #include "AoMatrix4x4.h"
+#include "AoTexture2D.h"
+#include <tinyxml2.h>
 
-AoMaterial::AoMaterial( AoShader* Shader ) 
+AoMaterial::AoMaterial( AoShader* Shader )
 	: Shader( Shader )
 {
 }
 
 AoMaterial::~AoMaterial( )
 {
-	for( auto Property : Properties )
-	{
-		delete Property.second;
-	}
-
-	Properties.clear( );
+	DeleteAllProperties( );
 }
 
 ID3DX11EffectTechnique * AoMaterial::GetTechniqueByName( const string& PropertyName ) const
@@ -290,4 +287,153 @@ void AoMaterial::SetVectorByName( const string& PropertyName, const AoVector4& V
 			Properties.insert( std::pair<string, AoMaterialProperty*>( PropertyName, NewProperty ) );
 		}
 	}
+}
+
+void AoMaterial::SetMaterialName( const string& Name )
+{
+	this->MaterialName = Name;
+}
+
+string AoMaterial::GetMaterialName( ) const
+{
+	return MaterialName;
+}
+
+void AoMaterial::SetShader( AoShader* Shader )
+{
+	if ( this->Shader != Shader )
+	{
+		this->Shader = Shader;
+		DeleteAllProperties( );
+	}
+}
+
+AoShader* AoMaterial::GetShader( ) const
+{
+	return Shader;
+}
+
+void AoMaterial::ApplyPropertiesToShader( )
+{
+	for( auto PropertyPair : Properties )
+	{
+		AoMaterialProperty* Property = PropertyPair.second;
+		if( Property != nullptr )
+		{
+			Property->ApplyToGlobalVariable( Shader );
+		}
+	}
+}
+
+void AoMaterial::SaveToFile( const string& FileName, const AoMaterial* Material )
+{
+	bool bIsValidMaterial = Material != nullptr;
+	if ( bIsValidMaterial )
+	{
+		tinyxml2::XMLDocument Document;
+		auto RootNode = Document.NewElement( "Material" );
+		Document.InsertFirstChild( RootNode );
+
+		auto MaterialNameNode = Document.NewElement( "MaterialName" );
+		MaterialNameNode->SetText( AoString::WStringToString( Material->GetMaterialName( ) ).c_str( ) );
+		RootNode->InsertEndChild( MaterialNameNode );
+
+		AoShader* Shader = Material->GetShader( );
+		auto UseShaderAssetNode = Document.NewElement( "UseShaderAsset" );
+		UseShaderAssetNode->SetAttribute( "Path", AoString::WStringToString( Shader->GetFilePath( ) ).c_str( ) );
+		UseShaderAssetNode->SetAttribute( "Name", AoString::WStringToString( Shader->GetFileName( ) ).c_str( ) );
+		UseShaderAssetNode->SetAttribute( "Ext", AoString::WStringToString( Shader->GetFileExtension( ) ).c_str( ) );
+		RootNode->InsertEndChild( UseShaderAssetNode );
+
+		auto PropertiesNode = Document.NewElement( "Properties" );
+		for ( auto PropertyPair : Material->Properties )
+		{
+			AoMaterialProperty* Property = PropertyPair.second;
+			if ( Property != nullptr )
+			{
+				auto PropertyNode = Document.NewElement( "Property" );
+				auto ValueNode = Document.NewElement( "Value" );
+				if ( typeid( *Property ) == typeid( AoMaterialIntProperty ) )
+				{
+					AoMaterialIntProperty* IntProperty = reinterpret_cast< AoMaterialIntProperty* >( Property );
+					PropertyNode->SetAttribute( "Type", "int" );
+					PropertyNode->SetAttribute( "Name", AoString::WStringToString( Property->GetName( ) ).c_str( ) );
+					ValueNode->SetAttribute( "Scalar", IntProperty->GetData( ) );
+				}
+				else if ( typeid( *Property ) == typeid( AoMaterialFloatProperty ) )
+				{
+					AoMaterialFloatProperty* FloatProperty = reinterpret_cast< AoMaterialFloatProperty* >( Property );
+					PropertyNode->SetAttribute( "Type", "float" );
+					PropertyNode->SetAttribute( "Name", AoString::WStringToString( Property->GetName( ) ).c_str( ) );
+					ValueNode->SetAttribute( "Scalar", FloatProperty->GetData( ) );
+				}
+				else if ( typeid( *Property ) == typeid( AoMaterialBoolProperty ) )
+				{
+					AoMaterialBoolProperty* BoolProperty = reinterpret_cast< AoMaterialBoolProperty* >( Property );
+					PropertyNode->SetAttribute( "Type", "bool" );
+					PropertyNode->SetAttribute( "Name", AoString::WStringToString( Property->GetName( ) ).c_str( ) );
+					ValueNode->SetAttribute( "Scalar", BoolProperty->GetData( ) );
+				}
+				else if ( typeid( *Property ) == typeid( AoMaterialVectorProperty ) )
+				{
+					AoMaterialVectorProperty* VectorProperty = reinterpret_cast< AoMaterialVectorProperty* >( Property );
+					PropertyNode->SetAttribute( "Type", "vector" );
+					PropertyNode->SetAttribute( "Name", AoString::WStringToString( Property->GetName( ) ).c_str( ) );
+
+					AoVector4 Vector = VectorProperty->GetData( );
+					ValueNode->SetAttribute( "X", Vector.X );
+					ValueNode->SetAttribute( "Y", Vector.Y );
+					ValueNode->SetAttribute( "Z", Vector.Z );
+					ValueNode->SetAttribute( "W", Vector.W );
+				}
+				else if ( typeid( *Property ) == typeid( AoMaterialMatrixProperty ) )
+				{
+					AoMaterialMatrixProperty* MatrixProperty = reinterpret_cast< AoMaterialMatrixProperty* >( Property );
+					PropertyNode->SetAttribute( "Type", "matrix" );
+					PropertyNode->SetAttribute( "Name", AoString::WStringToString( Property->GetName( ) ).c_str( ) );
+
+					AoMatrix4x4 Matrix = MatrixProperty->GetData( );
+					ValueNode->SetAttribute( "M11", Matrix.M[ 0 ][ 0 ] ); ValueNode->SetAttribute( "M12", Matrix.M[ 0 ][ 1 ] );
+					ValueNode->SetAttribute( "M13", Matrix.M[ 0 ][ 2 ] ); ValueNode->SetAttribute( "M14", Matrix.M[ 0 ][ 3 ] );
+
+					ValueNode->SetAttribute( "M21", Matrix.M[ 1 ][ 0 ] ); ValueNode->SetAttribute( "M22", Matrix.M[ 1 ][ 1 ] );
+					ValueNode->SetAttribute( "M23", Matrix.M[ 1 ][ 2 ] ); ValueNode->SetAttribute( "M24", Matrix.M[ 1 ][ 3 ] );
+
+					ValueNode->SetAttribute( "M31", Matrix.M[ 2 ][ 0 ] ); ValueNode->SetAttribute( "M32", Matrix.M[ 2 ][ 1 ] );
+					ValueNode->SetAttribute( "M33", Matrix.M[ 2 ][ 2 ] ); ValueNode->SetAttribute( "M34", Matrix.M[ 2 ][ 3 ] );
+
+					ValueNode->SetAttribute( "M41", Matrix.M[ 3 ][ 0 ] ); ValueNode->SetAttribute( "M42", Matrix.M[ 3 ][ 1 ] );
+					ValueNode->SetAttribute( "M43", Matrix.M[ 3 ][ 2 ] ); ValueNode->SetAttribute( "M44", Matrix.M[ 3 ][ 3 ] );
+				}
+				else if ( typeid( *Property ) == typeid( AoMaterialTextureProperty ) )
+				{
+					AoMaterialTextureProperty* TextureProperty = reinterpret_cast< AoMaterialTextureProperty* >( Property );
+					PropertyNode->SetAttribute( "Type", "matrix" );
+					PropertyNode->SetAttribute( "Name", AoString::WStringToString( Property->GetName( ) ).c_str( ) );
+
+					AoTexture2D* Texture = TextureProperty->GetData( );
+					ValueNode->SetAttribute( "Path", AoString::WStringToString( Texture->GetFilePath( ) ).c_str( ) );
+					ValueNode->SetAttribute( "Name", AoString::WStringToString( Texture->GetFileName( ) ).c_str( ) );
+					ValueNode->SetAttribute( "Ext", AoString::WStringToString( Texture->GetFileExtension( ) ).c_str( ) );
+				}
+
+				PropertyNode->InsertEndChild( ValueNode );
+				PropertiesNode->InsertEndChild( PropertyNode );
+			}
+		}
+
+		RootNode->InsertEndChild( PropertiesNode );
+
+		auto Error = Document.SaveFile( AoString::WStringToString( FileName ).c_str( ) );
+	}
+}
+
+void AoMaterial::DeleteAllProperties( )
+{
+	for ( auto Property : Properties )
+	{
+		delete Property.second;
+	}
+
+	Properties.clear( );
 }

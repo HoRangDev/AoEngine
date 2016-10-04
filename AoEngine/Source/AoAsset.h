@@ -9,6 +9,7 @@ enum class EAssetType
 	Model,
 	Texture2D,
 	Shader,
+	Material,
 	Audio,
 	Text,
 };
@@ -21,8 +22,9 @@ enum class ESupportAssetExtension
 	FBX, OBJ,
 	PNG, JPG, DDS,
 	FXO,
+	Material,
 	MP3, WAV, OGG,
-	TXT
+	TXT,
 };
 
 struct SAssetTypeMatchInfo

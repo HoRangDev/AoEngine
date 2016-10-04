@@ -1,13 +1,15 @@
-#include "WindowsInc.h"
+#include "AoAssetFactory.h"
+#include "AoAssetManager.h"
 #include "AoString.h"
 #include "AoApplication.h"
 #include "AoRenderer.h"
 #include "AoShader.h"
-#include "AoAssetFactory.h"
+#include "AoMaterial.h"
 #include "AoModel.h"
 #include "AoMesh.h"
 #include "AoTexture2D.h"
 #include "AoVertex.h"
+#include "WindowsInc.h"
 #include <sstream>
 #include <fstream>
 #include <vector>
@@ -16,11 +18,12 @@
 #include <postprocess.h>
 #include <WICTextureLoader.h>
 #include <DDSTextureLoader.h>
+#include <tinyxml2.h>
 
 AoAsset* AoAssetFactory::CreateAsset( const string& AssetDirectoryPath, const string& FilePath, const string& FileName, const string& FileExtension )
 {
-	AoAsset* CreatedAsset = new AoAsset( );
-	string AssetFullPath = AssetDirectoryPath + TEXT( "/" ) + FilePath + FileName + FileExtension;
+	AoAsset* CreatedAsset = nullptr;
+	string AssetFullPath = AssetDirectoryPath + TEXT( "/" ) + FilePath + TEXT( "/" ) + FileName + FileExtension;
 
 	SAssetTypeMatchInfo AssetTypeMatchInfo = AoAsset::GetMatchInfoFromFileExtension( FileExtension );
 	switch ( AssetTypeMatchInfo.MatchType )
@@ -35,6 +38,10 @@ AoAsset* AoAssetFactory::CreateAsset( const string& AssetDirectoryPath, const st
 
 	case EAssetType::Shader:
 		CreatedAsset = CreateShaderFromFile( AssetFullPath, AssetTypeMatchInfo.ExtensionType );
+		break;
+
+	case EAssetType::Material:
+		CreatedAsset = CreateMaterialFromFile( AssetFullPath, AssetTypeMatchInfo.ExtensionType );
 		break;
 
 	case EAssetType::Audio:
@@ -154,17 +161,156 @@ AoShader* AoAssetFactory::CreateShaderFromFile( const string& FileFullPath, ESup
 	case ESupportAssetExtension::FXO:
 		std::ifstream FileIn( FileFullPath, std::ios::binary );
 
-		FileIn.seekg( 0, std::ios_base::end );
-		int Size = static_cast< int >( FileIn.tellg( ) );
-		FileIn.seekg( 0, std::ios_base::beg );
-		std::vector<char> CompiledShader( Size );
+		if ( FileIn.is_open( ) )
+		{
+			FileIn.seekg( 0, std::ios_base::end );
+			int Size = static_cast< int >( FileIn.tellg( ) );
+			FileIn.seekg( 0, std::ios_base::beg );
+			std::vector<char> CompiledShader( Size );
 
-		FileIn.read( &CompiledShader[ 0 ], Size );
-		FileIn.close( );
+			FileIn.read( &CompiledShader[ 0 ], Size );
+			FileIn.close( );
 
-		CreatedAsset = new AoShader( std::move( CompiledShader ) );
+			CreatedAsset = new AoShader( std::move( CompiledShader ) );
+		}
 		break;
 	}
 
 	return CreatedAsset;
+}
+
+AoMaterial* AoAssetFactory::CreateMaterialFromFile( const string& FileFullPath, ESupportAssetExtension Extension )
+{
+	AoMaterial* CreatedAsset = nullptr;
+
+	switch ( Extension )
+	{
+	case ESupportAssetExtension::Material:
+		tinyxml2::XMLDocument Document;
+		auto Error = Document.LoadFile( AoString::WStringToString( FileFullPath ).c_str( ) );
+		if ( Error == tinyxml2::XMLError::XML_SUCCESS )
+		{
+			tinyxml2::XMLNode* RootNode = Document.FirstChildElement( "Material" );
+
+			if ( RootNode != nullptr )
+			{
+				tinyxml2::XMLElement* MaterialNameElement =
+					RootNode->FirstChildElement( "MaterialName" );
+
+				tinyxml2::XMLElement* UseShaderElement =
+					RootNode->FirstChildElement( "UseShaderAsset" );
+
+				bool bIsValidMaterialInfo = ( MaterialNameElement != nullptr && UseShaderElement != nullptr );
+				if ( bIsValidMaterialInfo )
+				{
+					AoShader* UseShader =
+						dynamic_cast< AoShader* >(
+							AoAssetManager::GetInstance( ).LoadAsset(
+							AoString::StringToWString( UseShaderElement->Attribute( "Path" ) ),
+							AoString::StringToWString( UseShaderElement->Attribute( "Name" ) ),
+							AoString::StringToWString( UseShaderElement->Attribute( "Ext" ) )
+							) );
+
+					bool bIsValidShader = UseShader != nullptr;
+					if ( bIsValidShader )
+					{
+						CreatedAsset = new AoMaterial( UseShader );
+						CreatedAsset->SetMaterialName( AoString::StringToWString( MaterialNameElement->GetText( ) ) );
+
+						tinyxml2::XMLNode* PropertiesNode = RootNode->FirstChildElement( "Properties" );
+						bool bIsHaveProperties = PropertiesNode != nullptr;
+						if ( bIsHaveProperties )
+						{
+							tinyxml2::XMLElement* CurrentProperty =
+								PropertiesNode->FirstChildElement( "Property" );
+							while ( CurrentProperty != nullptr )
+							{
+								std::string TypeName =
+									AoString::StringToLower( CurrentProperty->Attribute( "Type" ) );
+								string PropertyName =
+									AoString::StringToWString( CurrentProperty->Attribute( "Name" ) );
+
+								tinyxml2::XMLElement* ValueElement = CurrentProperty->FirstChildElement( "Value" );
+								bool bIsValidValue = ValueElement != nullptr;
+								if ( bIsValidValue )
+								{
+									if ( TypeName == "int" )
+									{
+										CreatedAsset->SetIntByName(
+											PropertyName,
+											ValueElement->IntAttribute( "Scalar" ) );
+									}
+									else if ( TypeName == "float" )
+									{
+										CreatedAsset->SetFloatByName(
+											PropertyName,
+											ValueElement->FloatAttribute( "Scalar" ) );
+									}
+									else if ( TypeName == "bool" )
+									{
+										CreatedAsset->SetBoolByName(
+											PropertyName,
+											ValueElement->BoolAttribute( "Scalar" ) );
+									}
+									else if ( TypeName == "vector" )
+									{
+										CreatedAsset->SetVectorByName(
+											PropertyName,
+											AoVector4(
+											ValueElement->FloatAttribute( "X" ),
+											ValueElement->FloatAttribute( "Y" ),
+											ValueElement->FloatAttribute( "Z" ),
+											ValueElement->FloatAttribute( "W" ) ) );
+									}
+									else if ( TypeName == "matrix" )
+									{
+										CreatedAsset->SetMatrixByName(
+											PropertyName,
+											AoMatrix4x4(
+											ValueElement->FloatAttribute( "M11" ), ValueElement->FloatAttribute( "M12" ),
+											ValueElement->FloatAttribute( "M13" ), ValueElement->FloatAttribute( "M14" ),
+
+											ValueElement->FloatAttribute( "M21" ), ValueElement->FloatAttribute( "M22" ),
+											ValueElement->FloatAttribute( "M23" ), ValueElement->FloatAttribute( "M24" ),
+
+											ValueElement->FloatAttribute( "M31" ), ValueElement->FloatAttribute( "M32" ),
+											ValueElement->FloatAttribute( "M33" ), ValueElement->FloatAttribute( "M34" ),
+
+											ValueElement->FloatAttribute( "M41" ), ValueElement->FloatAttribute( "M42" ),
+											ValueElement->FloatAttribute( "M43" ), ValueElement->FloatAttribute( "M44" ) ) );
+									}
+									else if ( TypeName == "texture" )
+									{
+										AoTexture2D* Texture = dynamic_cast< AoTexture2D* >( AoAssetManager::GetInstance( ).LoadAsset(
+											AoString::StringToWString( ValueElement->Attribute( "Path" ) ),
+											AoString::StringToWString( ValueElement->Attribute( "Name" ) ),
+											AoString::StringToWString( ValueElement->Attribute( "Ext" ) ) ) );
+
+										bool bIsValidTexture = Texture != nullptr;
+										if ( bIsValidTexture )
+										{
+											CreatedAsset->SetTextureByName(
+												PropertyName,
+												Texture );
+										}
+									}
+								}
+
+								CurrentProperty =
+									CurrentProperty->NextSiblingElement( "Property" );
+							}
+						}
+					}
+				}
+			}
+		}
+		break;
+	}
+
+	return CreatedAsset;
+}
+
+AoMaterial* AoAssetFactory::CreateMaterialWithShader( AoShader* Shader )
+{
+	return new AoMaterial( Shader );
 }

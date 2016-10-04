@@ -7,6 +7,7 @@ AoRenderComponent::AoRenderComponent( ) :
 	Renderer( AoApplication::GetRenderer( ) )
 {
 	Renderer.RegisterComponent( this );
+	//@TODO: Load Basic Material
 }
 
 AoRenderComponent::~AoRenderComponent( )

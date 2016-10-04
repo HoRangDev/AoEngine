@@ -4,17 +4,18 @@
 
 const SAssetTypeMatchInfo AoAsset::MatchInfos[ ] =
 {
-	{ TEXT( ".cfg" ),	ESupportAssetExtension::CFG,	 EAssetType::Config		},
-	{ TEXT( ".fbx" ),	ESupportAssetExtension::FBX,	 EAssetType::Model		},
-	{ TEXT( ".obj" ),	ESupportAssetExtension::OBJ,	 EAssetType::Model		},
-	{ TEXT( ".png" ),	ESupportAssetExtension::PNG,	 EAssetType::Texture2D	},
-	{ TEXT( ".jpg" ),	ESupportAssetExtension::JPG,	 EAssetType::Texture2D	},
-	{ TEXT( ".dds" ),	ESupportAssetExtension::DDS,	 EAssetType::Texture2D	},
-	{ TEXT( ".fxo" ),	ESupportAssetExtension::FXO,	 EAssetType::Shader		},
-	{ TEXT( ".mp3" ),	ESupportAssetExtension::MP3,	 EAssetType::Audio		},
-	{ TEXT( ".wav" ),	ESupportAssetExtension::WAV,	 EAssetType::Audio		},
-	{ TEXT( ".ogg" ),	ESupportAssetExtension::OGG,	 EAssetType::Audio		},
-	{ TEXT( ".txt" ),	ESupportAssetExtension::TXT,	 EAssetType::Text		}
+	{ TEXT( ".cfg" ),		ESupportAssetExtension::CFG,		 EAssetType::Config		},
+	{ TEXT( ".fbx" ),		ESupportAssetExtension::FBX,		 EAssetType::Model		},
+	{ TEXT( ".obj" ),		ESupportAssetExtension::OBJ,		 EAssetType::Model		},
+	{ TEXT( ".png" ),		ESupportAssetExtension::PNG,		 EAssetType::Texture2D	},
+	{ TEXT( ".jpg" ),		ESupportAssetExtension::JPG,		 EAssetType::Texture2D	},
+	{ TEXT( ".dds" ),		ESupportAssetExtension::DDS,		 EAssetType::Texture2D	},
+	{ TEXT( ".fxo" ),		ESupportAssetExtension::FXO,		 EAssetType::Shader		},
+	{ TEXT( ".material" ),	ESupportAssetExtension::Material,	 EAssetType::Material	},
+	{ TEXT( ".mp3" ),		ESupportAssetExtension::MP3,		 EAssetType::Audio		},
+	{ TEXT( ".wav" ),		ESupportAssetExtension::WAV,		 EAssetType::Audio		},
+	{ TEXT( ".ogg" ),		ESupportAssetExtension::OGG,		 EAssetType::Audio		},
+	{ TEXT( ".txt" ),		ESupportAssetExtension::TXT,		 EAssetType::Text		}
 };
 
 AoAsset::AoAsset( )

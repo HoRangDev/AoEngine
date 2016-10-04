@@ -44,16 +44,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)ThirdParty\DDSTextureLoader;$(SolutionDir)ThirdParty\WICTextureLoader;$(SolutionDir)ThirdParty\Effects11\include;$(SolutionDir)ThirdParty\assimp\include;$(ProjectDir)Source;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <SourcePath>$(SolutionDir)ThirdParty\DDSTextureLoader;$(SolutionDir)ThirdParty\WICTextureLoader;$(SolutionDir)ThirdParty\Effects11\include;$(SolutionDir)ThirdParty\assimp\include;$(ProjectDir)Source;$(VC_SourcePath)</SourcePath>
+    <IncludePath>$(SolutionDir)ThirdParty\TinyXML2;$(SolutionDir)ThirdParty\DDSTextureLoader;$(SolutionDir)ThirdParty\WICTextureLoader;$(SolutionDir)ThirdParty\Effects11\include;$(SolutionDir)ThirdParty\assimp\include;$(ProjectDir)Source;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <SourcePath>$(SolutionDir)ThirdParty\TinyXML2;$(SolutionDir)ThirdParty\DDSTextureLoader;$(SolutionDir)ThirdParty\WICTextureLoader;$(SolutionDir)ThirdParty\Effects11\include;$(SolutionDir)ThirdParty\assimp\include;$(ProjectDir)Source;$(VC_SourcePath)</SourcePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)ThirdParty\Effects11\libs;$(SolutionDir)ThirdParty\assimp\libs</LibraryPath>
     <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)ThirdParty\DDSTextureLoader;$(SolutionDir)ThirdParty\WICTextureLoader;$(SolutionDir)ThirdParty\Effects11\include;$(SolutionDir)ThirdParty\assimp\include;$(ProjectDir)Source;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <SourcePath>$(SolutionDir)ThirdParty\DDSTextureLoader;$(SolutionDir)ThirdParty\WICTextureLoader;$(SolutionDir)ThirdParty\Effects11\include;$(SolutionDir)ThirdParty\assimp\include;$(ProjectDir)Source;$(VC_SourcePath)</SourcePath>
+    <IncludePath>$(SolutionDir)ThirdParty\TinyXML2;$(SolutionDir)ThirdParty\DDSTextureLoader;$(SolutionDir)ThirdParty\WICTextureLoader;$(SolutionDir)ThirdParty\Effects11\include;$(SolutionDir)ThirdParty\assimp\include;$(ProjectDir)Source;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <SourcePath>$(SolutionDir)ThirdParty\TinyXML2;$(SolutionDir)ThirdParty\DDSTextureLoader;$(SolutionDir)ThirdParty\WICTextureLoader;$(SolutionDir)ThirdParty\Effects11\include;$(SolutionDir)ThirdParty\assimp\include;$(ProjectDir)Source;$(VC_SourcePath)</SourcePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)ThirdParty\Effects11\libs;$(SolutionDir)ThirdParty\assimp\libs</LibraryPath>
     <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</IntDir>
@@ -96,6 +96,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\ThirdParty\DDSTextureLoader\DDSTextureLoader.cpp" />
+    <ClCompile Include="..\ThirdParty\TinyXML2\tinyxml2.cpp" />
     <ClCompile Include="..\ThirdParty\WICTextureLoader\WICTextureLoader.cpp" />
     <ClCompile Include="Source\AoActor.cpp" />
     <ClCompile Include="Source\AoApplication.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="..\ThirdParty\assimp\include\version.h" />
     <ClInclude Include="..\ThirdParty\DDSTextureLoader\DDSTextureLoader.h" />
     <ClInclude Include="..\ThirdParty\Effects11\include\D3DX11Effect.h" />
+    <ClInclude Include="..\ThirdParty\TinyXML2\tinyxml2.h" />
     <ClInclude Include="..\ThirdParty\WICTextureLoader\WICTextureLoader.h" />
     <ClInclude Include="Source\AoActor.h" />
     <ClInclude Include="Source\AoApplication.h" />

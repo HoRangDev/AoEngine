@@ -8,6 +8,7 @@ class AoAssetManager;
 class AoModel;
 class AoTexture2D;
 class AoShader;
+class AoMaterial;
 class AoAudio;
 class AoText;
 class AoConfig;
@@ -18,6 +19,8 @@ public:
 	static AoModel* CreateModelFromFile( const string& FileFullPath, ESupportAssetExtension Extension );
 	static AoTexture2D* CreateTexture2DFromFile( const string& FileFullPath, ESupportAssetExtension Extension );
 	static AoShader* CreateShaderFromFile( const string& FileFullPath, ESupportAssetExtension Extension );
+	static AoMaterial* CreateMaterialFromFile( const string& FileFullPath, ESupportAssetExtension Extension );
+	static AoMaterial* CreateMaterialWithShader( AoShader* Shader );
 	static AoAudio* CreateAudioFromFile( const string& FileFullPath, ESupportAssetExtension Extension );
 	static AoText* CreateTextFromFile( const string& FileFullPath, ESupportAssetExtension Extension );
 	static AoConfig* CreateConfigFromFile( const string& FileFullPath, ESupportAssetExtension Extension );

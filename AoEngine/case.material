@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Material>
+	<MaterialName>"Basic"</MaterialName>
+	<UseShaderAsset Path="Shaders" Name="Basic" Ext=".fxo"/>
+	<Properties>
+		<Property Type="int" Name="INTProperty">
+			<Value Scalar="1" />
+		</Property>
+		<Property Type="float" Name="floatProper">
+			<Value Scalar="2.1" />
+		</Property>
+		<Property Type="bool" Name="boolProper">
+			<Value Scalar="true" />
+		</Property>
+		<Property Type="matrix" Name="MatProperty">
+			<Value M11="1" M12="0" M13="0" M14="0" M21="0" M22="1" M23="0" M24="0" M31="0" M32="0" M33="1" M34="0" M41="0" M42="0" M43="0" M44="1" />
+		</Property>
+		<Property Type="vector" Name="VecProperty">
+			<Value X="0.0" Y="1.0" Z="0.0" W="0.0" />
+		</Property>
+		<Property Type="texture" Name="TextureProperty">
+			<Value Path="Textures" Name="Default" Ext=".png" />
+		</Property>
+	</Properties>
+</Material>
