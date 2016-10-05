@@ -23,7 +23,7 @@ void AoRenderer::Render()
 	{
 		if( Component->IsVisible() )
 		{
-			Component->Render();
+			Component->Render( this );
 		}
 	}
 }
@@ -69,11 +69,6 @@ void AoRenderer::BeginFrame()
 	DeviceContext->ClearRenderTargetView(RenderTargetView, ClearColor);
 	DeviceContext->ClearDepthStencilView(DepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
 		1.0f, 0);
-
-	/*
-	* @TODO: View(Camera) Proj 행렬 계산
-	*/
-
 }
 
 void AoRenderer::EndFrame()
@@ -122,6 +117,51 @@ AoCameraComponent* AoRenderer::GetMainCamera( ) const
 void AoRenderer::SetMainCamera( AoCameraComponent* Camera )
 {
 	this->MainCamera = Camera;
+}
+
+void AoRenderer::BindVertexBuffer( ID3D11Buffer* const Buffer, uint32 VertexSize )
+{
+	uint32 Offset = 0;
+	DeviceContext->IASetVertexBuffers( 0, 1, &Buffer, &VertexSize, &Offset );
+}
+
+void AoRenderer::BindIndexBuffer( ID3D11Buffer* const Buffer )
+{
+	uint32 Offset = 0;
+	DeviceContext->IASetIndexBuffer( Buffer, DXGI_FORMAT_R32_UINT, Offset );
+}
+
+void AoRenderer::BindInputLayout( ID3D11InputLayout* const Layout )
+{
+	DeviceContext->IASetInputLayout( Layout );
+}
+
+void AoRenderer::SetPrimitiveTopology( EPrimitiveTopology Type )
+{
+	switch ( Type )
+	{
+	case EPrimitiveTopology::Point:
+		DeviceContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_POINTLIST );
+		break;
+
+	case EPrimitiveTopology::Line:
+		DeviceContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_LINELIST );
+		break;
+
+	case EPrimitiveTopology::Triangle:
+		DeviceContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
+		break;
+	}
+}
+
+void AoRenderer::ApplyPass( ID3DX11EffectPass* const Pass )
+{
+	Pass->Apply( 0, DeviceContext );
+}
+
+void AoRenderer::DrawIndexed( uint32 IndexCount, uint32 StartIndexLocation, uint32 BaseVertexLocation )
+{
+	DeviceContext->DrawIndexed( IndexCount, StartIndexLocation, BaseVertexLocation );
 }
 
 void AoRenderer::CreateDevice()

@@ -17,6 +17,7 @@ protected:
 public:
 	~AoMaterial( );
 
+	ID3DX11EffectTechnique* GetTechniqueByIndex( uint32 Index ) const;
 	ID3DX11EffectTechnique* GetTechniqueByName( const string& PropertyName ) const;
 	AoMaterialProperty* GetPropertyByName( const string& PropertyName ) const;
 	int GetIntByName( const string& PropertyName ) const;

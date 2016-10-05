@@ -6,7 +6,15 @@ class AoMeshRenderComponent : public AoRenderComponent
 {
 public:
 	AoMeshRenderComponent( );
+	~AoMeshRenderComponent( );
+
+	void SetMesh( AoMesh* Mesh );
+	AoMesh* GetMesh( ) const;
+
+	virtual void Render( AoRenderer* Renderer ) override;
 
 private:
+	AoMesh* Mesh;
+	ID3D11InputLayout* InputLayout;
 
 };

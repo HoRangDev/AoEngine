@@ -31,7 +31,7 @@ int AoApplication::Excute( )
 
 	AoProfiler& Profiler = AoProfiler::GetInstance( );
 	AoTimeManager& TimeManager = AoTimeManager::GetInstance( );
-	float RawDeltaTime = 0.0f;
+	double RawDeltaTime = 0.0;
 	
 	float FPSElasedTime = 0.0f;
 	uint32 FrameCount = 0;
@@ -79,7 +79,7 @@ int AoApplication::Excute( )
 		Profiler.RegisterSample( TEXT( "MainLoop" ), MainLoopProfileSample );
 
 		RawDeltaTime = MainLoopProfileSample.GetDeltaTime( );
-		TimeManager.Update( RawDeltaTime );
+		TimeManager.Tick( RawDeltaTime );
 
 		FPSElasedTime += RawDeltaTime;
 		if( FPSElasedTime >= 1.0f )

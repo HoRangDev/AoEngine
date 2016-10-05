@@ -22,6 +22,11 @@ AoMaterial::~AoMaterial( )
 	DeleteAllProperties( );
 }
 
+ID3DX11EffectTechnique * AoMaterial::GetTechniqueByIndex( uint32 Index ) const
+{
+	return Shader->GetTechniqueByIndex( Index );
+}
+
 ID3DX11EffectTechnique * AoMaterial::GetTechniqueByName( const string& PropertyName ) const
 {
 	return Shader->GetTechniqueByName( PropertyName );

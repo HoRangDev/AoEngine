@@ -21,6 +21,11 @@ AoShader::~AoShader( )
 	ReleaseCOM( FX );
 }
 
+ID3DX11EffectTechnique * AoShader::GetTechniqueByIndex( uint32 Index )
+{
+	return FX->GetTechniqueByIndex( Index );
+}
+
 ID3DX11EffectTechnique* AoShader::GetTechniqueByName( const string& PropertyName ) const
 {
 	return FX->GetTechniqueByName( AoStringUtility::WStringToString(PropertyName).c_str() );

@@ -1,4 +1,5 @@
 #pragma once
+#include "AoType.h"
 #include "AoAsset.h"
 #include <vector>
 
@@ -21,6 +22,7 @@ private:
 public:
 	~AoShader( );
 
+	ID3DX11EffectTechnique* GetTechniqueByIndex( uint32 Index );
 	ID3DX11EffectTechnique* GetTechniqueByName( const string& PropertyName ) const;
 	ID3DX11EffectVariable* GetVariableByName( const string& PropertyName ) const;
 	ID3DX11EffectMatrixVariable* GetMatrixByName( const string& PropertyName ) const;

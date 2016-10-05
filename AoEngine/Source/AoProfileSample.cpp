@@ -34,29 +34,29 @@ void AoProfileSample::SetProfileEndPoint( TimePoint Point )
 	Min = Max = ElasedTime = GetDeltaTime( );
 }
 
-float AoProfileSample::GetDeltaTime( ) const
+double AoProfileSample::GetDeltaTime( ) const
 {
 	auto Duration = 
 		std::chrono::duration_cast<std::chrono::duration<double>> ( EndPoint - StartPoint );
-	return static_cast< float >( Duration.count( ) );
+	return ( Duration.count( ) );
 }
 
-float AoProfileSample::GetMin( ) const
+double AoProfileSample::GetMin( ) const
 {
 	return Min;
 }
 
-float AoProfileSample::GetAverage( ) const
+double AoProfileSample::GetAverage( ) const
 {
 	return (ElasedTime / ::Max( Count, 1 ));
 }
 
-float AoProfileSample::GetMax( ) const
+double AoProfileSample::GetMax( ) const
 {
 	return Max;
 }
 
-float AoProfileSample::GetElasedTime( ) const
+double AoProfileSample::GetElasedTime( ) const
 {
 	return ElasedTime;
 }

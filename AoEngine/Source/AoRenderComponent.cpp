@@ -19,6 +19,7 @@ AoRenderComponent::~AoRenderComponent( )
 void AoRenderComponent::SetMaterial( AoMaterial* Material )
 {
 	this->Material = Material;
+	ActiveTechnique = Material->GetTechniqueByIndex( 0 );
 }
 
 AoMaterial* AoRenderComponent::GetMaterial( ) const
@@ -26,11 +27,16 @@ AoMaterial* AoRenderComponent::GetMaterial( ) const
 	return Material;
 }
 
+void AoRenderComponent::SetActiveTechnique( const string& TechniqueName )
+{
+	ActiveTechnique = Material->GetTechniqueByName( TechniqueName );
+}
+
 bool AoRenderComponent::IsVisible( ) const
 {
 	if ( Actor != nullptr )
 	{
-		return bIsVisible && IsActive( ) && Actor->IsActive( );
+		return bIsVisible && IsActive( ) && Actor->IsActive( ) && ActiveTechnique != nullptr;
 	}
 	else
 	{

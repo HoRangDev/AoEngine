@@ -14,22 +14,22 @@ public:
 	void SetProfileStartPoint( TimePoint Point );
 	void SetProfileEndPoint( TimePoint Point );
 
-	float GetDeltaTime( ) const;
+	double GetDeltaTime( ) const;
 
-	float GetMin( ) const;
-	float GetAverage( ) const;
-	float GetMax( ) const;
-	float GetElasedTime( ) const;
+	double GetMin( ) const;
+	double GetAverage( ) const;
+	double GetMax( ) const;
+	double GetElasedTime( ) const;
 	int GetSampleCount( ) const;
 
 private:
 	TimePoint StartPoint;
 	TimePoint EndPoint;
 
-	float Min			= 0.0f;
-	float Average		= 0.0f;
-	float Max			= 0.0f;
-	float ElasedTime	= 0.0f;
+	double Min			= 0.0;
+	double Average		= 0.0;
+	double Max			= 0.0;
+	double ElasedTime	= 0.0;
 	int Count			= 1;
 
 };

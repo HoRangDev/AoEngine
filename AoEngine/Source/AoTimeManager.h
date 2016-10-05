@@ -10,7 +10,7 @@ public:
 	void Initialize( );
 	static void ForceDeallocate( );
 
-	void Update( float DeltaTime );
+	void Tick( double DeltaTime );
 
 	void SetTimeScale( float Scale );
 	float GetTimeScale( );
@@ -36,7 +36,7 @@ private:
 	bool bIsPause;
 
 	float TimeScale;
-	float DeltaTime;
-	float ElasedTime;
+	double DeltaTime;
+	double ElasedTime;
 
 };

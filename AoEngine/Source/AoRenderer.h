@@ -3,6 +3,13 @@
 #include "AoViewport.h"
 #include <list>
 
+enum class EPrimitiveTopology
+{
+	Point,
+	Line,
+	Triangle,
+};
+
 class AoWindow;
 class AoRenderComponent;
 class AoCameraComponent;
@@ -36,6 +43,17 @@ public:
 
 	AoCameraComponent* GetMainCamera( ) const;
 	void SetMainCamera( AoCameraComponent* Camera );
+
+	void BindVertexBuffer( ID3D11Buffer* const Buffer, uint32 VertexSize );
+	void BindIndexBuffer( ID3D11Buffer* const Buffer );
+
+	void BindInputLayout( ID3D11InputLayout* const Layout );
+
+	void SetPrimitiveTopology( EPrimitiveTopology Type );
+
+	void ApplyPass( ID3DX11EffectPass* const Pass );
+
+	void DrawIndexed( uint32 IndexCount, uint32 StartIndexLocation = 0, uint32 BaseVertexLocation = 0 );
 
 protected:
 	virtual void CreateDevice();

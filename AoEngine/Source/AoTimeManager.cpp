@@ -33,7 +33,7 @@ void AoTimeManager::ForceDeallocate( )
 	}
 }
 
-void AoTimeManager::Update( float DeltaTime )
+void AoTimeManager::Tick( double DeltaTime )
 {
 	if ( !bIsPause )
 	{
