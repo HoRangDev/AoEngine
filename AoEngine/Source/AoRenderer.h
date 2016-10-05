@@ -1,5 +1,7 @@
 #pragma once
+#include "AoType.h"
 #include "WindowsInc.h"
+#include "DirectXInc.h"
 #include "AoViewport.h"
 #include <list>
 

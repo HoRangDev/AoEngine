@@ -11,7 +11,7 @@ AoTimeManager::AoTimeManager( )
 
 AoTimeManager& AoTimeManager::GetInstance( )
 {
-	if( Instance == nullptr )
+	if ( Instance == nullptr )
 	{
 		Instance = new AoTimeManager( );
 	}
@@ -47,29 +47,29 @@ void AoTimeManager::SetTimeScale( float Scale )
 	this->TimeScale = Scale;
 }
 
-float AoTimeManager::GetTimeScale(  )
+float AoTimeManager::GetTimeScale( )
 {
 	return TimeScale;
 }
 
 float AoTimeManager::GetDeltaTime( ) const
 {
-	return DeltaTime * TimeScale;
+	return static_cast< float >( DeltaTime * TimeScale );
 }
 
 float AoTimeManager::GetElasedTime( ) const
 {
-	return ElasedTime * TimeScale;
+	return static_cast< float >( ElasedTime * TimeScale );
 }
 
 float AoTimeManager::GetUnscaledDeltaTime( ) const
 {
-	return DeltaTime;
+	return static_cast< float >( DeltaTime );
 }
 
 float AoTimeManager::GetUnscaledElasedTime( ) const
 {
-	return ElasedTime;
+	return static_cast< float >( ElasedTime );
 }
 
 void AoTimeManager::Start( )

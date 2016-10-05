@@ -6,6 +6,7 @@
 #include "AoInputLayouts.h"
 #include "AoProfiler.h"
 #include "AoTimeManager.h"
+#include "AoLightManager.h"
 #include <assert.h>
 
 bool AoApplication::bIsInitialized = false;
@@ -33,7 +34,7 @@ int AoApplication::Excute( )
 	AoTimeManager& TimeManager = AoTimeManager::GetInstance( );
 	double RawDeltaTime = 0.0;
 	
-	float FPSElasedTime = 0.0f;
+	double FPSElasedTime = 0.0f;
 	uint32 FrameCount = 0;
 
 	MSG Msg = { 0 };
@@ -58,7 +59,7 @@ int AoApplication::Excute( )
 		if ( LoadedLevel != nullptr )
 		{
 			/* Scale */
-			LoadedLevel->Update( RawDeltaTime );
+			LoadedLevel->Update( static_cast< float >( RawDeltaTime ) );
 		}
 		UpdateLoopProfileSample.SetProfileEndPoint( high_resolution_clock::now( ) );
 		Profiler.RegisterSample( TEXT( "LogicUpdate" ), UpdateLoopProfileSample );
@@ -82,11 +83,11 @@ int AoApplication::Excute( )
 		TimeManager.Tick( RawDeltaTime );
 
 		FPSElasedTime += RawDeltaTime;
-		if( FPSElasedTime >= 1.0f )
+		if( FPSElasedTime >= 1.0 )
 		{
 			FPSCount = FrameCount;
 			FrameCount = 0;
-			FPSElasedTime = 0.0f;
+			FPSElasedTime = 0.0;
 		}
 	}
 
@@ -118,6 +119,7 @@ void AoApplication::Initialize( )
 	AoAssetManager::GetInstance( ).Initialize( );
 	AoProfiler::GetInstance( ).Initialize( );
 	AoInputLayouts::Initialize( );
+	AoLightManager::GetInstance( ).Initialize( );
 
 	bIsInitialized = true;
 }
@@ -142,6 +144,7 @@ void AoApplication::DeInitialize( )
 		Window = nullptr;
 	}
 
+	AoLightManager::ForceDeallocate( );
 	AoInputLayouts::DeInitialize( );
 	AoProfiler::ForceDeallocate( );
 	AoAssetManager::ForceDeallocate( );

@@ -168,6 +168,18 @@
     <ClCompile Include="Source\AoProfileSample.cpp">
       <Filter>Source\Core\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="Source\AoMaterialData.cpp">
+      <Filter>Source\Core\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoLight.cpp">
+      <Filter>Source\Core\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoLightComponent.cpp">
+      <Filter>Source\Core\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoLightManager.cpp">
+      <Filter>Source\Core\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AoApplication.h">
@@ -418,6 +430,18 @@
     </ClInclude>
     <ClInclude Include="Source\AoProfileSample.h">
       <Filter>Source\Core\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoMaterialData.h">
+      <Filter>Source\Core\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoLight.h">
+      <Filter>Source\Core\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoLightComponent.h">
+      <Filter>Source\Core\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoLightManager.h">
+      <Filter>Source\Core\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -81,6 +81,11 @@ void AoRenderer::EndFrame()
 	{
 		bIsStandByMode = (SwapChain->Present(0, 0) == DXGI_STATUS_OCCLUDED);
 	}
+
+	for( auto RenderComponent : Components )
+	{
+		RenderComponent->GetMaterial( )->SetIsLightOutdated( true );
+	}
 }
 
 float AoRenderer::GetBackBufferWidth() const

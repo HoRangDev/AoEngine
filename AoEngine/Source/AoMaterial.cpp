@@ -13,7 +13,7 @@
 #include <tinyxml2.h>
 
 AoMaterial::AoMaterial( AoShader* Shader )
-	: Shader( Shader )
+	: Shader( Shader ), bIsLightOutdated( true )
 {
 }
 
@@ -143,6 +143,19 @@ AoVector4 AoMaterial::GetVectorByName( const string& PropertyName ) const
 	}
 
 	return AoVector4::Zero;
+}
+
+void AoMaterial::SetVariableByName( const string& PropertyName, const void* Data, uint32 ByteOffset, uint32 ByteCount )
+{
+	if( PropertyName == TEXT( "Lights" ) )
+	{
+		bIsLightOutdated = false;
+	}
+
+	if ( Shader->IsValidProperty( PropertyName ) )
+	{
+		Shader->SetGlobalVariableByName( PropertyName, Data, ByteOffset, ByteCount );
+	}
 }
 
 void AoMaterial::SetIntByName( const string& PropertyName, int Value )
@@ -329,6 +342,16 @@ void AoMaterial::ApplyPropertiesToShader( )
 			Property->ApplyToGlobalVariable( Shader );
 		}
 	}
+}
+
+void AoMaterial::SetIsLightOutdated( bool IsOutdated )
+{
+	this->bIsLightOutdated = IsOutdated;
+}
+
+bool AoMaterial::IsLightOutdated( ) const
+{
+	return bIsLightOutdated;
 }
 
 void AoMaterial::SaveToFile( const string& FileName, const AoMaterial* Material )

@@ -27,6 +27,7 @@ public:
 	AoMatrix4x4 GetMatrixByName( const string& PropertyName ) const;
 	AoVector4 GetVectorByName( const string& PropertyName ) const;
 
+	void SetVariableByName( const string& PropertyName, const void* Data, uint32 ByteOffset, uint32 ByteCount );
 	void SetIntByName( const string& PropertyName, int Value );
 	void SetFloatByName( const string& PropertyName, float Value );
 	void SetBoolByName( const string& PropertyName, bool Value );
@@ -42,6 +43,9 @@ public:
 
 	void ApplyPropertiesToShader( );
 
+	void SetIsLightOutdated( bool IsOutdated );
+	bool IsLightOutdated( ) const;
+
 	static void SaveToFile( const string& FileFullPath, const AoMaterial* Material );
 
 private:
@@ -52,5 +56,7 @@ private:
 	string MaterialName;
 	AoShader* Shader;
 	PropertyMap Properties;
+
+	bool bIsLightOutdated;
 
 };

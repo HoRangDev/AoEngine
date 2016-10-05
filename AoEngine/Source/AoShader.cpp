@@ -56,7 +56,7 @@ ID3DX11EffectShaderResourceVariable* AoShader::GetTextureByName( const string& P
 	return GetVariableByName( PropertyName )->AsShaderResource( );
 }
 
-void AoShader::SetGlobalVariableByName( const string& PropertyName, const void* Data, uint32_t ByteCount )
+void AoShader::SetGlobalVariableByName( const string& PropertyName, const void* Data, uint32 ByteOffset, uint32 ByteCount )
 {
 	ID3DX11EffectVariable* Variable = GetVariableByName( PropertyName );
 	if( Variable != nullptr )

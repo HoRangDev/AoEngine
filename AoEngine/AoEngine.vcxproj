@@ -107,9 +107,13 @@
     <ClCompile Include="Source\AoComponent.cpp" />
     <ClCompile Include="Source\AoGenericVertex.cpp" />
     <ClCompile Include="Source\AoInputLayouts.cpp" />
+    <ClCompile Include="Source\AoLight.cpp" />
+    <ClCompile Include="Source\AoLightComponent.cpp" />
+    <ClCompile Include="Source\AoLightManager.cpp" />
     <ClCompile Include="Source\AoLogger.cpp" />
     <ClCompile Include="Source\AoMaterial.cpp" />
     <ClCompile Include="Source\AoMaterialBoolProperty.cpp" />
+    <ClCompile Include="Source\AoMaterialData.cpp" />
     <ClCompile Include="Source\AoMaterialFloatProperty.cpp" />
     <ClCompile Include="Source\AoMaterialIntProperty.cpp" />
     <ClCompile Include="Source\AoMaterialMatrixProperty.cpp" />
@@ -188,9 +192,13 @@
     <ClInclude Include="Source\AoCameraComponent.h" />
     <ClInclude Include="Source\AoGenericVertex.h" />
     <ClInclude Include="Source\AoInputLayouts.h" />
+    <ClInclude Include="Source\AoLight.h" />
+    <ClInclude Include="Source\AoLightComponent.h" />
+    <ClInclude Include="Source\AoLightManager.h" />
     <ClInclude Include="Source\AoLogger.h" />
     <ClInclude Include="Source\AoMaterial.h" />
     <ClInclude Include="Source\AoMaterialBoolProperty.h" />
+    <ClInclude Include="Source\AoMaterialData.h" />
     <ClInclude Include="Source\AoMaterialFloatProperty.h" />
     <ClInclude Include="Source\AoMaterialIntProperty.h" />
     <ClInclude Include="Source\AoMaterialMatrixProperty.h" />

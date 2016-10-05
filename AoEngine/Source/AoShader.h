@@ -30,7 +30,7 @@ public:
 	ID3DX11EffectVectorVariable* GetVectorByName( const string& PropertyName ) const;
 	ID3DX11EffectShaderResourceVariable* GetTextureByName( const string& PropertyName ) const;
 
-	void SetGlobalVariableByName( const string& PropertyName, const void* Data, uint32_t ByteCount );
+	void SetGlobalVariableByName( const string& PropertyName, const void* Data, uint32 ByteOffset, uint32 ByteCount );
 	void SetGlobalMatrixByName( const string& PropertyName, const AoMatrix4x4& Matrix );
 	void SetGlobalFloatByName( const string& PropertyName, float Value );
 	void SetGlobalIntByName( const string& PropertyName, int Value );

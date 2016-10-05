@@ -2,6 +2,7 @@
 #include "AoInputLayouts.h"
 #include "AoRenderer.h"
 #include "AoMesh.h"
+#include "AoLightManager.h"
 
 AoMeshRenderComponent::AoMeshRenderComponent( )
 	: InputLayout( AoInputLayouts::GetGenericVertexLayout( ) )
@@ -31,6 +32,8 @@ void AoMeshRenderComponent::Render( AoRenderer* Renderer )
 	{
 		D3DX11_TECHNIQUE_DESC TechniqueDesc;
 		ActiveTechnique->GetDesc( &TechniqueDesc );
+
+		AoLightManager::GetInstance( ).BindLights( Material );
 
 		for ( uint32 Index = 0; Index < TechniqueDesc.Passes; ++Index )
 		{
