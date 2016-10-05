@@ -1,6 +1,5 @@
 #pragma once
 #include "AoAsset.h"
-#include "AoString.h"
 #include <vector>
 
 class ID3DX11Effect;

@@ -1,9 +1,10 @@
 #pragma once
-#include <string>
-using string = std::wstring;
+#include "AoType.h"
 
 class AoWindow;
 class AoRenderer;
+class AoAssetManager;
+class AoProfiler;
 class AoLevel;
 class AoApplication
 {
@@ -15,17 +16,20 @@ public:
 	int Excute( );
 
 	static AoRenderer& GetRenderer( );
-
 	static bool IsInitialized( );
+
+	static uint32 GetFPS( );
 
 private:
 	void Initialize( );
 	void DeInitialize( );
 
 private:
+	static bool bIsInitialized;
 	AoWindow* Window;
 	static AoRenderer* Renderer;
 	AoLevel* LoadedLevel;
-	static bool bIsInitialized;
+
+	static uint32 FPSCount;
 
 };

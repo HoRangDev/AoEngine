@@ -1,4 +1,5 @@
 #include "AoShader.h"
+#include "AoStringUtility.h"
 #include "DirectXInc.h"
 #include "AoApplication.h"
 #include "AoRenderer.h"
@@ -22,12 +23,12 @@ AoShader::~AoShader( )
 
 ID3DX11EffectTechnique* AoShader::GetTechniqueByName( const string& PropertyName ) const
 {
-	return FX->GetTechniqueByName( AoString::WStringToString(PropertyName).c_str() );
+	return FX->GetTechniqueByName( AoStringUtility::WStringToString(PropertyName).c_str() );
 }
 
 ID3DX11EffectVariable* AoShader::GetVariableByName( const string& PropertyName ) const
 {
-	return FX->GetVariableByName( AoString::WStringToString( PropertyName ).c_str( ) );
+	return FX->GetVariableByName( AoStringUtility::WStringToString( PropertyName ).c_str( ) );
 }
 
 ID3DX11EffectMatrixVariable* AoShader::GetMatrixByName( const string& PropertyName ) const

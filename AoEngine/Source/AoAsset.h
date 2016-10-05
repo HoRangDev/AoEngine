@@ -1,6 +1,5 @@
 #pragma once
-#include <string>
-using string = std::wstring;
+#include "AoType.h"
 
 enum class EAssetType
 {

@@ -3,7 +3,7 @@
 #include "AoRenderComponent.h"
 #include <Windows.h>
 
-std::atomic<uint64_t> AoActor::InstanceCount = 0;
+atomic_uint64 AoActor::InstanceCount = 0;
 
 AoActor::AoActor( string Name ) :
 	Name( Name )
@@ -159,7 +159,7 @@ void AoActor::DetachAllComponent( bool bIsCleanup )
 	AttachComponent( Transform );
 }
 
-uint64_t AoActor::GetInstanceCount( )
+uint64 AoActor::GetInstanceCount( )
 {
 	return InstanceCount;
 }

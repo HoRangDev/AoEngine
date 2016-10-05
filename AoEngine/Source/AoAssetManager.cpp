@@ -63,6 +63,16 @@ void AoAssetManager::DeInitialize( )
 	Instance = nullptr;
 }
 
+void AoAssetManager::ForceDeallocate( )
+{
+	if( Instance != nullptr )
+	{
+		Instance->DeInitialize( );
+		delete Instance;
+		Instance = nullptr;
+	}
+}
+
 void AoAssetManager::SearchDirectory( const string& RootDirectoryPath, const string& SubDirectoryName )
 {
 	std::forward_list<string> SubDirectoryList;

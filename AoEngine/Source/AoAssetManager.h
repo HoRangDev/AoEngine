@@ -16,6 +16,9 @@ public :
 	~AoAssetManager( );
 
 	static AoAssetManager& GetInstance( );
+	void Initialize( );
+	void DeInitialize( );
+	static void ForceDeallocate( );
 
 	void LoadAllAssets( );
 	void UnloadAllAssets( );
@@ -31,13 +34,9 @@ public :
 	string GetAssetDirectoryPath( ) const;
 
 private:
-	void Initialize( );
-	void DeInitialize( );
-
 	void SearchDirectory( const string& RootDirectoryName, const string& SubDirectory );
 
 private:
-	friend AoApplication;
 	static AoAssetManager* Instance;
 	std::unordered_map<string, AoAsset*> Database;
 	std::atomic<unsigned int> LoadedAssetQuantity;

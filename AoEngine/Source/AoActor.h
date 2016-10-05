@@ -9,10 +9,8 @@
 */
 
 #pragma once
-#include <string>
+#include "AoType.h"
 #include <vector>
-#include <atomic>
-using string = std::wstring;;
 
 class AoLevel;
 class AoComponent;
@@ -43,7 +41,7 @@ public:
 	void DetachComponent( AoComponent* const Component );
 	void DetachAllComponent( bool bIsCleanup = true );
 
-	static uint64_t GetInstanceCount( );
+	static uint64 GetInstanceCount( );
 	string GetName( ) const;
 
 	AoActor* GetParent( ) const;
@@ -74,7 +72,7 @@ protected:
 	AoTransform* Transform;
 
 private:
-	static std::atomic<uint64_t> InstanceCount;
+	static atomic_uint64 InstanceCount;
 	string Name;
 
 	ActorVector Children;

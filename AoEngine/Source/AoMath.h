@@ -88,11 +88,11 @@ inline static Ty Max( Ty Value, Ty Max )
 {
 	if ( Value > Max )
 	{
-		return Max;
+		return Value;
 	}
 	else
 	{
-		return Value;
+		return Max;
 	}
 }
 
@@ -101,11 +101,11 @@ inline static Ty Min( Ty Value, Ty Min )
 {
 	if ( Value < Min )
 	{
-		return Min;
+		return Value;
 	}
 	else
 	{
-		return Value;
+		return Min;
 	}
 }
 

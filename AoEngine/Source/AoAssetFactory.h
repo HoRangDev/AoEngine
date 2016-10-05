@@ -1,8 +1,6 @@
 #pragma once
-#include <string>
+#include "AoType.h"
 #include "AoAsset.h"
-
-using string = std::wstring;
 
 class AoAssetManager;
 class AoModel;

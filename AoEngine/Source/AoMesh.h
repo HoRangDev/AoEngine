@@ -1,11 +1,11 @@
 #pragma once
+#include "AoType.h"
 #include "DirectXInc.h"
-#include "AoVertex.h"
+#include "AoGenericVertex.h"
 #include <vector>
 
-using VertexVector = std::vector<AoVertex::AoBasic32>;
+using VertexVector = std::vector<AoGenericVertex>;
 using IndexVector = std::vector<unsigned int>;
-using string = std::wstring;
 
 class AoMesh
 {

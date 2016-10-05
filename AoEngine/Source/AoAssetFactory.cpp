@@ -1,6 +1,6 @@
 #include "AoAssetFactory.h"
 #include "AoAssetManager.h"
-#include "AoString.h"
+#include "AoStringUtility.h"
 #include "AoApplication.h"
 #include "AoRenderer.h"
 #include "AoShader.h"
@@ -8,7 +8,7 @@
 #include "AoModel.h"
 #include "AoMesh.h"
 #include "AoTexture2D.h"
-#include "AoVertex.h"
+#include "AoGenericVertex.h"
 #include "WindowsInc.h"
 #include <sstream>
 #include <fstream>
@@ -78,25 +78,76 @@ AoModel* AoAssetFactory::CreateModelFromFile( const string& FileFullPath, ESuppo
 	case ESupportAssetExtension::OBJ:
 		Assimp::Importer Importer;
 		const aiScene* Scene = Importer.ReadFile(
-			AoString::WStringToString( FileFullPath ),
+			AoStringUtility::WStringToString( FileFullPath ),
 			aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_JoinIdenticalVertices );
 
 		std::vector<AoMesh*> Meshes(Scene->mNumMeshes);
 		for ( unsigned int MeshIndex = 0; MeshIndex < Scene->mNumMeshes; ++MeshIndex )
 		{
 			const aiMesh* Mesh = Scene->mMeshes[ MeshIndex ];
-
 			VertexVector Vertices( Mesh->mNumVertices );
 			IndexVector Indices( 3 * Mesh->mNumFaces );
+
+			bool bIsHasNormals = Mesh->HasNormals( );
+			bool bIsHasTangentAndBiNormals = Mesh->HasTangentsAndBitangents( );
+			bool bIsHasTextureUV = Mesh->HasTextureCoords( 0 );
+			bool bIsHasColor = Mesh->HasVertexColors( 0 );
+
+			AoVector	Normal;
+			AoVector4	Color;
+			AoVector2	TextureUV;
+			AoVector	Tangent;
+			AoVector	BiNormal;
 			for ( unsigned int Index = 0; Index < Mesh->mNumVertices; ++Index )
 			{
+				Normal = AoVector::Zero;
+				Color = AoVector4::One;
+				TextureUV = AoVector2::Zero;
+				Tangent = AoVector::Zero;
+				BiNormal = AoVector::Zero;
+
+				if ( bIsHasColor )
+				{
+					aiColor4D aiColor = Mesh->mColors[ 0 ][ Index ];
+					Color.X = aiColor.r;
+					Color.Y = aiColor.g;
+					Color.Z = aiColor.b;
+					Color.W = aiColor.a;
+				}
+				if( bIsHasTextureUV )
+				{
+					aiVector3D UVW = Mesh->mTextureCoords[ 0 ][ Index ];
+					TextureUV.X = UVW.x;
+					TextureUV.Y = UVW.y;
+				}
+				if( bIsHasNormals )
+				{
+					aiVector3D aiNormal = Mesh->mNormals[ Index ];
+					Normal.X = aiNormal.x;
+					Normal.Y = aiNormal.y;
+					Normal.Z = aiNormal.z;
+				}
+				if ( bIsHasTangentAndBiNormals )
+				{
+					aiVector3D aiTangent = Mesh->mTangents[ Index ];
+					aiVector3D aiBiNormal = Mesh->mBitangents[ Index ];
+					Tangent.X = aiTangent.x;
+					Tangent.Y = aiTangent.y;
+					Tangent.Z = aiTangent.z;
+
+					BiNormal.X = aiBiNormal.x;
+					BiNormal.Y = aiBiNormal.y;
+					BiNormal.Z = aiBiNormal.z;
+				}
+
 				aiVector3D Position = Mesh->mVertices[ Index ];
-				aiVector3D Normal = Mesh->mNormals[ Index ];
-				aiVector3D UVW = Mesh->mTextureCoords[ 0 ][ Index ];
-				Vertices[ Index ] = AoVertex::AoBasic32(
+
+				Vertices[ Index ] = AoGenericVertex(
 					AoVector( Position.x, Position.y, Position.z ),
-					AoVector( Normal.x, Normal.y, Normal.z ),
-					AoVector2( UVW.x, UVW.y ) );
+					Normal,
+					TextureUV,
+					Tangent,
+					BiNormal );
 			}
 
 			for ( unsigned int Index = 0; Index < Mesh->mNumFaces; ++Index )
@@ -106,7 +157,7 @@ AoModel* AoAssetFactory::CreateModelFromFile( const string& FileFullPath, ESuppo
 				Indices[ Index + 2 ] = ( Mesh->mFaces[ Index ].mIndices[ 2 ] );
 			}
 
-			AoMesh* MeshData = new AoMesh( AoString::StringToWString( Mesh->mName.C_Str( ) ) );
+			AoMesh* MeshData = new AoMesh( AoStringUtility::StringToWString( Mesh->mName.C_Str( ) ) );
 			MeshData->Initialize(
 				std::move( Vertices ),
 				std::move( Indices ) );
@@ -187,7 +238,7 @@ AoMaterial* AoAssetFactory::CreateMaterialFromFile( const string& FileFullPath, 
 	{
 	case ESupportAssetExtension::Material:
 		tinyxml2::XMLDocument Document;
-		auto Error = Document.LoadFile( AoString::WStringToString( FileFullPath ).c_str( ) );
+		auto Error = Document.LoadFile( AoStringUtility::WStringToString( FileFullPath ).c_str( ) );
 		if ( Error == tinyxml2::XMLError::XML_SUCCESS )
 		{
 			tinyxml2::XMLNode* RootNode = Document.FirstChildElement( "Material" );
@@ -206,16 +257,16 @@ AoMaterial* AoAssetFactory::CreateMaterialFromFile( const string& FileFullPath, 
 					AoShader* UseShader =
 						dynamic_cast< AoShader* >(
 							AoAssetManager::GetInstance( ).LoadAsset(
-							AoString::StringToWString( UseShaderElement->Attribute( "Path" ) ),
-							AoString::StringToWString( UseShaderElement->Attribute( "Name" ) ),
-							AoString::StringToWString( UseShaderElement->Attribute( "Ext" ) )
+							AoStringUtility::StringToWString( UseShaderElement->Attribute( "Path" ) ),
+							AoStringUtility::StringToWString( UseShaderElement->Attribute( "Name" ) ),
+							AoStringUtility::StringToWString( UseShaderElement->Attribute( "Ext" ) )
 							) );
 
 					bool bIsValidShader = UseShader != nullptr;
 					if ( bIsValidShader )
 					{
 						CreatedAsset = new AoMaterial( UseShader );
-						CreatedAsset->SetMaterialName( AoString::StringToWString( MaterialNameElement->GetText( ) ) );
+						CreatedAsset->SetMaterialName( AoStringUtility::StringToWString( MaterialNameElement->GetText( ) ) );
 
 						tinyxml2::XMLNode* PropertiesNode = RootNode->FirstChildElement( "Properties" );
 						bool bIsHaveProperties = PropertiesNode != nullptr;
@@ -226,9 +277,9 @@ AoMaterial* AoAssetFactory::CreateMaterialFromFile( const string& FileFullPath, 
 							while ( CurrentProperty != nullptr )
 							{
 								std::string TypeName =
-									AoString::StringToLower( CurrentProperty->Attribute( "Type" ) );
+									AoStringUtility::StringToLower( CurrentProperty->Attribute( "Type" ) );
 								string PropertyName =
-									AoString::StringToWString( CurrentProperty->Attribute( "Name" ) );
+									AoStringUtility::StringToWString( CurrentProperty->Attribute( "Name" ) );
 
 								tinyxml2::XMLElement* ValueElement = CurrentProperty->FirstChildElement( "Value" );
 								bool bIsValidValue = ValueElement != nullptr;
@@ -282,9 +333,9 @@ AoMaterial* AoAssetFactory::CreateMaterialFromFile( const string& FileFullPath, 
 									else if ( TypeName == "texture" )
 									{
 										AoTexture2D* Texture = dynamic_cast< AoTexture2D* >( AoAssetManager::GetInstance( ).LoadAsset(
-											AoString::StringToWString( ValueElement->Attribute( "Path" ) ),
-											AoString::StringToWString( ValueElement->Attribute( "Name" ) ),
-											AoString::StringToWString( ValueElement->Attribute( "Ext" ) ) ) );
+											AoStringUtility::StringToWString( ValueElement->Attribute( "Path" ) ),
+											AoStringUtility::StringToWString( ValueElement->Attribute( "Name" ) ),
+											AoStringUtility::StringToWString( ValueElement->Attribute( "Ext" ) ) ) );
 
 										bool bIsValidTexture = Texture != nullptr;
 										if ( bIsValidTexture )

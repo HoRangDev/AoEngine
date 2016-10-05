@@ -7,12 +7,6 @@
     <Filter Include="Source\Core">
       <UniqueIdentifier>{ef52f50c-66f1-4dc0-b003-7796310e6200}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Math">
-      <UniqueIdentifier>{3757588e-953c-49c8-91ba-1c11d6941529}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Game">
-      <UniqueIdentifier>{13eb0638-4c09-413e-b344-75718107af83}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Core\Rendering">
       <UniqueIdentifier>{836a02b3-c190-4b25-9afb-20d93f0b514d}</UniqueIdentifier>
     </Filter>
@@ -37,6 +31,15 @@
     <Filter Include="Source\ThirdParty\TinyXML2">
       <UniqueIdentifier>{a91cabce-1707-4b5d-946d-0bd0d33c9c09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Core\Game">
+      <UniqueIdentifier>{13eb0638-4c09-413e-b344-75718107af83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\Math">
+      <UniqueIdentifier>{3757588e-953c-49c8-91ba-1c11d6941529}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\Utility">
+      <UniqueIdentifier>{b69fbf67-c6b0-4372-85a6-a144a3417783}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\AoEntryPoint.cpp">
@@ -49,16 +52,16 @@
       <Filter>Source\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoVector4.cpp">
-      <Filter>Source\Math</Filter>
+      <Filter>Source\Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoVector2.cpp">
-      <Filter>Source\Math</Filter>
+      <Filter>Source\Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoVector.cpp">
-      <Filter>Source\Math</Filter>
+      <Filter>Source\Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoMatrix4x4.cpp">
-      <Filter>Source\Math</Filter>
+      <Filter>Source\Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoRenderer.cpp">
       <Filter>Source\Core\Rendering</Filter>
@@ -70,18 +73,15 @@
       <Filter>Source\Core\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoActor.cpp">
-      <Filter>Source\Game</Filter>
+      <Filter>Source\Core\Game</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoComponent.cpp">
-      <Filter>Source\Game</Filter>
+      <Filter>Source\Core\Game</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoRenderComponent.cpp">
-      <Filter>Source\Game</Filter>
+      <Filter>Source\Core\Game</Filter>
     </ClCompile>
     <ClCompile Include="Source\WinProc.cpp">
-      <Filter>Source\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoString.cpp">
       <Filter>Source\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoAsset.cpp">
@@ -94,7 +94,7 @@
       <Filter>Source\Core\Asset</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoLevel.cpp">
-      <Filter>Source\Game</Filter>
+      <Filter>Source\Core\Game</Filter>
     </ClCompile>
     <ClCompile Include="..\ThirdParty\WICTextureLoader\WICTextureLoader.cpp">
       <Filter>Source\ThirdParty\WICTextureLoader</Filter>
@@ -103,7 +103,7 @@
       <Filter>Source\ThirdParty\DDSTextureLoader</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoTransform.cpp">
-      <Filter>Source\Game</Filter>
+      <Filter>Source\Core\Game</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoMesh.cpp">
       <Filter>Source\Core\Rendering</Filter>
@@ -139,16 +139,34 @@
       <Filter>Source\Core\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoMeshRenderComponent.cpp">
-      <Filter>Source\Game</Filter>
+      <Filter>Source\Core\Game</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoCameraComponent.cpp">
-      <Filter>Source\Game</Filter>
+      <Filter>Source\Core\Game</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoMaterial.cpp">
       <Filter>Source\Core\Asset</Filter>
     </ClCompile>
     <ClCompile Include="..\ThirdParty\TinyXML2\tinyxml2.cpp">
       <Filter>Source\ThirdParty\TinyXML2</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoGenericVertex.cpp">
+      <Filter>Source\Core\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoStringUtility.cpp">
+      <Filter>Source\Core\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoLogger.cpp">
+      <Filter>Source\Core\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoTimeManager.cpp">
+      <Filter>Source\Core\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoProfiler.cpp">
+      <Filter>Source\Core\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoProfileSample.cpp">
+      <Filter>Source\Core\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -162,27 +180,24 @@
       <Filter>Source\Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoVector4.h">
-      <Filter>Source\Math</Filter>
+      <Filter>Source\Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoVector2.h">
-      <Filter>Source\Math</Filter>
+      <Filter>Source\Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoVector.h">
-      <Filter>Source\Math</Filter>
+      <Filter>Source\Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoMatrix4x4.h">
-      <Filter>Source\Math</Filter>
+      <Filter>Source\Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoMath.h">
-      <Filter>Source\Math</Filter>
+      <Filter>Source\Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoRenderer.h">
       <Filter>Source\Core\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoViewport.h">
-      <Filter>Source\Core\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoVertex.h">
       <Filter>Source\Core\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoInputLayouts.h">
@@ -192,13 +207,13 @@
       <Filter>Source\Core\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoRenderComponent.h">
-      <Filter>Source\Game</Filter>
+      <Filter>Source\Core\Game</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoActor.h">
-      <Filter>Source\Game</Filter>
+      <Filter>Source\Core\Game</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoComponent.h">
-      <Filter>Source\Game</Filter>
+      <Filter>Source\Core\Game</Filter>
     </ClInclude>
     <ClInclude Include="Source\WinProc.h">
       <Filter>Source\Core</Filter>
@@ -317,9 +332,6 @@
     <ClInclude Include="..\ThirdParty\Effects11\include\D3DX11Effect.h">
       <Filter>Source\ThirdParty\Effects11</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AoString.h">
-      <Filter>Source\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Source\AoAsset.h">
       <Filter>Source\Core\Asset</Filter>
     </ClInclude>
@@ -330,7 +342,7 @@
       <Filter>Source\Core\Asset</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoLevel.h">
-      <Filter>Source\Game</Filter>
+      <Filter>Source\Core\Game</Filter>
     </ClInclude>
     <ClInclude Include="..\ThirdParty\WICTextureLoader\WICTextureLoader.h">
       <Filter>Source\ThirdParty\WICTextureLoader</Filter>
@@ -339,7 +351,7 @@
       <Filter>Source\ThirdParty\DDSTextureLoader</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoTransform.h">
-      <Filter>Source\Game</Filter>
+      <Filter>Source\Core\Game</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoMesh.h">
       <Filter>Source\Core\Rendering</Filter>
@@ -375,16 +387,37 @@
       <Filter>Source\Core\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoMeshRenderComponent.h">
-      <Filter>Source\Game</Filter>
+      <Filter>Source\Core\Game</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoCameraComponent.h">
-      <Filter>Source\Game</Filter>
+      <Filter>Source\Core\Game</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoMaterial.h">
       <Filter>Source\Core\Asset</Filter>
     </ClInclude>
     <ClInclude Include="..\ThirdParty\TinyXML2\tinyxml2.h">
       <Filter>Source\ThirdParty\TinyXML2</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoGenericVertex.h">
+      <Filter>Source\Core\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoType.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoStringUtility.h">
+      <Filter>Source\Core\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoLogger.h">
+      <Filter>Source\Core\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoTimeManager.h">
+      <Filter>Source\Core\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoProfiler.h">
+      <Filter>Source\Core\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoProfileSample.h">
+      <Filter>Source\Core\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
