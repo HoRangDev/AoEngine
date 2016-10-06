@@ -22,7 +22,8 @@ void AoInputLayouts::Initialize( )
 	ID3D11Device* Device = AoApplication::GetRenderer( ).GetDevice( );
 	assert( Device != nullptr );
 
-	AoMaterial* BasicMaterial = dynamic_cast< AoMaterial* >( AoAssetManager::GetInstance( ).LoadAsset( TEXT( "Shaders" ), TEXT( "Basic" ), TEXT( ".fx" ) ) );
+	AoMaterial* BasicMaterial = dynamic_cast< AoMaterial* >( AoAssetManager::GetInstance( ).LoadAsset(
+		TEXT( "Materials" ), TEXT( "Basic" ), TEXT( ".material" ) ) );
 	if ( BasicMaterial != nullptr )
 	{
 		D3DX11_PASS_DESC PassDesc;
@@ -30,8 +31,9 @@ void AoInputLayouts::Initialize( )
 		if ( Pass != nullptr )
 		{
 			Pass->GetDesc( &PassDesc );
-			Device->CreateInputLayout( GenericDesc, 6, PassDesc.pIAInputSignature, PassDesc.IAInputSignatureSize, &GenericVertexLayout );
+			auto err = Device->CreateInputLayout( GenericDesc, 6, PassDesc.pIAInputSignature, PassDesc.IAInputSignatureSize, &GenericVertexLayout );
 
+			assert( GenericVertexLayout != nullptr );
 			if ( GenericVertexLayout == nullptr )
 			{
 				// Log Error

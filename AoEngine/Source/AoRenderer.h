@@ -26,6 +26,8 @@ public:
 	AoRenderer( AoWindow& Window );
 	virtual ~AoRenderer();
 
+	static AoRenderer& GetInstance( );
+
 	virtual void BeginFrame();
 	virtual void Render();
 	virtual void EndFrame();
@@ -64,10 +66,12 @@ protected:
 	virtual void Release();
 
 private:
+	static AoRenderer* Instance;
 	AoWindow& Window;
 	AoViewport Viewport;
-	AoCameraComponent* MainCamera;
 	RenderComponentList Components;
+
+	AoCameraComponent* MainCamera = nullptr;
 
 	IDXGISwapChain* SwapChain = nullptr;
 	ID3D11Device* Device = nullptr;

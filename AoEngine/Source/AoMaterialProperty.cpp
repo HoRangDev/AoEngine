@@ -14,3 +14,13 @@ void AoMaterialProperty::SetName( const string& Name )
 {
 	this->Name = Name;
 }
+
+void AoMaterialProperty::SetDirty( bool bIsDirty )
+{
+	this->bIsDirty = bIsDirty;
+}
+
+bool AoMaterialProperty::IsDirty( ) const
+{
+	return bIsDirty;
+}

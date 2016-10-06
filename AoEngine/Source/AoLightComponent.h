@@ -11,7 +11,11 @@ public:
 	AoLight GetLightData( ) const;
 	void SetLightData( AoLight LightData );
 
+	bool IsDirty( ) const;
+	void SetDirty( bool bIsDirty );
+
 private:
+	bool bIsDirty;
 	AoLight LightData;
 
 };

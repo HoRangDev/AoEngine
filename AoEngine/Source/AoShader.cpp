@@ -9,7 +9,8 @@
 #include "AoVector4.h"
 #include "AoTexture2D.h"
 
-AoShader::AoShader( std::vector<char>&& CompiledShader )
+AoShader::AoShader( std::vector<char>&& CompiledShader ) 
+	: FX( nullptr )
 {
 	ID3D11Device* Device = AoApplication::GetRenderer( ).GetDevice( );
 	D3DX11CreateEffectFromMemory( &CompiledShader[ 0 ], CompiledShader.size( ), 0, Device, &FX );
@@ -61,7 +62,11 @@ void AoShader::SetGlobalVariableByName( const string& PropertyName, const void* 
 	ID3DX11EffectVariable* Variable = GetVariableByName( PropertyName );
 	if( Variable != nullptr )
 	{
-		Variable->SetRawValue( Data, 0, ByteCount );
+		if ( Variable->IsValid( ) )
+		{
+			Variable->SetRawValue( Data, 0, ByteCount );
+		}
+		ReleaseCOM( Variable );
 	}
 }
 
@@ -70,7 +75,11 @@ void AoShader::SetGlobalMatrixByName( const string& PropertyName, const AoMatrix
 	ID3DX11EffectMatrixVariable* Variable = GetMatrixByName( PropertyName );
 	if ( Variable != nullptr )
 	{
-		Variable->SetMatrix( reinterpret_cast< const float* >( &Matrix ) );
+		if ( Variable->IsValid( ) )
+		{
+			Variable->SetMatrix( reinterpret_cast< const float* >( &Matrix ) );
+		}
+		ReleaseCOM( Variable );
 	}
 }
 
@@ -79,7 +88,11 @@ void AoShader::SetGlobalFloatByName( const string& PropertyName, float Value )
 	ID3DX11EffectScalarVariable* Variable = GetScalarByName( PropertyName );
 	if( Variable != nullptr )
 	{
-		Variable->SetFloat( Value );
+		if ( Variable->IsValid( ) )
+		{
+			Variable->SetFloat( Value );
+		}
+		ReleaseCOM( Variable );
 	}
 }
 
@@ -88,7 +101,11 @@ void AoShader::SetGlobalIntByName( const string& PropertyName, int Value )
 	ID3DX11EffectScalarVariable* Variable = GetScalarByName( PropertyName );
 	if( Variable != nullptr )
 	{
-		Variable->SetInt( Value );
+		if ( Variable->IsValid( ) )
+		{
+			Variable->SetInt( Value );
+		}
+		ReleaseCOM( Variable );
 	}
 }
 
@@ -97,7 +114,11 @@ void AoShader::SetGlobalBoolByName( const string& PropertyName, bool Value )
 	ID3DX11EffectScalarVariable* Variable = GetScalarByName( PropertyName );
 	if( Variable != nullptr )
 	{
-		Variable->SetBool( Value );
+		if ( Variable->IsValid( ) )
+		{
+			Variable->SetBool( Value );
+		}
+		ReleaseCOM( Variable );
 	}
 }
 
@@ -106,7 +127,11 @@ void AoShader::SetGlobalVectorByName( const string& PropertyName, const AoVector
 	ID3DX11EffectVectorVariable* Variable = GetVectorByName( PropertyName );
 	if( Variable != nullptr )
 	{
-		Variable->SetFloatVector( reinterpret_cast< const float * >( &Vector ) );
+		if ( Variable->IsValid( ) )
+		{
+			Variable->SetFloatVector( reinterpret_cast< const float * >( &Vector ) );
+		}
+		ReleaseCOM( Variable );
 	}
 }
 
@@ -115,18 +140,25 @@ void  AoShader::SetGlobalTextureByName(const string& PropertyName, const AoTextu
 	ID3DX11EffectShaderResourceVariable* Variable = GetTextureByName( PropertyName );
 	if( Variable != nullptr )
 	{
-		if( Texture != nullptr )
+		if ( Variable->IsValid( ) )
 		{
-			Variable->SetResource( Texture->GetShaderResourceView( ) );
+			if ( Texture != nullptr )
+			{
+				Variable->SetResource( Texture->GetShaderResourceView( ) );
+			}
+			else
+			{
+				Variable->SetResource( nullptr );
+			}
 		}
-		else
-		{
-			Variable->SetResource( nullptr );
-		}
+		ReleaseCOM( Variable );
 	}
 }
 
 bool AoShader::IsValidProperty( const string& PropertyName ) const
 {
-	return (GetVariableByName( PropertyName ) != nullptr);
+	auto Variable = GetVariableByName( PropertyName );
+	bool bIsValid = Variable->IsValid( );
+	ReleaseCOM( Variable );
+	return bIsValid;
 }

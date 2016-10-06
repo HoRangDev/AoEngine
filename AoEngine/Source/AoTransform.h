@@ -45,7 +45,11 @@ public:
 	void SetParent( AoTransform* Parent );
 	AoTransform* GetParent( ) const;
 
+	bool IsDirty( ) const;
+	void SetDirty( bool bIsDirty );
+
 private:
+	bool bIsDirty;
 	AoTransform* Parent;
 	AoVector Position;
 	AoVector Scale;

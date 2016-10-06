@@ -27,7 +27,10 @@ AoLightManager& AoLightManager::GetInstance( )
 
 void AoLightManager::Initialize( )
 {
-	/* Nothing in here */
+	for ( uint32 Index = 0; Index < MAX_LIGHT_NUMBER; ++Index )
+	{
+		Lights[ Index ] = nullptr;
+	}
 }
 
 void AoLightManager::DeInitialize( )
@@ -87,14 +90,22 @@ void AoLightManager::BindLights( AoMaterial* Material )
 		AoLightComponent* Light = Lights[ Index ];
 		if ( Light != nullptr )
 		{
-			if ( Light->IsActive( ) )
+			if ( Light->IsValid( ) )
 			{
-				Material->SetVariableByName( TEXT( "Lights" ), &( Light->GetLightData( ) ),
-					sizeof( AoLight ) * ValidLightsNum,
-					sizeof( AoLight ) );
+				if ( Light->IsDirty( ) )
+				{
+					Material->SetVariableByName( TEXT( "Lights" ), &( Light->GetLightData( ) ),
+						sizeof( AoLight ) * ValidLightsNum,
+						sizeof( AoLight ) );
 
-				++ValidLightsNum;
+					++ValidLightsNum;
+				}
 			}
+		}
+
+		if ( ValidLightsNum > 0 )
+		{
+			Material->SetIntByName( TEXT( "BindingLightsNumber" ), ValidLightsNum );
 		}
 	}
 }

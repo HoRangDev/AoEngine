@@ -1,14 +1,14 @@
 #include "AoComponent.h"
 #include "AoActor.h"
 
-AoComponent::AoComponent( )
+AoComponent::AoComponent( ) :
+	Actor( nullptr ), bIsActive( true )
 {
 
 }
 
 AoComponent::~AoComponent( )
 {
-
 }
 
 void AoComponent::SetActive( bool bIsActive )
@@ -21,6 +21,21 @@ bool AoComponent::IsActive( ) const
 	return bIsActive;
 }
 
+bool AoComponent::IsParentActorRegistered( ) const
+{
+	if ( Actor != nullptr )
+	{
+		return Actor->IsRegisteredAtLevel( );
+	}
+
+	return false;
+}
+
+bool AoComponent::IsValid( ) const
+{
+	return IsActive( ) && IsParentActorRegistered( );
+}
+
 AoActor* AoComponent::GetAttachedActor( ) const
 {
 	return Actor;
@@ -28,6 +43,7 @@ AoActor* AoComponent::GetAttachedActor( ) const
 
 void AoComponent::SetAttachedActor( AoActor* Actor )
 {
+	this->Actor = Actor;
 	if( Actor != nullptr )
 	{
 		OnAttach( );
@@ -36,6 +52,4 @@ void AoComponent::SetAttachedActor( AoActor* Actor )
 	{
 		OnDetach( );
 	}
-
-	this->Actor = Actor;
 }

@@ -6,6 +6,7 @@
 #include "AoMaterialMatrixProperty.h"
 #include "AoMaterialVectorProperty.h"
 #include "AoMaterialTextureProperty.h"
+#include "AoMaterialManager.h"
 #include "AoShader.h"
 #include "AoStringUtility.h"
 #include "AoMatrix4x4.h"
@@ -13,31 +14,34 @@
 #include <tinyxml2.h>
 
 AoMaterial::AoMaterial( AoShader* Shader )
-	: Shader( Shader ), bIsLightOutdated( true )
+	: Shader( Shader )
 {
 }
 
 AoMaterial::~AoMaterial( )
 {
+	AoMaterialManager::GetInstance( ).UnRegisterMaterial( this );
 	DeleteAllProperties( );
 }
 
-ID3DX11EffectTechnique * AoMaterial::GetTechniqueByIndex( uint32 Index ) const
+ID3DX11EffectTechnique* AoMaterial::GetTechniqueByIndex( uint32 Index ) const
 {
 	return Shader->GetTechniqueByIndex( Index );
 }
 
-ID3DX11EffectTechnique * AoMaterial::GetTechniqueByName( const string& PropertyName ) const
+ID3DX11EffectTechnique* AoMaterial::GetTechniqueByName( const string& PropertyName ) const
 {
 	return Shader->GetTechniqueByName( PropertyName );
 }
 
-AoMaterialProperty* AoMaterial::GetPropertyByName( const string & PropertyName ) const
+AoMaterialProperty* AoMaterial::GetPropertyByName( const string& PropertyName ) const
 {
-	auto Itr = Properties.find( PropertyName );
-	if ( Itr != Properties.end( ) )
+	for( auto Itr = Properties.begin(); Itr != Properties.end(); ++Itr )
 	{
-		return ( *Itr ).second;
+		if ( ( *Itr )->GetName() == PropertyName )
+		{
+			return ( *Itr );
+		}
 	}
 
 	return nullptr;
@@ -147,11 +151,6 @@ AoVector4 AoMaterial::GetVectorByName( const string& PropertyName ) const
 
 void AoMaterial::SetVariableByName( const string& PropertyName, const void* Data, uint32 ByteOffset, uint32 ByteCount )
 {
-	if( PropertyName == TEXT( "Lights" ) )
-	{
-		bIsLightOutdated = false;
-	}
-
 	if ( Shader->IsValidProperty( PropertyName ) )
 	{
 		Shader->SetGlobalVariableByName( PropertyName, Data, ByteOffset, ByteCount );
@@ -170,6 +169,7 @@ void AoMaterial::SetIntByName( const string& PropertyName, int Value )
 
 			if ( Property != nullptr )
 			{
+				Property->SetDirty( true );
 				Property->SetData( Value );
 			}
 		}
@@ -178,7 +178,7 @@ void AoMaterial::SetIntByName( const string& PropertyName, int Value )
 			AoMaterialIntProperty* NewProperty = 
 				new AoMaterialIntProperty( Value, PropertyName );
 
-			Properties.insert( std::pair<string, AoMaterialProperty*>( PropertyName, NewProperty ) );
+			Properties.push_back( NewProperty );
 		}
 	}
 }
@@ -195,6 +195,7 @@ void AoMaterial::SetFloatByName( const string& PropertyName, float Value )
 
 			if ( Property != nullptr )
 			{
+				Property->SetDirty( true );
 				Property->SetData( Value );
 			}
 		}
@@ -203,7 +204,7 @@ void AoMaterial::SetFloatByName( const string& PropertyName, float Value )
 			AoMaterialFloatProperty* NewProperty =
 				new AoMaterialFloatProperty( Value, PropertyName );
 
-			Properties.insert( std::pair<string, AoMaterialProperty*>( PropertyName, NewProperty ) );
+			Properties.push_back( NewProperty );
 		}
 	}
 }
@@ -220,6 +221,7 @@ void AoMaterial::SetBoolByName( const string& PropertyName, bool Value )
 
 			if ( Property != nullptr )
 			{
+				Property->SetDirty( true );
 				Property->SetData( Value );
 			}
 		}
@@ -228,7 +230,7 @@ void AoMaterial::SetBoolByName( const string& PropertyName, bool Value )
 			AoMaterialBoolProperty* NewProperty =
 				new AoMaterialBoolProperty( Value, PropertyName );
 
-			Properties.insert( std::pair<string, AoMaterialProperty*>( PropertyName, NewProperty ) );
+			Properties.push_back( NewProperty );
 		}
 	}
 }
@@ -245,6 +247,7 @@ void AoMaterial::SetTextureByName( const string& PropertyName, AoTexture2D* Valu
 
 			if ( Property != nullptr )
 			{
+				Property->SetDirty( true );
 				Property->SetData( Value );
 			}
 		}
@@ -253,34 +256,14 @@ void AoMaterial::SetTextureByName( const string& PropertyName, AoTexture2D* Valu
 			AoMaterialTextureProperty* NewProperty =
 				new AoMaterialTextureProperty( Value, PropertyName );
 
-			Properties.insert( std::pair<string, AoMaterialProperty*>( PropertyName, NewProperty ) );
+			Properties.push_back( NewProperty );
 		}
 	}
 }
 
 void AoMaterial::SetMatrixByName( const string& PropertyName, const AoMatrix4x4& Value )
 {
-	if ( Shader->IsValidProperty( PropertyName ) )
-	{
-		AoMaterialProperty* FoundProperty = GetPropertyByName( PropertyName );
-		if ( FoundProperty != nullptr )
-		{
-			AoMaterialMatrixProperty* Property =
-				dynamic_cast< AoMaterialMatrixProperty* >( FoundProperty );
-
-			if ( Property != nullptr )
-			{
-				Property->SetData( Value );
-			}
-		}
-		else
-		{
-			AoMaterialMatrixProperty* NewProperty =
-				new AoMaterialMatrixProperty( Value, PropertyName );
-
-			Properties.insert( std::pair<string, AoMaterialProperty*>( PropertyName, NewProperty ) );
-		}
-	}
+	Shader->SetGlobalMatrixByName( PropertyName, Value );
 }
 
 void AoMaterial::SetVectorByName( const string& PropertyName, const AoVector4& Value )
@@ -292,9 +275,10 @@ void AoMaterial::SetVectorByName( const string& PropertyName, const AoVector4& V
 		{
 			AoMaterialVectorProperty* Property =
 				dynamic_cast< AoMaterialVectorProperty* >( FoundProperty );
-
+			
 			if ( Property != nullptr )
 			{
+				Property->SetDirty( true );
 				Property->SetData( Value );
 			}
 		}
@@ -303,7 +287,7 @@ void AoMaterial::SetVectorByName( const string& PropertyName, const AoVector4& V
 			AoMaterialVectorProperty* NewProperty =
 				new AoMaterialVectorProperty( Value, PropertyName );
 
-			Properties.insert( std::pair<string, AoMaterialProperty*>( PropertyName, NewProperty ) );
+			Properties.push_back( NewProperty );
 		}
 	}
 }
@@ -334,24 +318,17 @@ AoShader* AoMaterial::GetShader( ) const
 
 void AoMaterial::ApplyPropertiesToShader( )
 {
-	for( auto PropertyPair : Properties )
+	for( auto Property : Properties )
 	{
-		AoMaterialProperty* Property = PropertyPair.second;
 		if( Property != nullptr )
 		{
-			Property->ApplyToGlobalVariable( Shader );
+			if ( Property->IsDirty( ) )
+			{
+				Property->SetDirty( false );
+				Property->ApplyToGlobalVariable( Shader );
+			}
 		}
 	}
-}
-
-void AoMaterial::SetIsLightOutdated( bool IsOutdated )
-{
-	this->bIsLightOutdated = IsOutdated;
-}
-
-bool AoMaterial::IsLightOutdated( ) const
-{
-	return bIsLightOutdated;
 }
 
 void AoMaterial::SaveToFile( const string& FileName, const AoMaterial* Material )
@@ -375,9 +352,8 @@ void AoMaterial::SaveToFile( const string& FileName, const AoMaterial* Material 
 		RootNode->InsertEndChild( UseShaderAssetNode );
 
 		auto PropertiesNode = Document.NewElement( "Properties" );
-		for ( auto PropertyPair : Material->Properties )
+		for ( auto Property : Material->Properties )
 		{
-			AoMaterialProperty* Property = PropertyPair.second;
 			if ( Property != nullptr )
 			{
 				auto PropertyNode = Document.NewElement( "Property" );
@@ -461,7 +437,7 @@ void AoMaterial::DeleteAllProperties( )
 {
 	for ( auto Property : Properties )
 	{
-		delete Property.second;
+		delete Property;
 	}
 
 	Properties.clear( );

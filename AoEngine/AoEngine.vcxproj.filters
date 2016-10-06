@@ -40,16 +40,40 @@
     <Filter Include="Source\Core\Utility">
       <UniqueIdentifier>{b69fbf67-c6b0-4372-85a6-a144a3417783}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{6035f492-213e-4ebb-acf1-c7e4c382fdb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Tests">
+      <UniqueIdentifier>{0eab55d5-0e96-417b-a511-e3906fbfcbf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models">
+      <UniqueIdentifier>{4cf14515-cfc4-4b25-9ac2-9fa7f681ae99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Materials">
+      <UniqueIdentifier>{d98b4c4f-146e-4eb7-a349-d7f2c8e11d30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Shaders">
+      <UniqueIdentifier>{a7c7dc15-8056-4cb8-99cf-3cb17eb8f001}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\Rendering\Material Property">
+      <UniqueIdentifier>{d103d929-a35f-4708-b3dc-96b8c81f1631}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\Utility\Profiler">
+      <UniqueIdentifier>{3fc3a687-aa51-407d-a0a6-4be350ad0c78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\Utility\Logger">
+      <UniqueIdentifier>{e84d8669-eeaf-4ce0-af40-6b11c280ba6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\Utility\Time">
+      <UniqueIdentifier>{287471e1-ac25-47ec-86b3-7f8cf4f5719a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\Application">
+      <UniqueIdentifier>{0174c951-71fa-4ef1-a724-a8e98605274e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\AoEntryPoint.cpp">
       <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoApplication.cpp">
-      <Filter>Source\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoWindow.cpp">
-      <Filter>Source\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoVector4.cpp">
       <Filter>Source\Core\Math</Filter>
@@ -80,9 +104,6 @@
     </ClCompile>
     <ClCompile Include="Source\AoRenderComponent.cpp">
       <Filter>Source\Core\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\WinProc.cpp">
-      <Filter>Source\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\AoAsset.cpp">
       <Filter>Source\Core\Asset</Filter>
@@ -117,27 +138,6 @@
     <ClCompile Include="Source\AoShader.cpp">
       <Filter>Source\Core\Asset</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AoMaterialProperty.cpp">
-      <Filter>Source\Core\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoMaterialIntProperty.cpp">
-      <Filter>Source\Core\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoMaterialFloatProperty.cpp">
-      <Filter>Source\Core\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoMaterialBoolProperty.cpp">
-      <Filter>Source\Core\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoMaterialTextureProperty.cpp">
-      <Filter>Source\Core\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoMaterialMatrixProperty.cpp">
-      <Filter>Source\Core\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoMaterialVectorProperty.cpp">
-      <Filter>Source\Core\Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="Source\AoMeshRenderComponent.cpp">
       <Filter>Source\Core\Game</Filter>
     </ClCompile>
@@ -156,21 +156,6 @@
     <ClCompile Include="Source\AoStringUtility.cpp">
       <Filter>Source\Core\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AoLogger.cpp">
-      <Filter>Source\Core\Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoTimeManager.cpp">
-      <Filter>Source\Core\Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoProfiler.cpp">
-      <Filter>Source\Core\Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoProfileSample.cpp">
-      <Filter>Source\Core\Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\AoMaterialData.cpp">
-      <Filter>Source\Core\Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="Source\AoLight.cpp">
       <Filter>Source\Core\Rendering</Filter>
     </ClCompile>
@@ -180,17 +165,59 @@
     <ClCompile Include="Source\AoLightManager.cpp">
       <Filter>Source\Core\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="Source\AoMaterialBoolProperty.cpp">
+      <Filter>Source\Core\Rendering\Material Property</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoMaterialData.cpp">
+      <Filter>Source\Core\Rendering\Material Property</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoMaterialFloatProperty.cpp">
+      <Filter>Source\Core\Rendering\Material Property</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoMaterialIntProperty.cpp">
+      <Filter>Source\Core\Rendering\Material Property</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoMaterialMatrixProperty.cpp">
+      <Filter>Source\Core\Rendering\Material Property</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoMaterialProperty.cpp">
+      <Filter>Source\Core\Rendering\Material Property</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoMaterialTextureProperty.cpp">
+      <Filter>Source\Core\Rendering\Material Property</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoMaterialVectorProperty.cpp">
+      <Filter>Source\Core\Rendering\Material Property</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoTestLevel.cpp">
+      <Filter>Source\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoProfiler.cpp">
+      <Filter>Source\Core\Utility\Profiler</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoProfileSample.cpp">
+      <Filter>Source\Core\Utility\Profiler</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoLogger.cpp">
+      <Filter>Source\Core\Utility\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoTimeManager.cpp">
+      <Filter>Source\Core\Utility\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoApplication.cpp">
+      <Filter>Source\Core\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoWindow.cpp">
+      <Filter>Source\Core\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WinProc.cpp">
+      <Filter>Source\Core\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AoMaterialManager.cpp">
+      <Filter>Source\Core\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\AoApplication.h">
-      <Filter>Source\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoWindow.h">
-      <Filter>Source\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WindowsInc.h">
-      <Filter>Source\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Source\AoVector4.h">
       <Filter>Source\Core\Math</Filter>
     </ClInclude>
@@ -226,9 +253,6 @@
     </ClInclude>
     <ClInclude Include="Source\AoComponent.h">
       <Filter>Source\Core\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WinProc.h">
-      <Filter>Source\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\ThirdParty\assimp\include\ai_assert.h">
       <Filter>Source\ThirdParty\assimp</Filter>
@@ -377,27 +401,6 @@
     <ClInclude Include="Source\AoShader.h">
       <Filter>Source\Core\Asset</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AoMaterialProperty.h">
-      <Filter>Source\Core\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoMaterialIntProperty.h">
-      <Filter>Source\Core\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoMaterialFloatProperty.h">
-      <Filter>Source\Core\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoMaterialBoolProperty.h">
-      <Filter>Source\Core\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoMaterialMatrixProperty.h">
-      <Filter>Source\Core\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoMaterialTextureProperty.h">
-      <Filter>Source\Core\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoMaterialVectorProperty.h">
-      <Filter>Source\Core\Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="Source\AoMeshRenderComponent.h">
       <Filter>Source\Core\Game</Filter>
     </ClInclude>
@@ -413,26 +416,8 @@
     <ClInclude Include="Source\AoGenericVertex.h">
       <Filter>Source\Core\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AoType.h">
-      <Filter>Source\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Source\AoStringUtility.h">
       <Filter>Source\Core\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoLogger.h">
-      <Filter>Source\Core\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoTimeManager.h">
-      <Filter>Source\Core\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoProfiler.h">
-      <Filter>Source\Core\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoProfileSample.h">
-      <Filter>Source\Core\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AoMaterialData.h">
-      <Filter>Source\Core\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoLight.h">
       <Filter>Source\Core\Rendering</Filter>
@@ -441,6 +426,63 @@
       <Filter>Source\Core\Game</Filter>
     </ClInclude>
     <ClInclude Include="Source\AoLightManager.h">
+      <Filter>Source\Core\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoMaterialVectorProperty.h">
+      <Filter>Source\Core\Rendering\Material Property</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoMaterialBoolProperty.h">
+      <Filter>Source\Core\Rendering\Material Property</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoMaterialData.h">
+      <Filter>Source\Core\Rendering\Material Property</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoMaterialFloatProperty.h">
+      <Filter>Source\Core\Rendering\Material Property</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoMaterialIntProperty.h">
+      <Filter>Source\Core\Rendering\Material Property</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoMaterialMatrixProperty.h">
+      <Filter>Source\Core\Rendering\Material Property</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoMaterialProperty.h">
+      <Filter>Source\Core\Rendering\Material Property</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoMaterialTextureProperty.h">
+      <Filter>Source\Core\Rendering\Material Property</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoTestLevel.h">
+      <Filter>Source\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoProfiler.h">
+      <Filter>Source\Core\Utility\Profiler</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoProfileSample.h">
+      <Filter>Source\Core\Utility\Profiler</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoLogger.h">
+      <Filter>Source\Core\Utility\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoTimeManager.h">
+      <Filter>Source\Core\Utility\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoType.h">
+      <Filter>Source\Core\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoApplication.h">
+      <Filter>Source\Core\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoWindow.h">
+      <Filter>Source\Core\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WindowsInc.h">
+      <Filter>Source\Core\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WinProc.h">
+      <Filter>Source\Core\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AoMaterialManager.h">
       <Filter>Source\Core\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
@@ -466,5 +508,16 @@
     <None Include="..\ThirdParty\assimp\include\vector3.inl">
       <Filter>Source\ThirdParty\assimp</Filter>
     </None>
+    <None Include="Assets\Models\unitychan.fbx">
+      <Filter>Assets\Models</Filter>
+    </None>
+    <None Include="Assets\Materials\Basic.material">
+      <Filter>Assets\Materials</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Assets\Shaders\Basic.fx">
+      <Filter>Assets\Shaders</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>

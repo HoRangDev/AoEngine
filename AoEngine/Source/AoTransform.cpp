@@ -7,7 +7,8 @@ AoTransform::AoTransform( )
 }
 
 AoTransform::AoTransform( const AoVector& Position, const AoVector& Scale, const AoVector& Rotation )
-	: Position( Position ),
+	: bIsDirty( true ),
+	Position( Position ),
 	Scale( Scale ),
 	Rotation( Rotation ),
 	Parent( nullptr )
@@ -24,42 +25,50 @@ void AoTransform::OnAttach( )
 	if( ParentActor != nullptr )
 	{
 		Parent = ParentActor->GetTransform( );
+		bIsDirty = true;
 	}
 }
 
 void AoTransform::OnDetach( )
 {
 	Parent = nullptr;
+	bIsDirty = true;
 }
 
 void AoTransform::SetPosition( const AoVector& Position )
 {
 	this->Position = Position;
+	bIsDirty = true;
 }
 
 void AoTransform::SetScale( const AoVector& Scale )
 {
 	this->Scale = Scale;
+	bIsDirty = true;
 }
 
 void AoTransform::SetRotation( const AoVector& Rotation )
 {
 	this->Rotation = Rotation;
+	bIsDirty = true;
 }
 
 void AoTransform::SetRotationX( float Degree )
 {
 	this->Rotation.X = Degree;
+	bIsDirty = true;
 }
 
 void AoTransform::SetRotationY( float Degree )
 {
 	this->Rotation.Y = Degree;
+	bIsDirty = true;
 }
 
 void AoTransform::SetRotationZ( float Degree )
 {
 	this->Rotation.Z = Degree;
+	bIsDirty = true;
 }
 
 AoVector AoTransform::GetPosition( ) const
@@ -86,7 +95,7 @@ AoVector AoTransform::GetRelativeScale( ) const
 {
 	if( Parent != nullptr )
 	{
-		return Parent->GetRelativeScale( ) + Scale;
+		return Parent->GetRelativeScale( ) * Scale;
 	}
 
 	return Scale;
@@ -187,4 +196,14 @@ void AoTransform::SetParent( AoTransform* Parent )
 AoTransform* AoTransform::GetParent( ) const
 {
 	return Parent;
+}
+
+bool AoTransform::IsDirty( ) const
+{
+	return bIsDirty;
+}
+
+void AoTransform::SetDirty( bool bIsDirty )
+{
+	this->bIsDirty = bIsDirty;
 }

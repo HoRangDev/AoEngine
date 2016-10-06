@@ -1,10 +1,17 @@
 #include "AoRenderer.h"
+#include "AoMaterial.h"
+#include "AoMaterialManager.h"
 #include "AoRenderComponent.h"
+#include "AoCameraComponent.h"
 #include "AoWindow.h"
+
+AoRenderer* AoRenderer::Instance = nullptr;
 
 AoRenderer::AoRenderer( AoWindow& Window ) :
 	Window( Window )
 {
+	assert( Instance == nullptr );
+	Instance = this;
 	CreateDevice();
 	CreateDepthStencilBuffer();
 	CreateRenderTarget();
@@ -17,13 +24,33 @@ AoRenderer::~AoRenderer()
 	Release();
 }
 
-void AoRenderer::Render()
+AoRenderer& AoRenderer::GetInstance( )
 {
-	for( AoRenderComponent* Component : Components )
+	assert( Instance != nullptr );
+	return *Instance;
+}
+
+void AoRenderer::Render( )
+{
+	if ( MainCamera != nullptr )
 	{
-		if( Component->IsVisible() )
+		if ( MainCamera->IsValid( ) )
 		{
-			Component->Render( this );
+			if ( MainCamera->IsDirty( ) )
+			{
+				AoMaterialManager::GetInstance( ).BatchMatrixSet(
+					TEXT( "gViewProj" ),
+					MainCamera->GetViewProjMatrix( ) );
+				MainCamera->SetDirty( false );
+			}
+
+			for ( AoRenderComponent* Component : Components )
+			{
+				if ( Component->IsVisible( ) )
+				{
+					Component->Render( this );
+				}
+			}
 		}
 	}
 }
@@ -80,11 +107,6 @@ void AoRenderer::EndFrame()
 	else
 	{
 		bIsStandByMode = (SwapChain->Present(0, 0) == DXGI_STATUS_OCCLUDED);
-	}
-
-	for( auto RenderComponent : Components )
-	{
-		RenderComponent->GetMaterial( )->SetIsLightOutdated( true );
 	}
 }
 

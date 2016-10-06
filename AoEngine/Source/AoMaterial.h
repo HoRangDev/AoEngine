@@ -1,8 +1,7 @@
 #pragma once
 #include "AoAsset.h"
 #include "AoMatrix4x4.h"
-#include <unordered_map>
-
+#include <vector>
 class AoShader;
 class AoTexture2D;
 class AoMaterialProperty;
@@ -43,20 +42,15 @@ public:
 
 	void ApplyPropertiesToShader( );
 
-	void SetIsLightOutdated( bool IsOutdated );
-	bool IsLightOutdated( ) const;
-
 	static void SaveToFile( const string& FileFullPath, const AoMaterial* Material );
 
 private:
 	void DeleteAllProperties( );
 
 private:
-	using PropertyMap = std::unordered_map<string, AoMaterialProperty*>;
+	using PropertyList = std::vector< AoMaterialProperty* >;
 	string MaterialName;
 	AoShader* Shader;
-	PropertyMap Properties;
-
-	bool bIsLightOutdated;
+	PropertyList Properties;
 
 };

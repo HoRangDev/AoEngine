@@ -158,7 +158,7 @@ AoVector AoVector::operator^( const AoVector& Operand )
 {
 	return  AoVector(
 		Y*Operand.Z - Z*Operand.Y,
-		X*Operand.Z - Z*Operand.X,
+		Z*Operand.X - X*Operand.Z,
 		X*Operand.Y - Y*Operand.X );
 }
 

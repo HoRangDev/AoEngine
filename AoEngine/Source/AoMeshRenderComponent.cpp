@@ -2,6 +2,10 @@
 #include "AoInputLayouts.h"
 #include "AoRenderer.h"
 #include "AoMesh.h"
+#include "AoActor.h"
+#include "AoMatrix4x4.h"
+#include "AoTransform.h"
+#include "AoCameraComponent.h"
 #include "AoLightManager.h"
 
 AoMeshRenderComponent::AoMeshRenderComponent( )
@@ -33,8 +37,6 @@ void AoMeshRenderComponent::Render( AoRenderer* Renderer )
 		D3DX11_TECHNIQUE_DESC TechniqueDesc;
 		ActiveTechnique->GetDesc( &TechniqueDesc );
 
-		AoLightManager::GetInstance( ).BindLights( Material );
-
 		for ( uint32 Index = 0; Index < TechniqueDesc.Passes; ++Index )
 		{
 			Renderer->BindInputLayout( InputLayout );
@@ -43,6 +45,15 @@ void AoMeshRenderComponent::Render( AoRenderer* Renderer )
 				Mesh->GetVertexBuffer( ),
 				Mesh->GetVertexSize( ) );
 			Renderer->BindIndexBuffer( Mesh->GetIndexBuffer( ) );
+
+			AoTransform* Transform = Actor->GetTransform( );
+
+			if ( Transform->IsDirty( ) )
+			{
+				AoMatrix4x4 World = Transform->GetRelativeTransformationMatrix( );
+				Material->SetMatrixByName( TEXT( "gWorld" ), World );
+				Transform->SetDirty( false );
+			}
 
 			Material->ApplyPropertiesToShader( );
 

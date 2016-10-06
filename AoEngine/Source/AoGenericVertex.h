@@ -18,7 +18,7 @@ public:
 	AoVector	Position;	// X, Y, Z		,	Semantic: POSITION	,	ByteOffset: 0
 	AoVector	Normal;		// X, Y, Z		,	Semantic: NORMAL	,	ByteOffset: 12
 	AoVector4	Color;		// R, G, B, A	,	Semantic: COLOR		,	BytePffset: 24
-	AoVector2	TextureUV;	// U, V			,	Semantic: TEXCOORD	,	ByteOffset: 40
+	AoVector2	TextureUV;	// U, V			,	Semantic: TEXCOORD0	,	ByteOffset: 40
 	AoVector	Tangent;	// X, Y, Z		,	Semantic: TANGENT	,	ByteOffset: 48
 	AoVector	BiNormal;	// X, Y, Z		,	Semantic: BINORMAL	,	ByteOffset: 60
 							//											ByteOffset: 72

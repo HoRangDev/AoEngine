@@ -17,6 +17,8 @@ public:
 
 	virtual void SetActive( bool bIsActive );
 	bool IsActive( ) const;
+	bool IsParentActorRegistered( ) const;
+	bool IsValid( ) const;
 
 	AoActor* GetAttachedActor( ) const;
 

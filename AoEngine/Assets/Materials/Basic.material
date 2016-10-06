@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Material>
+    <MaterialName>"Basic"</MaterialName>
+    <UseShaderAsset Path="Shaders" Name="Basic" Ext=".fxo"/>
+    <Properties>
+    </Properties>
+</Material>

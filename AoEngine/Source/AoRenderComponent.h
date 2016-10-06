@@ -24,6 +24,9 @@ public:
 
 	bool IsRegistered() const;
 
+	virtual void OnAttach( ) override;
+	virtual void OnDetach( ) override;
+
 protected:
 	AoRenderer& Renderer;
 	AoMaterial* Material;

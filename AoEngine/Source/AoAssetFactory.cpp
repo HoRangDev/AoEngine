@@ -1,3 +1,4 @@
+#pragma comment(lib, "assimp_D.lib")
 #include "AoAssetFactory.h"
 #include "AoAssetManager.h"
 #include "AoStringUtility.h"
@@ -12,6 +13,7 @@
 #include "WindowsInc.h"
 #include <sstream>
 #include <fstream>
+#include <iostream>
 #include <vector>
 #include <Importer.hpp>
 #include <scene.h>
@@ -79,92 +81,101 @@ AoModel* AoAssetFactory::CreateModelFromFile( const string& FileFullPath, ESuppo
 		Assimp::Importer Importer;
 		const aiScene* Scene = Importer.ReadFile(
 			AoStringUtility::WStringToString( FileFullPath ),
-			aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_JoinIdenticalVertices );
+			aiProcess_CalcTangentSpace |
+			aiProcess_Triangulate |
+			aiProcess_GenSmoothNormals |
+			aiProcess_SplitLargeMeshes |
+			aiProcess_ConvertToLeftHanded |
+			aiProcess_SortByPType |
+			aiProcess_PreTransformVertices );
 
-		std::vector<AoMesh*> Meshes(Scene->mNumMeshes);
-		for ( unsigned int MeshIndex = 0; MeshIndex < Scene->mNumMeshes; ++MeshIndex )
+		if ( Scene != nullptr )
 		{
-			const aiMesh* Mesh = Scene->mMeshes[ MeshIndex ];
-			VertexVector Vertices( Mesh->mNumVertices );
-			IndexVector Indices( 3 * Mesh->mNumFaces );
-
-			bool bIsHasNormals = Mesh->HasNormals( );
-			bool bIsHasTangentAndBiNormals = Mesh->HasTangentsAndBitangents( );
-			bool bIsHasTextureUV = Mesh->HasTextureCoords( 0 );
-			bool bIsHasColor = Mesh->HasVertexColors( 0 );
-
-			AoVector	Normal;
-			AoVector4	Color;
-			AoVector2	TextureUV;
-			AoVector	Tangent;
-			AoVector	BiNormal;
-			for ( unsigned int Index = 0; Index < Mesh->mNumVertices; ++Index )
+			std::vector<AoMesh*> Meshes( Scene->mNumMeshes );
+			for ( unsigned int MeshIndex = 0; MeshIndex < Scene->mNumMeshes; ++MeshIndex )
 			{
-				Normal = AoVector::Zero;
-				Color = AoVector4::One;
-				TextureUV = AoVector2::Zero;
-				Tangent = AoVector::Zero;
-				BiNormal = AoVector::Zero;
+				const aiMesh* Mesh = Scene->mMeshes[ MeshIndex ];
+				VertexVector Vertices( Mesh->mNumVertices );
+				IndexVector Indices( 3 * Mesh->mNumFaces );
 
-				if ( bIsHasColor )
-				{
-					aiColor4D aiColor = Mesh->mColors[ 0 ][ Index ];
-					Color.X = aiColor.r;
-					Color.Y = aiColor.g;
-					Color.Z = aiColor.b;
-					Color.W = aiColor.a;
-				}
-				if( bIsHasTextureUV )
-				{
-					aiVector3D UVW = Mesh->mTextureCoords[ 0 ][ Index ];
-					TextureUV.X = UVW.x;
-					TextureUV.Y = UVW.y;
-				}
-				if( bIsHasNormals )
-				{
-					aiVector3D aiNormal = Mesh->mNormals[ Index ];
-					Normal.X = aiNormal.x;
-					Normal.Y = aiNormal.y;
-					Normal.Z = aiNormal.z;
-				}
-				if ( bIsHasTangentAndBiNormals )
-				{
-					aiVector3D aiTangent = Mesh->mTangents[ Index ];
-					aiVector3D aiBiNormal = Mesh->mBitangents[ Index ];
-					Tangent.X = aiTangent.x;
-					Tangent.Y = aiTangent.y;
-					Tangent.Z = aiTangent.z;
+				bool bIsHasNormals = Mesh->HasNormals( );
+				bool bIsHasTangentAndBiNormals = Mesh->HasTangentsAndBitangents( );
+				bool bIsHasTextureUV = Mesh->HasTextureCoords( 0 );
+				bool bIsHasColor = Mesh->HasVertexColors( 0 );
 
-					BiNormal.X = aiBiNormal.x;
-					BiNormal.Y = aiBiNormal.y;
-					BiNormal.Z = aiBiNormal.z;
+				AoVector	Normal;
+				AoVector4	Color;
+				AoVector2	TextureUV;
+				AoVector	Tangent;
+				AoVector	BiNormal;
+				for ( unsigned int Index = 0; Index < Mesh->mNumVertices; ++Index )
+				{
+					Normal = AoVector::Zero;
+					Color = AoVector4::One;
+					TextureUV = AoVector2::Zero;
+					Tangent = AoVector::Zero;
+					BiNormal = AoVector::Zero;
+
+					if ( bIsHasColor )
+					{
+						aiColor4D aiColor = Mesh->mColors[ 0 ][ Index ];
+						Color.X = aiColor.r;
+						Color.Y = aiColor.g;
+						Color.Z = aiColor.b;
+						Color.W = aiColor.a;
+					}
+					if ( bIsHasTextureUV )
+					{
+						aiVector3D UVW = Mesh->mTextureCoords[ 0 ][ Index ];
+						TextureUV.X = UVW.x;
+						TextureUV.Y = UVW.y;
+					}
+					if ( bIsHasNormals )
+					{
+						aiVector3D aiNormal = Mesh->mNormals[ Index ];
+						Normal.X = aiNormal.x;
+						Normal.Y = aiNormal.y;
+						Normal.Z = aiNormal.z;
+					}
+					if ( bIsHasTangentAndBiNormals )
+					{
+						aiVector3D aiTangent = Mesh->mTangents[ Index ];
+						aiVector3D aiBiNormal = Mesh->mBitangents[ Index ];
+						Tangent.X = aiTangent.x;
+						Tangent.Y = aiTangent.y;
+						Tangent.Z = aiTangent.z;
+
+						BiNormal.X = aiBiNormal.x;
+						BiNormal.Y = aiBiNormal.y;
+						BiNormal.Z = aiBiNormal.z;
+					}
+
+					aiVector3D Position = Mesh->mVertices[ Index ];
+					Vertices[ Index ] = AoGenericVertex(
+						AoVector( Position.x, Position.y, Position.z ),
+						Normal,
+						TextureUV,
+						Tangent,
+						BiNormal );
 				}
 
-				aiVector3D Position = Mesh->mVertices[ Index ];
+				for ( unsigned int Index = 0; Index < Mesh->mNumFaces; ++Index )
+				{
+					Indices[ Index * 3 + 0 ] = ( Mesh->mFaces[ Index ].mIndices[ 0 ] );
+					Indices[ Index * 3 + 1 ] = ( Mesh->mFaces[ Index ].mIndices[ 1 ] );
+					Indices[ Index * 3 + 2 ] = ( Mesh->mFaces[ Index ].mIndices[ 2 ] );
+				}
 
-				Vertices[ Index ] = AoGenericVertex(
-					AoVector( Position.x, Position.y, Position.z ),
-					Normal,
-					TextureUV,
-					Tangent,
-					BiNormal );
+				std::cout << Mesh->mName.C_Str( ) << std::endl;
+				AoMesh* MeshData = new AoMesh( AoStringUtility::StringToWString( Mesh->mName.C_Str( ) ) );
+				MeshData->Initialize(
+					std::move( Vertices ),
+					std::move( Indices ) );
+				Meshes[ MeshIndex ] = MeshData;
 			}
 
-			for ( unsigned int Index = 0; Index < Mesh->mNumFaces; ++Index )
-			{
-				Indices[ Index + 0 ] = ( Mesh->mFaces[ Index ].mIndices[ 0 ] );
-				Indices[ Index + 1 ] = ( Mesh->mFaces[ Index ].mIndices[ 1 ] );
-				Indices[ Index + 2 ] = ( Mesh->mFaces[ Index ].mIndices[ 2 ] );
-			}
-
-			AoMesh* MeshData = new AoMesh( AoStringUtility::StringToWString( Mesh->mName.C_Str( ) ) );
-			MeshData->Initialize(
-				std::move( Vertices ),
-				std::move( Indices ) );
-			Meshes[ MeshIndex ] = MeshData;
+			CreatedAsset = new AoModel( std::move( Meshes ) );
 		}
-
-		CreatedAsset = new AoModel( std::move(Meshes) );
 		break;
 	}
 

@@ -4,13 +4,20 @@
 #include "AoMath.h"
 #include "AoMatrix4x4.h"
 #include "AoVector4.h"
+#include "AoRenderer.h"
 
 AoCameraComponent::AoCameraComponent( )
+	: bIsDirty( true ), Near( 1.0f ), Far( 1000.0f ),
+	FOV( 70.0f ), AspectRatio( 1.0f )
 {
 }
 
 AoCameraComponent::~AoCameraComponent( )
 {
+	if ( AoRenderer::GetInstance( ).GetMainCamera( ) == this )
+	{
+		AoRenderer::GetInstance( ).SetMainCamera( nullptr );
+	}
 }
 
 float AoCameraComponent::GetNear( ) const
@@ -21,6 +28,7 @@ float AoCameraComponent::GetNear( ) const
 void AoCameraComponent::SetNear( float Near )
 {
 	this->Near = Max<float>( Near, 0.0f );
+	this->bIsDirty = true;
 }
 
 float AoCameraComponent::GetFar( ) const
@@ -31,6 +39,7 @@ float AoCameraComponent::GetFar( ) const
 void AoCameraComponent::SetFar( float Far )
 {
 	this->Far = Far;
+	this->bIsDirty = true;
 }
 
 float AoCameraComponent::GetFOV( ) const
@@ -38,9 +47,10 @@ float AoCameraComponent::GetFOV( ) const
 	return FOV;
 }
 
-void AoCameraComponent::SetFOV( float FOV )
+void AoCameraComponent::SetFOV( float DegreeFOV )
 {
-	this->FOV = Clamp<float>( FOV, 5.0f, 170.0f );
+	this->FOV = Clamp<float>( DegreeFOV, 5.0f, 170.0f );
+	this->bIsDirty = true;
 }
 
 float AoCameraComponent::GetAspectRatio( ) const
@@ -51,25 +61,52 @@ float AoCameraComponent::GetAspectRatio( ) const
 void AoCameraComponent::SetAspectRatio( float AspectRatio )
 {
 	this->AspectRatio = Clamp<float>( AspectRatio, 1.0f, 2.5f );
+	this->bIsDirty = true;
 }
 
-AoMatrix4x4 AoCameraComponent::GetViewMatrix( ) const
+AoMatrix4x4 AoCameraComponent::GetViewMatrix( )
 {
-	AoTransform* Transform = Actor->GetTransform( );
-	AoVector4 LookDirection{ 0.0f, 0.0f, 1.0f, 0.0f };
-	LookDirection = LookDirection * Transform->GetRelativeRotationMatrix( );
-	return AoMatrix4x4::CreateLookToLH(
-		Transform->GetRelativePosition( ),
-		AoVector( LookDirection.X, LookDirection.Y, LookDirection.Z ),
-		AoVector( 0.0f, 1.0f, 0.0f ) );
+	if ( IsDirty() )
+	{
+		AoTransform* Transform = Actor->GetTransform( );
+		AoVector4 LookDirection{ 0.0f, 0.0f, 1.0f, 0.0f };
+		LookDirection = LookDirection * Transform->GetRelativeRotationMatrix( );
+		ViewMatrix = AoMatrix4x4::CreateLookToLH(
+			Transform->GetRelativePosition( ),
+			AoVector( LookDirection.X, LookDirection.Y, LookDirection.Z ),
+			AoVector( 0.0f, 1.0f, 0.0f ) );
+	}
+
+	return ViewMatrix;
 }
 
-AoMatrix4x4 AoCameraComponent::GetProjectionMatrix( ) const
+AoMatrix4x4 AoCameraComponent::GetProjectionMatrix( )
 {
-	return AoMatrix4x4::CreatePerspectiveLH( FOV, AspectRatio, Near, Far );
+	if ( IsDirty() )
+	{
+		ProjectionMatrix = AoMatrix4x4::CreatePerspectiveLH( FOV, AspectRatio, Near, Far );
+	}
+
+	return ProjectionMatrix;
 }
 
-AoMatrix4x4 AoCameraComponent::GetViewProjMatrix( ) const
+AoMatrix4x4 AoCameraComponent::GetViewProjMatrix( )
 {
-	return GetViewMatrix( ) * GetProjectionMatrix( );
+	if ( IsDirty() )
+	{
+		ViewProjectionMatrix = GetViewMatrix() * GetProjectionMatrix();
+	}
+
+	return ViewProjectionMatrix;
+}
+
+bool AoCameraComponent::IsDirty( ) const
+{
+	return bIsDirty || Actor->GetTransform( )->IsDirty( );
+}
+
+void AoCameraComponent::SetDirty( bool bIsDirty )
+{
+	this->bIsDirty = bIsDirty;
+	Actor->GetTransform( )->SetDirty( bIsDirty );
 }

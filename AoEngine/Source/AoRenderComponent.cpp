@@ -1,19 +1,19 @@
 #include "AoRenderComponent.h"
-#include "AoApplication.h"
 #include "AoRenderer.h"
 #include "AoActor.h"
+#include "AoAssetManager.h"
 
 AoRenderComponent::AoRenderComponent( ) :
-	Renderer( AoApplication::GetRenderer( ) )
+	Renderer( AoRenderer::GetInstance() ), bIsRegistered( false )
 {
-	Renderer.RegisterComponent( this );
-	//@TODO: Load Basic Material
+	SetMaterial( dynamic_cast< AoMaterial* >( AoAssetManager::GetInstance( ).LoadAsset(
+		TEXT( "Materials" ), TEXT( "Basic" ), TEXT( ".material" ) ) ) );
 }
 
 AoRenderComponent::~AoRenderComponent( )
 {
-	SetActive( false );
 	Renderer.UnRegisterComponent( this );
+	SetActive( false );
 }
 
 void AoRenderComponent::SetMaterial( AoMaterial* Material )
@@ -36,7 +36,7 @@ bool AoRenderComponent::IsVisible( ) const
 {
 	if ( Actor != nullptr )
 	{
-		return bIsVisible && IsActive( ) && Actor->IsActive( ) && ActiveTechnique != nullptr;
+		return bIsVisible && IsValid() && ActiveTechnique != nullptr;
 	}
 	else
 	{
@@ -52,4 +52,14 @@ void AoRenderComponent::SetIsVisible( bool bIsVisible )
 bool AoRenderComponent::IsRegistered( ) const
 {
 	return bIsRegistered;
+}
+
+void AoRenderComponent::OnAttach( )
+{
+	Renderer.RegisterComponent( this );
+}
+
+void AoRenderComponent::OnDetach( )
+{
+	Renderer.UnRegisterComponent( this );
 }

@@ -4,10 +4,13 @@
 #include "AoLevel.h"
 #include "AoAssetManager.h"
 #include "AoInputLayouts.h"
+#include "AoMaterialManager.h"
 #include "AoProfiler.h"
 #include "AoTimeManager.h"
 #include "AoLightManager.h"
+#include "AoTestLevel.h"
 #include <assert.h>
+#include <iostream>
 
 bool AoApplication::bIsInitialized = false;
 AoRenderer* AoApplication::Renderer = nullptr;
@@ -72,9 +75,6 @@ int AoApplication::Excute( )
 		RenderLoopProfileSample.SetProfileEndPoint( high_resolution_clock::now( ) );
 		Profiler.RegisterSample( TEXT( "Rendering" ), RenderLoopProfileSample );
 
-		// Increase FPS Count
-		++FrameCount;
-
 		/** Main Loop End	*/
 		MainLoopProfileSample.SetProfileEndPoint( high_resolution_clock::now( ) );
 		Profiler.RegisterSample( TEXT( "MainLoop" ), MainLoopProfileSample );
@@ -82,10 +82,15 @@ int AoApplication::Excute( )
 		RawDeltaTime = MainLoopProfileSample.GetDeltaTime( );
 		TimeManager.Tick( RawDeltaTime );
 
+		// Increase FPS Count
+		++FrameCount;
 		FPSElasedTime += RawDeltaTime;
 		if( FPSElasedTime >= 1.0 )
 		{
 			FPSCount = FrameCount;
+			std::cout << FPSCount << std::endl;
+			std::cout << "	Main Loop Delta Time: " << RawDeltaTime << std::endl;
+			std::cout << "		- Rendering Delta Time: " << RenderLoopProfileSample.GetDeltaTime( ) << std::endl;
 			FrameCount = 0;
 			FPSElasedTime = 0.0;
 		}
@@ -119,7 +124,11 @@ void AoApplication::Initialize( )
 	AoAssetManager::GetInstance( ).Initialize( );
 	AoProfiler::GetInstance( ).Initialize( );
 	AoInputLayouts::Initialize( );
+	AoMaterialManager::GetInstance( ).Initialize( );
 	AoLightManager::GetInstance( ).Initialize( );
+	AoTimeManager::GetInstance( ).Initialize( );
+
+	LoadedLevel = new AoTestLevel( );
 
 	bIsInitialized = true;
 }
@@ -144,7 +153,9 @@ void AoApplication::DeInitialize( )
 		Window = nullptr;
 	}
 
+	AoTimeManager::ForceDeallocate( );
 	AoLightManager::ForceDeallocate( );
+	AoMaterialManager::ForceDeallocate( );
 	AoInputLayouts::DeInitialize( );
 	AoProfiler::ForceDeallocate( );
 	AoAssetManager::ForceDeallocate( );

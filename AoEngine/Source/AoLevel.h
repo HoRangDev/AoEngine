@@ -13,7 +13,7 @@ public:
 
 public:
 	AoLevel( );
-	~AoLevel( );
+	virtual ~AoLevel( );
 
 	void RegisterActor( AoActor* const Actor );
 	void UnRegisterActor( AoActor* const Actor );

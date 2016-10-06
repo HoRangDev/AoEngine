@@ -1,7 +1,7 @@
 #include "AoLightComponent.h"
 
 AoLightComponent::AoLightComponent( AoLight LightData )
-	: LightData( LightData )
+	: bIsDirty( true ), LightData( LightData )
 {
 }
 
@@ -17,4 +17,15 @@ AoLight AoLightComponent::GetLightData( ) const
 void AoLightComponent::SetLightData( AoLight LightData )
 {
 	this->LightData = LightData;
+	this->bIsDirty = true;
+}
+
+bool AoLightComponent::IsDirty( ) const
+{
+	return bIsDirty;
+}
+
+void AoLightComponent::SetDirty( bool bIsDirty )
+{
+	this->bIsDirty = bIsDirty;
 }

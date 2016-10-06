@@ -6,7 +6,7 @@
 atomic_uint64 AoActor::InstanceCount = 0;
 
 AoActor::AoActor( string Name ) :
-	Name( Name )
+	Name( Name ), Parent( nullptr ), RegisteredLevel( nullptr ), Transform( nullptr ), RenderComponent( nullptr )
 {
 	++InstanceCount;
 	Transform = new AoTransform( );
@@ -20,8 +20,8 @@ AoActor::AoActor( ) :
 
 AoActor::~AoActor( )
 {
-	DetachAllChild( true );
 	DetachAllComponent( true );
+	DetachAllChild( true );
 
 	delete Transform;
 	Transform = nullptr;
@@ -140,22 +140,19 @@ void AoActor::DetachComponent( AoComponent* const Component )
 
 void AoActor::DetachAllComponent( bool bIsCleanup )
 {
-	for ( auto* Component : Components )
+	for ( auto Itr = Components.begin( ); Itr != Components.end( ); )
 	{
 		if ( bIsCleanup )
 		{
-			if ( Component != Transform )
+			if ( ( *Itr ) != Transform )
 			{
-				delete Component;
+				delete ( *Itr );
 			}
 		}
-		else
-		{
-			Component->SetAttachedActor( nullptr );
-		}
+
+		Itr = Components.erase( Itr );
 	}
 
-	Components.clear( );
 	AttachComponent( Transform );
 }
 
@@ -218,9 +215,15 @@ void AoActor::Update( float DeltaTime )
 void AoActor::SetParent( AoActor* const Parent )
 {
 	this->Parent = Parent;
+	Transform->SetParent( Parent->GetTransform( ) );
 }
 
 void AoActor::SetRegisteredLevel( AoLevel* const TargetLevel )
 {
 	this->RegisteredLevel = TargetLevel;
+
+	for( auto Child : Children )
+	{
+		Child->SetRegisteredLevel( TargetLevel );
+	}
 }

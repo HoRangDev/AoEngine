@@ -218,7 +218,7 @@ AoMatrix4x4 AoMatrix4x4::CreateRotationZ( float Degree )
 
 AoMatrix4x4 AoMatrix4x4::CreateRotation( AoVector Degrees )
 {
-	return CreateRotationZ( Degrees.Z ) * CreateRotationY( Degrees.Y ) * CreateRotationX( Degrees.X );
+	return  CreateRotationZ( Degrees.Z ) * CreateRotationX( Degrees.X ) * CreateRotationY( Degrees.Y );
 }
 
 AoMatrix4x4 AoMatrix4x4::CreateTranspose( const AoMatrix4x4& InM )
@@ -247,12 +247,9 @@ AoMatrix4x4 AoMatrix4x4::CreateLookToLH( const AoVector& CameraPosition, const A
 		-( XAxis | CameraPosition ), -( YAxis | CameraPosition ), -( ZAxis | CameraPosition ), 1.0f );
 }
 
-AoMatrix4x4 AoMatrix4x4::CreatePerspectiveLH( float FOV, float AspectRatio, float Near, float Far )
+AoMatrix4x4 AoMatrix4x4::CreatePerspectiveLH( float DegreeFOV, float AspectRatio, float Near, float Far )
 {
-	float SinFOV = sin(0.5f * FOV);
-	float CosFOV = cos(0.5f * FOV);
-
-	float Height = CosFOV / SinFOV;
+	float Height = 1.0f / DegreeTan( DegreeFOV * 0.5f );
 	float Width = Height / AspectRatio;
 	float Range = Far / ( Far - Near );
 

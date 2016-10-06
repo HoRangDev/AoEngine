@@ -14,26 +14,32 @@ AoLevel::~AoLevel( )
 
 void AoLevel::RegisterActor( AoActor* const Actor )
 {
-	bool bIsRegisteredActor = Actor->GetRegisteredLevel( ) != nullptr;
-	if ( !bIsRegisteredActor )
+	if ( Actor != nullptr )
 	{
-		Actor->SetRegisteredLevel( this );
-		RegisteredActors.push_back( Actor );
+		bool bIsRegisteredActor = Actor->GetRegisteredLevel( ) != nullptr;
+		if ( !bIsRegisteredActor )
+		{
+			Actor->SetRegisteredLevel( this );
+			RegisteredActors.push_back( Actor );
+		}
 	}
 }
 
 void AoLevel::UnRegisterActor( AoActor* const Actor )
 {
-	bool bIsRegisteredActor = Actor->GetRegisteredLevel( ) == this;
-	if ( bIsRegisteredActor )
+	if ( Actor != nullptr )
 	{
-		for ( auto Itr = RegisteredActors.begin( ); Itr != RegisteredActors.end( ); ++Itr )
+		bool bIsRegisteredActor = Actor->GetRegisteredLevel( ) == this;
+		if ( bIsRegisteredActor )
 		{
-			if ( *Itr == Actor )
+			for ( auto Itr = RegisteredActors.begin( ); Itr != RegisteredActors.end( ); ++Itr )
 			{
-				( *Itr )->SetRegisteredLevel( nullptr );
-				RegisteredActors.erase( Itr );
-				break;
+				if ( *Itr == Actor )
+				{
+					( *Itr )->SetRegisteredLevel( nullptr );
+					RegisteredActors.erase( Itr );
+					break;
+				}
 			}
 		}
 	}

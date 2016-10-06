@@ -90,7 +90,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>assimp_.lib;Effects11.lib;dxgi.lib;d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp.lib;Effects11.lib;dxgi.lib;d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\assimp\libs;$(SolutionDir)ThirdParty\Effects11\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -116,6 +116,7 @@
     <ClCompile Include="Source\AoMaterialData.cpp" />
     <ClCompile Include="Source\AoMaterialFloatProperty.cpp" />
     <ClCompile Include="Source\AoMaterialIntProperty.cpp" />
+    <ClCompile Include="Source\AoMaterialManager.cpp" />
     <ClCompile Include="Source\AoMaterialMatrixProperty.cpp" />
     <ClCompile Include="Source\AoMaterialProperty.cpp" />
     <ClCompile Include="Source\AoMaterialTextureProperty.cpp" />
@@ -130,6 +131,7 @@
     <ClCompile Include="Source\AoRenderer.cpp" />
     <ClCompile Include="Source\AoShader.cpp" />
     <ClCompile Include="Source\AoStringUtility.cpp" />
+    <ClCompile Include="Source\AoTestLevel.cpp" />
     <ClCompile Include="Source\AoTexture2D.cpp" />
     <ClCompile Include="Source\AoTimeManager.cpp" />
     <ClCompile Include="Source\AoTransform.cpp" />
@@ -201,6 +203,7 @@
     <ClInclude Include="Source\AoMaterialData.h" />
     <ClInclude Include="Source\AoMaterialFloatProperty.h" />
     <ClInclude Include="Source\AoMaterialIntProperty.h" />
+    <ClInclude Include="Source\AoMaterialManager.h" />
     <ClInclude Include="Source\AoMaterialMatrixProperty.h" />
     <ClInclude Include="Source\AoMaterialProperty.h" />
     <ClInclude Include="Source\AoMaterialTextureProperty.h" />
@@ -216,6 +219,7 @@
     <ClInclude Include="Source\AoRenderer.h" />
     <ClInclude Include="Source\AoShader.h" />
     <ClInclude Include="Source\AoStringUtility.h" />
+    <ClInclude Include="Source\AoTestLevel.h" />
     <ClInclude Include="Source\AoTexture2D.h" />
     <ClInclude Include="Source\AoTimeManager.h" />
     <ClInclude Include="Source\AoTransform.h" />
@@ -239,6 +243,19 @@
     <None Include="..\ThirdParty\assimp\include\quaternion.inl" />
     <None Include="..\ThirdParty\assimp\include\vector2.inl" />
     <None Include="..\ThirdParty\assimp\include\vector3.inl" />
+    <None Include="Assets\Materials\Basic.material" />
+    <None Include="Assets\Models\unitychan.fbx" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Assets\Shaders\Basic.fx">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">fxc /Fc /Od /Zi /T fx_5_0 /Fo "%(RelativeDir)\%(Filename).fxo" "%(FullPath)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">fxc compile for debug: %(FullPath)</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(RelativeDir)\%(Filename).fxo</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">fxc /T fx_5_0 /Fo "%(RelativeDir)\%(Filename).fxo" "%(FullPath)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">fxc compile for release: %(FullPath)</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(RelativeDir)\%(Filename).fxo</Outputs>
+    </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

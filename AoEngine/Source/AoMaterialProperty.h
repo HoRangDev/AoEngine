@@ -16,7 +16,11 @@ public:
 	string GetName( ) const;
 	void SetName( const string& Name );
 
+	void SetDirty( bool bIsDirty );
+	bool IsDirty( ) const;
+
 protected:
 	string Name;
+	bool bIsDirty;
 
 };
