@@ -97,7 +97,6 @@ AoModel* AoAssetFactory::CreateModelFromFile( const string& FileFullPath, ESuppo
 				const aiMesh* Mesh = Scene->mMeshes[ MeshIndex ];
 				VertexVector Vertices( Mesh->mNumVertices );
 				IndexVector Indices( 3 * Mesh->mNumFaces );
-
 				bool bIsHasNormals = Mesh->HasNormals( );
 				bool bIsHasTangentAndBiNormals = Mesh->HasTangentsAndBitangents( );
 				bool bIsHasTextureUV = Mesh->HasTextureCoords( 0 );

@@ -61,7 +61,7 @@ int AoApplication::Excute( )
 		// Update
 		if ( LoadedLevel != nullptr )
 		{
-			/* Scale */
+			/* Pass Raw Delta Time! */
 			LoadedLevel->Update( static_cast< float >( RawDeltaTime ) );
 		}
 		UpdateLoopProfileSample.SetProfileEndPoint( high_resolution_clock::now( ) );
@@ -82,13 +82,13 @@ int AoApplication::Excute( )
 		RawDeltaTime = MainLoopProfileSample.GetDeltaTime( );
 		TimeManager.Tick( RawDeltaTime );
 
-		// Increase FPS Count
+		// Calculate Frame Rate
 		++FrameCount;
 		FPSElasedTime += RawDeltaTime;
 		if( FPSElasedTime >= 1.0 )
 		{
 			FPSCount = FrameCount;
-			std::cout << FPSCount << std::endl;
+			std::cout << "FPS: " << FPSCount << std::endl;
 			std::cout << "	Main Loop Delta Time: " << RawDeltaTime << std::endl;
 			std::cout << "		- Rendering Delta Time: " << RenderLoopProfileSample.GetDeltaTime( ) << std::endl;
 			FrameCount = 0;

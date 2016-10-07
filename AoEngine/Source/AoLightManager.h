@@ -2,7 +2,7 @@
 #include "AoType.h"
 #include <array>
 
-#define MAX_LIGHT_NUMBER 8
+constexpr uint32 MaxLightNumber = 8;
 
 class AoLightComponent;
 class AoMaterial;
@@ -28,6 +28,6 @@ public:
 
 private:
 	static AoLightManager* Instance;
-	std::array<AoLightComponent*, MAX_LIGHT_NUMBER> Lights;
+	std::array<AoLightComponent*, MaxLightNumber> Lights;
 
 };

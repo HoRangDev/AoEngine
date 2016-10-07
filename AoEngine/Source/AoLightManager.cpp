@@ -27,7 +27,7 @@ AoLightManager& AoLightManager::GetInstance( )
 
 void AoLightManager::Initialize( )
 {
-	for ( uint32 Index = 0; Index < MAX_LIGHT_NUMBER; ++Index )
+	for ( uint32 Index = 0; Index < MaxLightNumber; ++Index )
 	{
 		Lights[ Index ] = nullptr;
 	}
@@ -53,7 +53,7 @@ void AoLightManager::ForceDeallocate( )
 
 AoLightComponent* AoLightManager::RegisterLight( AoLightComponent* const LightComponent, uint32 LightIndex )
 {
-	assert( LightIndex < MAX_LIGHT_NUMBER );
+	assert( LightIndex < MaxLightNumber );
 
 	AoLightComponent* OldLightComponent = Lights[ LightIndex ];
 	Lights[ LightIndex ] = LightComponent;
@@ -62,7 +62,7 @@ AoLightComponent* AoLightManager::RegisterLight( AoLightComponent* const LightCo
 
 AoLightComponent* AoLightManager::UnRegisterLight( uint32 Index )
 {
-	assert( Index < MAX_LIGHT_NUMBER );
+	assert( Index < MaxLightNumber );
 
 	AoLightComponent* OldLightComponent = Lights[ Index ];
 	Lights[ Index ] = nullptr;
@@ -72,7 +72,7 @@ AoLightComponent* AoLightManager::UnRegisterLight( uint32 Index )
 
 void AoLightManager::UnRegisterLight( AoLightComponent* const LightComponent )
 {
-	for ( uint32 Index = 0; Index < Lights.max_size( ); ++Index )
+	for ( uint32 Index = 0; Index < MaxLightNumber; ++Index )
 	{
 		if ( Lights[ Index ] == LightComponent )
 		{
@@ -85,7 +85,7 @@ void AoLightManager::UnRegisterLight( AoLightComponent* const LightComponent )
 void AoLightManager::BindLights( AoMaterial* Material )
 {
 	uint32 ValidLightsNum = 0;
-	for ( uint32 Index = 0; Index < Lights.max_size( ); ++Index )
+	for ( uint32 Index = 0; Index < MaxLightNumber; ++Index )
 	{
 		AoLightComponent* Light = Lights[ Index ];
 		if ( Light != nullptr )
