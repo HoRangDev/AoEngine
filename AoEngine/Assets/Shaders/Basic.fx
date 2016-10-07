@@ -18,20 +18,30 @@ struct VertexOut
 {
 	float4 Position : SV_POSITION;
 	float3 WorldPosition : POSITION;
+	float3 Diffuse : TEXCOORD1;
 };
 
 VertexOut VS( VertexIn VIn )
 {
 	VertexOut VOut;
 	VOut.WorldPosition = mul( float4( VIn.Position, 1.0f ), gWorld ).xyz;
+
+	float3 LightDir = VOut.WorldPosition - float3( 500.0f, 500.0f, -500.0f );
+	LightDir = normalize( LightDir );
+
+	float3 WorldNormal = mul( VIn.Normal, (float3x3)gWorld );
+	WorldNormal = normalize( WorldNormal );
+
 	VOut.Position = mul( float4( VIn.Position, 1.0f ), mul( gWorld, gViewProj ) );
+	VOut.Diffuse = dot( -LightDir, WorldNormal );
 
 	return VOut;
 }
 
 float4 PS( VertexOut VOut ) : SV_Target
 {
-	return float4( 0.0f, 1.0f, 0.0f, 1.0f );
+	float3 Diffuse = saturate( VOut.Diffuse );
+	return float4( Diffuse, 1.0f );
 }
 
 technique11 Basic

@@ -50,7 +50,7 @@ fxgroup
                 // Name                 Index   Mask Register SysValue  Format   Used
                 // -------------------- ----- ------ -------- -------- ------- ------
                 // POSITION                 0   xyz         0     NONE   float   xyz 
-                // NORMAL                   0   xyz         1     NONE   float       
+                // NORMAL                   0   xyz         1     NONE   float   xyz 
                 // COLOR                    0   xyzw        2     NONE   float       
                 // TEXCOORD                 0   xy          3     NONE   float       
                 // TANGENT                  0   xyz         4     NONE   float       
@@ -63,14 +63,17 @@ fxgroup
                 // -------------------- ----- ------ -------- -------- ------- ------
                 // SV_POSITION              0   xyzw        0      POS   float   xyzw
                 // POSITION                 0   xyz         1     NONE   float   xyz 
+                // TEXCOORD                 1   xyz         2     NONE   float   xyz 
                 //
                 vs_5_0
                 dcl_globalFlags refactoringAllowed | skipOptimization
                 dcl_constantbuffer cb0[8], immediateIndexed
                 dcl_input v0.xyz
+                dcl_input v1.xyz
                 dcl_output_siv o0.xyzw, position
                 dcl_output o1.xyz
-                dcl_temps 7
+                dcl_output o2.xyz
+                dcl_temps 9
                 //
                 // Initial variable locations:
                 //   v0.x <- VIn.Position.x; v0.y <- VIn.Position.y; v0.z <- VIn.Position.z; 
@@ -79,51 +82,69 @@ fxgroup
                 //   v3.x <- VIn.TextureUV.x; v3.y <- VIn.TextureUV.y; 
                 //   v4.x <- VIn.Tangent.x; v4.y <- VIn.Tangent.y; v4.z <- VIn.Tangent.z; 
                 //   v5.x <- VIn.BiNormal.x; v5.y <- VIn.BiNormal.y; v5.z <- VIn.BiNormal.z; 
+                //   o2.x <- <VS return value>.Diffuse.x; o2.y <- <VS return value>.Diffuse.y; o2.z <- <VS return value>.Diffuse.z; 
                 //   o1.x <- <VS return value>.WorldPosition.x; o1.y <- <VS return value>.WorldPosition.y; o1.z <- <VS return value>.WorldPosition.z; 
                 //   o0.x <- <VS return value>.Position.x; o0.y <- <VS return value>.Position.y; o0.z <- <VS return value>.Position.z; o0.w <- <VS return value>.Position.w
                 //
-                #line 26 "D:\Project\Developement\Live\AoEngine\AoEngine\Assets\Shaders\Basic.fx"
+                #line 27 "D:\Project\Developement\Live\AoEngine\AoEngine\Assets\Shaders\Basic.fx"
                 mov r0.xyz, v0.xyzx
                 mov r0.w, l(1.000000)
                 dp4 r1.x, r0.xyzw, cb0[0].xyzw  // r1.x <- VOut.WorldPosition.x
                 dp4 r1.y, r0.xyzw, cb0[1].xyzw  // r1.y <- VOut.WorldPosition.y
                 dp4 r1.z, r0.xyzw, cb0[2].xyzw  // r1.z <- VOut.WorldPosition.z
-                mul r2.xyzw, cb0[0].xyzw, cb0[4].xxxx
-                mul r3.xyzw, cb0[1].xyzw, cb0[4].yyyy
-                add r2.xyzw, r2.xyzw, r3.xyzw
-                mul r3.xyzw, cb0[2].xyzw, cb0[4].zzzz
-                add r2.xyzw, r2.xyzw, r3.xyzw
-                mul r3.xyzw, cb0[3].xyzw, cb0[4].wwww
-                add r2.xyzw, r2.xyzw, r3.xyzw
-                mul r3.xyzw, cb0[0].xyzw, cb0[5].xxxx
-                mul r4.xyzw, cb0[1].xyzw, cb0[5].yyyy
-                add r3.xyzw, r3.xyzw, r4.xyzw
-                mul r4.xyzw, cb0[2].xyzw, cb0[5].zzzz
-                add r3.xyzw, r3.xyzw, r4.xyzw
-                mul r4.xyzw, cb0[3].xyzw, cb0[5].wwww
-                add r3.xyzw, r3.xyzw, r4.xyzw
-                mul r4.xyzw, cb0[0].xyzw, cb0[6].xxxx
-                mul r5.xyzw, cb0[1].xyzw, cb0[6].yyyy
+                mov r2.xyz, l(-500.000000,-500.000000,500.000000,-0.000000)
+                add r2.xyz, r1.xyzx, r2.xyzx  // r2.x <- LightDir.x; r2.y <- LightDir.y; r2.z <- LightDir.z
+                dp3 r1.w, r2.xyzx, r2.xyzx
+                rsq r1.w, r1.w
+                mul r2.xyz, r1.wwww, r2.xyzx
+                dp3 r3.x, v1.xyzx, cb0[0].xyzx  // r3.x <- WorldNormal.x
+                dp3 r3.y, v1.xyzx, cb0[1].xyzx  // r3.y <- WorldNormal.y
+                dp3 r3.z, v1.xyzx, cb0[2].xyzx  // r3.z <- WorldNormal.z
+                dp3 r1.w, r3.xyzx, r3.xyzx
+                rsq r1.w, r1.w
+                mul r3.xyz, r1.wwww, r3.xyzx
+                mul r4.xyzw, cb0[0].xyzw, cb0[4].xxxx
+                mul r5.xyzw, cb0[1].xyzw, cb0[4].yyyy
                 add r4.xyzw, r4.xyzw, r5.xyzw
-                mul r5.xyzw, cb0[2].xyzw, cb0[6].zzzz
+                mul r5.xyzw, cb0[2].xyzw, cb0[4].zzzz
                 add r4.xyzw, r4.xyzw, r5.xyzw
-                mul r5.xyzw, cb0[3].xyzw, cb0[6].wwww
+                mul r5.xyzw, cb0[3].xyzw, cb0[4].wwww
                 add r4.xyzw, r4.xyzw, r5.xyzw
-                mul r5.xyzw, cb0[0].xyzw, cb0[7].xxxx
-                mul r6.xyzw, cb0[1].xyzw, cb0[7].yyyy
+                mul r5.xyzw, cb0[0].xyzw, cb0[5].xxxx
+                mul r6.xyzw, cb0[1].xyzw, cb0[5].yyyy
                 add r5.xyzw, r5.xyzw, r6.xyzw
-                mul r6.xyzw, cb0[2].xyzw, cb0[7].zzzz
+                mul r6.xyzw, cb0[2].xyzw, cb0[5].zzzz
                 add r5.xyzw, r5.xyzw, r6.xyzw
-                mul r6.xyzw, cb0[3].xyzw, cb0[7].wwww
+                mul r6.xyzw, cb0[3].xyzw, cb0[5].wwww
                 add r5.xyzw, r5.xyzw, r6.xyzw
-                dp4 r2.x, r0.xyzw, r2.xyzw  // r2.x <- VOut.Position.x
-                dp4 r2.y, r0.xyzw, r3.xyzw  // r2.y <- VOut.Position.y
-                dp4 r2.z, r0.xyzw, r4.xyzw  // r2.z <- VOut.Position.z
-                dp4 r2.w, r0.xyzw, r5.xyzw  // r2.w <- VOut.Position.w
-                mov o0.xyzw, r2.xyzw
+                mul r6.xyzw, cb0[0].xyzw, cb0[6].xxxx
+                mul r7.xyzw, cb0[1].xyzw, cb0[6].yyyy
+                add r6.xyzw, r6.xyzw, r7.xyzw
+                mul r7.xyzw, cb0[2].xyzw, cb0[6].zzzz
+                add r6.xyzw, r6.xyzw, r7.xyzw
+                mul r7.xyzw, cb0[3].xyzw, cb0[6].wwww
+                add r6.xyzw, r6.xyzw, r7.xyzw
+                mul r7.xyzw, cb0[0].xyzw, cb0[7].xxxx
+                mul r8.xyzw, cb0[1].xyzw, cb0[7].yyyy
+                add r7.xyzw, r7.xyzw, r8.xyzw
+                mul r8.xyzw, cb0[2].xyzw, cb0[7].zzzz
+                add r7.xyzw, r7.xyzw, r8.xyzw
+                mul r8.xyzw, cb0[3].xyzw, cb0[7].wwww
+                add r7.xyzw, r7.xyzw, r8.xyzw
+                dp4 r4.x, r0.xyzw, r4.xyzw  // r4.x <- VOut.Position.x
+                dp4 r4.y, r0.xyzw, r5.xyzw  // r4.y <- VOut.Position.y
+                dp4 r4.z, r0.xyzw, r6.xyzw  // r4.z <- VOut.Position.z
+                dp4 r4.w, r0.xyzw, r7.xyzw  // r4.w <- VOut.Position.w
+                mov r0.xyz, -r2.xyzx
+                dp3 r0.z, r0.xyzx, r3.xyzx
+                mov r0.xyz, r0.zzzz  // r0.x <- VOut.Diffuse.x; r0.y <- VOut.Diffuse.y; r0.z <- VOut.Diffuse.z
+                
+                #line 38
+                mov o0.xyzw, r4.xyzw
                 mov o1.xyz, r1.xyzx
+                mov o2.xyz, r0.xyzx
                 ret 
-                // Approximately 40 instruction slots used
+                // Approximately 55 instruction slots used
                             
             };
             GeometryShader = NULL;
@@ -139,6 +160,7 @@ fxgroup
                 // -------------------- ----- ------ -------- -------- ------- ------
                 // SV_POSITION              0   xyzw        0      POS   float       
                 // POSITION                 0   xyz         1     NONE   float       
+                // TEXCOORD                 1   xyz         2     NONE   float   xyz 
                 //
                 //
                 // Output signature:
@@ -149,17 +171,23 @@ fxgroup
                 //
                 ps_5_0
                 dcl_globalFlags refactoringAllowed | skipOptimization
+                dcl_input_ps linear v2.xyz
                 dcl_output o0.xyzw
+                dcl_temps 1
                 //
                 // Initial variable locations:
                 //   v0.x <- VOut.Position.x; v0.y <- VOut.Position.y; v0.z <- VOut.Position.z; v0.w <- VOut.Position.w; 
                 //   v1.x <- VOut.WorldPosition.x; v1.y <- VOut.WorldPosition.y; v1.z <- VOut.WorldPosition.z; 
+                //   v2.x <- VOut.Diffuse.x; v2.y <- VOut.Diffuse.y; v2.z <- VOut.Diffuse.z; 
                 //   o0.x <- <PS return value>.x; o0.y <- <PS return value>.y; o0.z <- <PS return value>.z; o0.w <- <PS return value>.w
                 //
-                #line 34 "D:\Project\Developement\Live\AoEngine\AoEngine\Assets\Shaders\Basic.fx"
-                mov o0.xyzw, l(0,1.000000,0,1.000000)
+                #line 43 "D:\Project\Developement\Live\AoEngine\AoEngine\Assets\Shaders\Basic.fx"
+                max r0.xyz, v2.xyzx, l(0.000000, 0.000000, 0.000000, 0.000000)
+                min r0.xyz, r0.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)  // r0.x <- Diffuse.x; r0.y <- Diffuse.y; r0.z <- Diffuse.z
+                mov o0.xyz, r0.xyzx
+                mov o0.w, l(1.000000)
                 ret 
-                // Approximately 2 instruction slots used
+                // Approximately 5 instruction slots used
                             
             };
         }
