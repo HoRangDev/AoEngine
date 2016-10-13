@@ -131,6 +131,7 @@
     <ClCompile Include="Source\AoRenderer.cpp" />
     <ClCompile Include="Source\AoShader.cpp" />
     <ClCompile Include="Source\AoStringUtility.cpp" />
+    <ClCompile Include="Source\AoTestActor.cpp" />
     <ClCompile Include="Source\AoTestLevel.cpp" />
     <ClCompile Include="Source\AoTexture2D.cpp" />
     <ClCompile Include="Source\AoTimeManager.cpp" />
@@ -219,6 +220,7 @@
     <ClInclude Include="Source\AoRenderer.h" />
     <ClInclude Include="Source\AoShader.h" />
     <ClInclude Include="Source\AoStringUtility.h" />
+    <ClInclude Include="Source\AoTestActor.h" />
     <ClInclude Include="Source\AoTestLevel.h" />
     <ClInclude Include="Source\AoTexture2D.h" />
     <ClInclude Include="Source\AoTimeManager.h" />
@@ -244,7 +246,7 @@
     <None Include="..\ThirdParty\assimp\include\vector2.inl" />
     <None Include="..\ThirdParty\assimp\include\vector3.inl" />
     <None Include="Assets\Materials\Basic.material" />
-    <None Include="Assets\Models\unitychan.fbx" />
+    <None Include="Assets\Models\Sphere.3ds" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\Shaders\Basic.fx">
@@ -256,6 +258,21 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">fxc compile for release: %(FullPath)</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(RelativeDir)\%(Filename).fxo</Outputs>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Models\bunny.obj">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Shaders\Lights.fx">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Shaders\ShaderStructure.fx">
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -10,12 +10,12 @@
 
 #pragma once
 #include "AoType.h"
+#include "AoTransform.h"
 #include <vector>
 
 class AoLevel;
 class AoComponent;
 class AoRenderComponent;
-class AoTransform;
 class AoActor
 {
 public:
@@ -56,6 +56,8 @@ public:
 	bool IsRegisteredAtLevel( ) const;
 
 	AoTransform* GetTransform( ) const;
+
+	void MakeChildTransformDirty( );
 
 private:
 	friend AoLevel;

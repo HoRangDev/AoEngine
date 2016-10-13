@@ -78,6 +78,7 @@ AoModel* AoAssetFactory::CreateModelFromFile( const string& FileFullPath, ESuppo
 	{
 	case ESupportAssetExtension::FBX:
 	case ESupportAssetExtension::OBJ:
+	case ESupportAssetExtension::Ext3DS:
 		Assimp::Importer Importer;
 		const aiScene* Scene = Importer.ReadFile(
 			AoStringUtility::WStringToString( FileFullPath ),

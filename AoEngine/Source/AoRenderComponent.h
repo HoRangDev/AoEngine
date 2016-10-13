@@ -11,7 +11,7 @@ public:
 	AoRenderComponent();
 	~AoRenderComponent();
 
-	virtual void Render( AoRenderer* Renderer ) = 0;
+	virtual void Render( ) = 0;
 
 	void SetMaterial( AoMaterial* Material );
 	AoMaterial* GetMaterial() const;

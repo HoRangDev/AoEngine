@@ -27,10 +27,9 @@ AoMesh* AoMeshRenderComponent::GetMesh( ) const
 	return Mesh;
 }
 
-void AoMeshRenderComponent::Render( AoRenderer* Renderer )
+void AoMeshRenderComponent::Render( )
 {
-	bool bIsValidToRendering =
-		Renderer != nullptr && Mesh != nullptr
+	bool bIsValidToRendering = Mesh != nullptr
 		&& InputLayout != nullptr && Material != nullptr;
 	if ( bIsValidToRendering )
 	{
@@ -39,26 +38,27 @@ void AoMeshRenderComponent::Render( AoRenderer* Renderer )
 
 		for ( uint32 Index = 0; Index < TechniqueDesc.Passes; ++Index )
 		{
-			Renderer->BindInputLayout( InputLayout );
-			Renderer->SetPrimitiveTopology( EPrimitiveTopology::Triangle );
-			Renderer->BindVertexBuffer(
+			Renderer.BindInputLayout( InputLayout );
+			Renderer.SetPrimitiveTopology( EPrimitiveTopology::Triangle );
+			Renderer.BindVertexBuffer(
 				Mesh->GetVertexBuffer( ),
 				Mesh->GetVertexSize( ) );
-			Renderer->BindIndexBuffer( Mesh->GetIndexBuffer( ) );
+			Renderer.BindIndexBuffer( Mesh->GetIndexBuffer( ) );
 
 			AoTransform* Transform = Actor->GetTransform( );
 
+			bool TransformDirty = Transform->IsDirty( );
 			if ( Transform->IsDirty( ) )
 			{
 				AoMatrix4x4 World = Transform->GetRelativeTransformationMatrix( );
-				Material->SetMatrixByName( TEXT( "gWorld" ), World );
+				Material->SetMatrixByName( TEXT( "WorldMatrix" ), World );
 				Transform->SetDirty( false );
 			}
 
 			Material->ApplyPropertiesToShader( );
 
-			Renderer->ApplyPass( ActiveTechnique->GetPassByIndex( Index ) );
-			Renderer->DrawIndexed( Mesh->GetIndexCount( ) );
+			Renderer.ApplyPass( ActiveTechnique->GetPassByIndex( Index ) );
+			Renderer.DrawIndexed( Mesh->GetIndexCount( ) );
 		}
 	}
 }

@@ -1,5 +1,6 @@
 #include "AoMaterialManager.h"
 #include "AoMaterial.h"
+#include "AoLightManager.h"
 
 AoMaterialManager* AoMaterialManager::Instance = nullptr;
 
@@ -93,6 +94,15 @@ AoMaterial* AoMaterialManager::GetMaterial( const string& Name ) const
 	}
 
 	return nullptr;
+}
+
+void AoMaterialManager::BatchLightSet( )
+{
+	AoLightManager& LightManager = AoLightManager::GetInstance( );
+	for ( auto Material : MaterialList )
+	{
+		LightManager.BindLights( Material );
+	}
 }
 
 void AoMaterialManager::BatchMatrixSet( const string& PropertyName, const AoMatrix4x4& Value )

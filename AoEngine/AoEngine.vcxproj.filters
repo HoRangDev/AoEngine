@@ -216,6 +216,9 @@
     <ClCompile Include="Source\AoMaterialManager.cpp">
       <Filter>Source\Core\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="Source\AoTestActor.cpp">
+      <Filter>Source\Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AoVector4.h">
@@ -485,6 +488,9 @@
     <ClInclude Include="Source\AoMaterialManager.h">
       <Filter>Source\Core\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Source\AoTestActor.h">
+      <Filter>Source\Tests</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\ThirdParty\assimp\include\color4.inl">
@@ -508,11 +514,20 @@
     <None Include="..\ThirdParty\assimp\include\vector3.inl">
       <Filter>Source\ThirdParty\assimp</Filter>
     </None>
-    <None Include="Assets\Models\unitychan.fbx">
-      <Filter>Assets\Models</Filter>
-    </None>
     <None Include="Assets\Materials\Basic.material">
       <Filter>Assets\Materials</Filter>
+    </None>
+    <None Include="Assets\Models\Sphere.3ds">
+      <Filter>Assets\Models</Filter>
+    </None>
+    <None Include="Assets\Models\bunny.obj">
+      <Filter>Assets\Models</Filter>
+    </None>
+    <None Include="Assets\Shaders\Lights.fx">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="Assets\Shaders\ShaderStructure.fx">
+      <Filter>Assets\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@ const SAssetTypeMatchInfo AoAsset::MatchInfos[ ] =
 	{ TEXT( ".cfg" ),		ESupportAssetExtension::CFG,		 EAssetType::Config		},
 	{ TEXT( ".fbx" ),		ESupportAssetExtension::FBX,		 EAssetType::Model		},
 	{ TEXT( ".obj" ),		ESupportAssetExtension::OBJ,		 EAssetType::Model		},
+	{ TEXT( ".3ds" ),		ESupportAssetExtension::Ext3DS,		 EAssetType::Model		},
 	{ TEXT( ".png" ),		ESupportAssetExtension::PNG,		 EAssetType::Texture2D	},
 	{ TEXT( ".jpg" ),		ESupportAssetExtension::JPG,		 EAssetType::Texture2D	},
 	{ TEXT( ".dds" ),		ESupportAssetExtension::DDS,		 EAssetType::Texture2D	},

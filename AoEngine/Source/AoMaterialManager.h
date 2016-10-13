@@ -25,6 +25,7 @@ public:
 
 	AoMaterial* GetMaterial( const string& Name ) const;
 
+	void BatchLightSet( );
 	void BatchMatrixSet( const string& PropertyName, const AoMatrix4x4& Value );
 
 private:

@@ -1,7 +1,7 @@
 #include "AoTransform.h"
 #include "AoActor.h"
 
-AoTransform::AoTransform( ) 
+AoTransform::AoTransform( )
 	: AoTransform( AoVector::Zero, AoVector::One, AoVector::Zero )
 {
 }
@@ -22,53 +22,53 @@ AoTransform::~AoTransform( )
 void AoTransform::OnAttach( )
 {
 	AoActor* ParentActor = Actor->GetParent( );
-	if( ParentActor != nullptr )
+	if ( ParentActor != nullptr )
 	{
 		Parent = ParentActor->GetTransform( );
-		bIsDirty = true;
+		Actor->MakeChildTransformDirty( );
 	}
 }
 
 void AoTransform::OnDetach( )
 {
 	Parent = nullptr;
-	bIsDirty = true;
+	Actor->MakeChildTransformDirty( );
 }
 
 void AoTransform::SetPosition( const AoVector& Position )
 {
 	this->Position = Position;
-	bIsDirty = true;
+	Actor->MakeChildTransformDirty( );
 }
 
 void AoTransform::SetScale( const AoVector& Scale )
 {
 	this->Scale = Scale;
-	bIsDirty = true;
+	Actor->MakeChildTransformDirty( );
 }
 
 void AoTransform::SetRotation( const AoVector& Rotation )
 {
 	this->Rotation = Rotation;
-	bIsDirty = true;
+	Actor->MakeChildTransformDirty( );
 }
 
 void AoTransform::SetRotationX( float Degree )
 {
 	this->Rotation.X = Degree;
-	bIsDirty = true;
+	Actor->MakeChildTransformDirty( );
 }
 
 void AoTransform::SetRotationY( float Degree )
 {
 	this->Rotation.Y = Degree;
-	bIsDirty = true;
+	Actor->MakeChildTransformDirty( );
 }
 
 void AoTransform::SetRotationZ( float Degree )
 {
 	this->Rotation.Z = Degree;
-	bIsDirty = true;
+	Actor->MakeChildTransformDirty( );
 }
 
 AoVector AoTransform::GetPosition( ) const
@@ -78,7 +78,7 @@ AoVector AoTransform::GetPosition( ) const
 
 AoVector AoTransform::GetRelativePosition( ) const
 {
-	if( Parent != nullptr )
+	if ( Parent != nullptr )
 	{
 		return Parent->GetRelativePosition( ) + Position;
 	}
@@ -93,7 +93,7 @@ AoVector AoTransform::GetScale( ) const
 
 AoVector AoTransform::GetRelativeScale( ) const
 {
-	if( Parent != nullptr )
+	if ( Parent != nullptr )
 	{
 		return Parent->GetRelativeScale( ) * Scale;
 	}
@@ -108,7 +108,7 @@ AoVector AoTransform::GetRotation( ) const
 
 AoVector AoTransform::GetRelativeRotation( ) const
 {
-	if( Parent != nullptr )
+	if ( Parent != nullptr )
 	{
 		return Parent->GetRelativeRotation( ) + Rotation;
 	}
@@ -180,7 +180,7 @@ AoMatrix4x4 AoTransform::GetRelativeRotationMatrix( ) const
 
 AoMatrix4x4 AoTransform::GetTransformationMatrix( ) const
 {
-	return GetScaleMatrix() * GetRotationMatrix() * GetTranslationMatrix( );
+	return GetScaleMatrix( ) * GetRotationMatrix( ) * GetTranslationMatrix( );
 }
 
 AoMatrix4x4 AoTransform::GetRelativeTransformationMatrix( ) const

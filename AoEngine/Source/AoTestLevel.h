@@ -4,7 +4,9 @@
 
 class AoModel;
 class AoActor;
+class AoTestActor;
 class AoMeshRenderComponent;
+class AoTexture2D;
 class AoTestLevel : public AoLevel
 {
 public:
@@ -16,7 +18,11 @@ public:
 private:
 	AoActor* Camera;
 	AoModel* Model;
-	AoActor* UnityChan;
-	std::vector< AoMeshRenderComponent* > UnityChanRenderComponent;
+	AoTestActor* Sphere;
+	std::vector< AoMeshRenderComponent* > RenderComponents;
+
+	AoTexture2D* DiffuseMap;
+	AoTexture2D* SpecularMap;
+	AoTexture2D* NormalMap;
 
 };

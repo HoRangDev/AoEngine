@@ -11,7 +11,7 @@ public:
 	void SetMesh( AoMesh* Mesh );
 	AoMesh* GetMesh( ) const;
 
-	virtual void Render( AoRenderer* Renderer ) override;
+	virtual void Render( ) override;
 
 private:
 	AoMesh* Mesh;

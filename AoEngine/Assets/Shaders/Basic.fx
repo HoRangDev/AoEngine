@@ -1,47 +1,87 @@
-cbuffer cbPerObject
+#include "Lights.fx"
+// @TODO: Add World-Inverse-Transpose matrix for world normal transform.
+// @TODO: Phong-Blin Shading
+
+#define MAX_LIGHT_NUM 8
+
+cbuffer ConstantBufferPerFrame
 {
-	float4x4 gWorld;
-	float4x4 gViewProj;
+	Light Lights[ MAX_LIGHT_NUM ];
+	int BindingLightsNumber;
+
+	float4 WorldCameraPosition;
+
+	float FogStart;
+	float FogRange;
+	float4 FogColor;
+	bool IsFoggy;
 };
 
-struct VertexIn
+cbuffer ConstantBufferPerObject
 {
-	float3 Position : POSITION;
-	float3 Normal : NORMAL;
-	float4 Color : COLOR;
-	float2 TextureUV : TEXCOORD;
-	float3 Tangent : TANGENT;
-	float3 BiNormal : BINORMAL;
+	float4x4 WorldMatrix;
+	float4x4 ViewProjMatrix;
 };
 
-struct VertexOut
+// Textures
+Texture2D DiffuseMap;
+Texture2D SpecularMap;
+Texture2D NormalMap;
+
+SamplerState DefaultSampler
 {
-	float4 Position : SV_POSITION;
-	float3 WorldPosition : POSITION;
-	float3 Diffuse : TEXCOORD1;
+	AddressU = WRAP;
+	AddressV = WRAP;
 };
 
-VertexOut VS( VertexIn VIn )
+Fragment VS( VertexIn Input )
 {
-	VertexOut VOut;
-	VOut.WorldPosition = mul( float4( VIn.Position, 1.0f ), gWorld ).xyz;
+	Fragment Output;
 
-	float3 LightDir = VOut.WorldPosition - float3( 500.0f, 500.0f, -500.0f );
-	LightDir = normalize( LightDir );
+	Output.Position = mul( float4( Input.Position, 1.0f ), mul( WorldMatrix, ViewProjMatrix ) );
+	Output.TextureUV = Input.TextureUV;
 
-	float3 WorldNormal = mul( VIn.Normal, (float3x3)gWorld );
-	WorldNormal = normalize( WorldNormal );
+	Output.WorldPosition = mul( float4( Input.Position, 1.0f ), WorldMatrix ).xyz;
 
-	VOut.Position = mul( float4( VIn.Position, 1.0f ), mul( gWorld, gViewProj ) );
-	VOut.Diffuse = dot( -LightDir, WorldNormal );
+	// It isn't caculate Light Direction for multiple Lights.
+	// Translation is unnecessary in direction vector.
+	float3 WorldNormal = mul( Input.Normal, ( float3x3 )WorldMatrix );
+	Output.Normal = normalize( WorldNormal );
 
-	return VOut;
+	float3 WorldTangent = mul( Input.Tangent, ( float3x3 )WorldMatrix );
+	Output.Tangent = normalize( WorldTangent );
+
+	float3 WorldBiNormal = mul( Input.BiNormal, ( float3x3 )WorldMatrix );
+	Output.BiNormal = normalize(WorldBiNormal);
+
+	return Output;
 }
 
-float4 PS( VertexOut VOut ) : SV_Target
+float4 PS( Fragment Input ) : SV_Target
 {
-	float3 Diffuse = saturate( VOut.Diffuse );
-	return float4( Diffuse, 1.0f );
+	float3 FinalAmbient = float3( 0.0f, 0.0f, 0.0f );
+	float3 FinalDiffuse = float3( 0.0f, 0.0f, 0.0f );
+	float3 FinalSpecular = float3( 0.0f, 0.0f, 0.0f );
+
+	[unroll]
+	for( int Index = 0; Index < BindingLightsNumber; ++Index )
+	{
+		float3 Ambient = float3( 0.0f, 0.0f, 0.0f );
+		float3 Diffuse = float3( 0.0f, 0.0f, 0.0f );
+		float3 Specular = float3( 0.0f, 0.0f, 0.0f );
+
+		ComputeLight( Input, Lights[ Index ], WorldCameraPosition.xyz,
+			DiffuseMap, DefaultSampler,
+			SpecularMap, DefaultSampler,
+			NormalMap, DefaultSampler,
+			Ambient, Diffuse, Specular );
+
+		FinalAmbient += Ambient;
+		FinalDiffuse += Diffuse;
+		FinalSpecular += Specular;
+	}
+
+	return float4( FinalAmbient + FinalDiffuse + FinalSpecular, 1.0f );
 }
 
 technique11 Basic

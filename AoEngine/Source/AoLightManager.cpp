@@ -98,6 +98,7 @@ void AoLightManager::BindLights( AoMaterial* Material )
 						sizeof( AoLight ) * ValidLightsNum,
 						sizeof( AoLight ) );
 
+					Light->SetDirty( false );
 					++ValidLightsNum;
 				}
 			}

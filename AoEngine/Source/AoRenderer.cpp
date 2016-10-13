@@ -1,6 +1,7 @@
 #include "AoRenderer.h"
 #include "AoMaterial.h"
 #include "AoMaterialManager.h"
+#include "AoLightManager.h"
 #include "AoRenderComponent.h"
 #include "AoCameraComponent.h"
 #include "AoWindow.h"
@@ -36,19 +37,22 @@ void AoRenderer::Render( )
 	{
 		if ( MainCamera->IsValid( ) )
 		{
+			AoMaterialManager MaterialManager = AoMaterialManager::GetInstance( );
 			if ( MainCamera->IsDirty( ) )
 			{
-				AoMaterialManager::GetInstance( ).BatchMatrixSet(
-					TEXT( "gViewProj" ),
+				MaterialManager.BatchMatrixSet(
+					TEXT( "ViewProjMatrix" ),
 					MainCamera->GetViewProjMatrix( ) );
 				MainCamera->SetDirty( false );
 			}
+
+			MaterialManager.BatchLightSet( );
 
 			for ( AoRenderComponent* Component : Components )
 			{
 				if ( Component->IsVisible( ) )
 				{
-					Component->Render( this );
+					Component->Render( );
 				}
 			}
 		}

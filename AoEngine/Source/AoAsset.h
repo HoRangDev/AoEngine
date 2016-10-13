@@ -18,7 +18,7 @@ enum class ESupportAssetExtension
 {
 	Unknown,
 	CFG,
-	FBX, OBJ,
+	FBX, OBJ, Ext3DS,
 	PNG, JPG, DDS,
 	FXO,
 	Material,

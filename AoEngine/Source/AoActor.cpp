@@ -1,5 +1,4 @@
 #include "AoActor.h"
-#include "AoTransform.h"
 #include "AoRenderComponent.h"
 #include <Windows.h>
 
@@ -194,6 +193,15 @@ bool AoActor::IsRegisteredAtLevel( ) const
 AoTransform* AoActor::GetTransform( ) const
 {
 	return Transform;
+}
+
+void AoActor::MakeChildTransformDirty( )
+{
+	this->Transform->SetDirty( true );
+	for( auto Actor : Children )
+	{
+		Actor->MakeChildTransformDirty( );
+	}
 }
 
 void AoActor::Update( float DeltaTime )
